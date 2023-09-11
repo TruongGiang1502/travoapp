@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
@@ -15,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool passToggle = true;
+  bool isChecked = false;
 
   bool isEmailValid(String email) {
     return RegExp(
@@ -122,7 +124,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
+                    ),
+
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: isChecked, 
+                          onChanged: (bool? newValue){
+                            setState(() {
+                              isChecked = newValue!;
+                            });
+                          }
+                        ),
+                        const Text('Remember me', style: TextStyle(fontSize: 15),),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordScreen()));
+                          }, 
+                          child: const Text('Forgot password?')
+                        ),
+                      ],
                     ),
 
                     AuthButton(formKey: _formKey, text: 'Login',),
