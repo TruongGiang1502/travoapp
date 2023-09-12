@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -10,12 +12,15 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool passToggle = true;
+  String curPhoneCode = '84';
+
   bool isEmailValid(String email) {
     return RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
@@ -103,30 +108,61 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-
+                   
                     DropdownButtonFormField(
-                      items: <String> ['Viet Nam', 'Indo' ,'America'].map((String value) {
+                      value: 'Viet Nam',
+                      items: listCountry.map((ListCountry country) {
                         return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
+                          value: country.countryName,
+                          child: Text(country.countryName),
                         );
                       }).toList(),
                       decoration: const InputDecoration(
                         labelText: 'Country',
                         border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.account_circle_sharp)), 
-                      onChanged: (value){}
+                        prefixIcon: Icon(Icons.flag_circle)), 
+                      onChanged: (value){
+                        setState(() {
+                          curPhoneCode = listCountry.firstWhere((element) => element.countryName == value).phoneCode;
+                        });
+                      }
                     ),
                     const SizedBox(
                       height: 20,
                     ),
 
-                    TextFormField(
-                      controller: phoneController,
-                      decoration: const InputDecoration(
-                          labelText: 'Phone number',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.phone)),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 64,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: const Color.fromARGB(255, 97, 97, 97)),
+                              borderRadius: const  BorderRadius.only(
+                                topLeft: Radius.circular(4),
+                                bottomLeft: Radius.circular(4)
+                              )),
+                            child: Center(child: Text('+$curPhoneCode', style: const TextStyle(fontSize: 18),)),
+                          ),
+                        ),
+                        Expanded(
+                          flex:4,
+                          child: TextFormField(
+                            controller: phoneController,
+                            keyboardType: TextInputType.phone,
+                            decoration: const InputDecoration(
+                                labelText: 'Phone number',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(4),
+                                    bottomRight: Radius.circular(4)
+                                  )
+                                ),
+                                prefixIcon: Icon(Icons.phone)),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
