@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
@@ -122,9 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.flag_circle)), 
                       onChanged: (value){
-                        setState(() {
-                          curPhoneCode = listCountry.firstWhere((element) => element.countryName == value).phoneCode;
-                        });
+                        context.read<AuthPhoneCodeCubit>().changePhoneCode(value!);
                       }
                     ),
                     const SizedBox(
@@ -143,7 +143,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                 topLeft: Radius.circular(4),
                                 bottomLeft: Radius.circular(4)
                               )),
-                            child: Center(child: Text('+$curPhoneCode', style: const TextStyle(fontSize: 18),)),
+                              
+                            child: BlocBuilder<AuthPhoneCodeCubit, String>(
+                              builder: (context, curPhoneCode) => Center(
+                                child: Text('+$curPhoneCode', style: const TextStyle(fontSize: 18),)
+                              )
+                            ),
                           ),
                         ),
                         Expanded(

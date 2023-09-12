@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
@@ -190,7 +192,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         const Text('Don\'t have an account?'),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignupScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> BlocProvider(
+                                create: (context) => AuthPhoneCodeCubit(),
+                                child: const SignupScreen(),
+                              )));
                             }, 
                             child: const Text('Sign Up')
                         ),
