@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
@@ -5,6 +6,12 @@ import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
+import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
+import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
+import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
+import 'package:travo_demo/widgets/blocs/language_bloc/language_event.dart';
+import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
+import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +26,18 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool passToggle = true;
   bool isChecked = false;
+
+  _changeTheme (BuildContext context){
+    context.read<ThemeBloc>().add(ChangeThemeEvent());
+  }
+
+  _changeBtnColor (BuildContext context){
+    context.read<ButtonColorBloc>().add(ButtonColorEvent());
+  }
+
+  _changeLocale (BuildContext context){
+    context.read<LanguageBloc>().add(LanguageChangeEvent());
+  }
 
   bool isEmailValid(String email) {
     return RegExp(
@@ -59,6 +78,36 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
           child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions:  [
+              BlocBuilder <ButtonColorBloc, Color>(
+                builder: (
+                  (context, color){
+                    return Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            _changeBtnColor(context);
+                            _changeTheme(context);
+                          }, 
+                          icon: 
+                             Icon(Icons.brightness_6, color: color,),
+                          
+                          
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _changeLocale(context);
+                          }, 
+                          icon: Icon(Icons.translate, color: color,)
+                        ),
+                      ],
+                    );
+                  }
+                ),
+              )
+            ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   borderRadius:
@@ -66,20 +115,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Login',
-                        style: TextStyle(
+                        "Login".tr(),
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.bold),
                       ),
-                      Text('Hi! Welcome back', style: TextStyle(color: Colors.white, fontSize: 14),)
+                      Text("hi_wc".tr(), style: const TextStyle(color: Colors.white, fontSize: 14),)
                     ],
                   ),
             ),
+            
             toolbarHeight: 30,
             centerTitle: true,
           ),
@@ -96,10 +146,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: emailController,
                       validator: emailValidator,
-                      decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.email)),
+                      decoration: InputDecoration(
+                          labelText: "email".tr(),
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.email)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -110,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: passwordValidator,
                       obscureText: passToggle,
                       decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: "password".tr(),
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
@@ -139,22 +189,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           }
                         ),
-                        const Text('Remember me', style: TextStyle(fontSize: 15),),
+                        Text("remember_me".tr(), style: const TextStyle(fontSize: 15),),
                         const Spacer(),
                         TextButton(
                           onPressed: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordScreen()));
                           }, 
-                          child: const Text('Forgot password?')
+                          child: Text("forgot_password".tr())
                         ),
                       ],
                     ),
 
-                    AuthButton(formKey: _formKey, text: 'Login',),
+                    AuthButton(formKey: _formKey, text:  "Login".tr(),),
 
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('or login with'),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text("or_login_with".tr()),
                     ),
 
                     Padding(
@@ -189,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account?'),
+                        Text("not_account".tr()),
                         TextButton(
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> BlocProvider(
@@ -197,13 +247,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const SignupScreen(),
                               )));
                             }, 
-                            child: const Text('Sign Up')
+                            child: Text("sign_up".tr())
                         ),
                       ],
                     )
                   ],
                 )),
           ),
-        ));
+        ),
+      );
   }
 }

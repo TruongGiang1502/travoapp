@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class OnboardItem {
   final String imageUrl, title, decription;
 
@@ -12,21 +14,21 @@ class OnboardItem {
 final List<OnboardItem> onboardItem = [
   OnboardItem(
     imageUrl: 'images/onboard_image1.png',
-    title: 'Book a flight',
+    title: "title_onboard1".tr(),
     decription:
-        'Found a flight that matches your destination and schedule? Book it instantly.'
+        "des_onboard1".tr()
   ),
   OnboardItem(
     imageUrl: 'images/onboard_image2.png',
-    title: 'Find a hotel room',
+    title: "title_onboard2".tr(),
     decription:
-        'Select the day, book your room. We give you the best price.'
+        "des_onboard2".tr()
   ),
   OnboardItem(
     imageUrl: 'images/onboard_image3.png',
-    title: 'Enjoy your trip',
+    title: "title_onboard3".tr(),
     decription:
-        'Easy discovering new places and share these between your friends and travel together.'
+        "des_onboard3".tr(),
   )
 ];
 

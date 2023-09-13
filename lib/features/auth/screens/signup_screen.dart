@@ -1,9 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
+import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
+import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
+import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
+import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -14,6 +19,14 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
+  _changeTheme (BuildContext context){
+    context.read<ThemeBloc>().add(ChangeThemeEvent());
+  }
+
+  _changeBtnColor (BuildContext context){
+    context.read<ButtonColorBloc>().add(ButtonColorEvent());
+  }
 
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -60,10 +73,38 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color? textSpanColor =  Theme.of(context).textTheme.bodyLarge!.color;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
           child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions:  [
+              BlocBuilder <ButtonColorBloc, Color>(
+                builder: (
+                  (context, color){
+                    return Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            _changeBtnColor(context);
+                            _changeTheme(context);
+                          }, 
+                          icon:  Icon(Icons.brightness_6, color: color,),
+                          
+                          
+                        ),
+                        IconButton(
+                          onPressed: () {}, 
+                          icon: Icon(Icons.translate, color: color,)
+                        ),
+                      ],
+                    );
+                  }
+                ),
+              )
+            ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   borderRadius:
@@ -71,17 +112,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Sign Up',
-                        style: TextStyle(
+                        "sign_up".tr(),
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.bold),
                       ),
-                      Text('Let\'s create your account! ', style: TextStyle(color: Colors.white, fontSize: 14),)
+                      Text("let_crt_acc".tr(), style: const TextStyle(color: Colors.white, fontSize: 14),)
                     ],
                   ),
             ),
@@ -102,10 +143,10 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     TextFormField(
                       controller: nameController,
-                      decoration: const InputDecoration(
-                          labelText: 'Name',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.account_circle_sharp)),
+                      decoration: InputDecoration(
+                          labelText: "name".tr(),
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.account_circle_sharp)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -119,10 +160,11 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: Text(country.countryName),
                         );
                       }).toList(),
-                      decoration: const InputDecoration(
-                        labelText: 'Country',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.flag_circle)), 
+                      decoration: InputDecoration(
+                        labelText: "country".tr(),
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.flag_circle)
+                      ), 
                       onChanged: (value){
                         context.read<AuthPhoneCodeCubit>().changePhoneCode(value!);
                       }
@@ -156,15 +198,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: TextFormField(
                             controller: phoneController,
                             keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                                labelText: 'Phone number',
-                                border: OutlineInputBorder(
+                            decoration: InputDecoration(
+                                labelText: "phone_number".tr(),
+                                border: const OutlineInputBorder(
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(4),
                                     bottomRight: Radius.circular(4)
                                   )
                                 ),
-                                prefixIcon: Icon(Icons.phone)),
+                                prefixIcon: const Icon(Icons.phone)),
                           ),
                         ),
                       ],
@@ -176,10 +218,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     TextFormField(
                       controller: emailController,
                       validator: emailValidator,
-                      decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.email)),
+                      decoration: InputDecoration(
+                          labelText: "email".tr(),
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.email)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -190,7 +232,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       validator: passwordValidator,
                       obscureText: passToggle,
                       decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: "password".tr(),
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
@@ -212,21 +254,21 @@ class _SignupScreenState extends State<SignupScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: RichText(
                         textAlign: TextAlign.center,
-                        text: const TextSpan(
+                        text: TextSpan(
                           children: [
-                            TextSpan(text: 'By tapping sign up you agree to the ', style: TextStyle(color: Colors.black)),
-                            TextSpan(text: 'Terms and Condition ', style: TextStyle(color: Colors.purple)),
-                            TextSpan(text: 'and ', style: TextStyle(color: Colors.black)),
-                            TextSpan(text: 'Privacy Policy ', style: TextStyle(color: Colors.purple)),
-                            TextSpan(text: 'of this app', style: TextStyle(color: Colors.black))
+                            TextSpan(text: "textspan1".tr(), style: TextStyle(color: textSpanColor)),
+                            TextSpan(text: "textspan2".tr(), style: const TextStyle(color: Colors.purple)),
+                            TextSpan(text: "textspan3".tr(), style: TextStyle(color: textSpanColor)),
+                            TextSpan(text: "textspan4".tr(), style: const TextStyle(color: Colors.purple)),
+                            TextSpan(text: "textspan5".tr(), style: TextStyle(color: textSpanColor))
                           ]
                         ),
                       ),
                     ),
-                    AuthButton(formKey: _formKey, text: 'Sign up',),
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('or sign up with'),
+                    AuthButton(formKey: _formKey, text: "sign_up".tr(),),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text("or_signup_with".tr()),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16),
