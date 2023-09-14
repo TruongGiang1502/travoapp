@@ -200,7 +200,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
 
-                    AuthButton(formKey: _formKey, text:  "Login".tr(),),
+                    AuthButton(
+                      onPressed: () {},
+                      formKey: _formKey, 
+                      text:  "Login".tr(),
+                    ),
 
                     Padding(
                       padding: const EdgeInsets.all(16.0),

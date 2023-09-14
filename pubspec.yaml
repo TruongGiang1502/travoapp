@@ -43,6 +43,8 @@ dependencies:
     sdk: flutter
   intl: any
   easy_localization: ^3.0.3
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.9.0
 
 dev_dependencies:
   flutter_test:

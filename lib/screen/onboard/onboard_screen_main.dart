@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
-import 'package:travo_demo/screen/onboard/utils/onboard_items.dart';
 import 'package:travo_demo/screen/onboard/widget/dotindicator.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
@@ -21,7 +20,7 @@ class OnboardScreenMain extends StatefulWidget {
 
 class _OnboardScreenMainState extends State<OnboardScreenMain> {
   late PageController _pageController;
-  int pageNumber = 0;
+  int pageNumber = 0;  
 
   _changeTheme (BuildContext context){
     context.read<ThemeBloc>().add(ChangeThemeEvent());
@@ -54,6 +53,7 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
     super.initState();
   }
 
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -64,89 +64,92 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
   @override
   Widget build(BuildContext context) {
 
-    return  
-      Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions:  [
-            BlocBuilder <ButtonColorBloc, Color>(
-              builder: (
-                (context, color){
-                  return Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          _changeBtnColor(context);
-                          _changeTheme(context);
-                        }, 
-                        icon: Icon(Icons.brightness_6, color: color,),
-                        
-                         
-                      ),
-                      IconButton(
-                        onPressed: (){
-                          _changeLocale(context);
-                        },
-                        icon: Icon(Icons.translate, color: color,)
-                      ),
-                    ],
-                  );
-                }
-              ),
-            )
-          ],
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: PageView.builder(
-                    itemCount: 3,
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      setState(() {
-                        pageNumber = index;
-                      });
-                    },
-                    itemBuilder: (context, index) => OnboardContent(
-                        imageUrl: onboardItem[index].imageUrl,
-                        title: onboardItem[index].title,
-                        decription: onboardItem[index].decription),
+    return
+      BlocConsumer<LanguageBloc, (String, String)>(
+        listener: (BuildContext context, (String, String) state){},
+        builder: (BuildContext context, state){
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions:  [
+                BlocBuilder <ButtonColorBloc, Color>(
+                  builder: (
+                    (context, color){
+                      return Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              _changeBtnColor(context);
+                              _changeTheme(context);
+                            }, 
+                            icon: Icon(Icons.brightness_6, color: color,),
+                            
+                            
+                          ),
+                          IconButton(
+                            onPressed: (){
+                              _changeLocale(context);
+                            },
+                            icon: Icon(Icons.translate, color: color,)
+                          ),
+                        ],
+                      );
+                    }
                   ),
-                ),
-                Row(
-                  children: [
-                    ...List.generate(
-                        onboardItem.length,
-                        (index) => Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: DotIndicator(active: index == pageNumber),
-                            )),
-                    const Spacer(),
-                    SizedBox(
-                      child: ElevatedButton(
-                        onPressed: pageChangeScreen,
-                        child: Text("next".tr()),
-                      )
-                    ),
-                  ],
-                ),
-                const Spacer(
-                  flex: 1,
                 )
               ],
             ),
-          ),
-        ),
-        // floatingActionButton:  FloatingActionButton(
-        //     child: const Icon(Icons.brightness_6),
-        //     onPressed: () => _changeTheme(context)
-        //   ),
-      );
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 6,
+                      child: PageView.builder(
+                        itemCount: 3,
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            pageNumber = index;
+                          });
+                        },
+                        itemBuilder: (context, index) => OnboardContent(
+                            imageUrl: "images/onboard_image${index+1}.png",
+                            title: "title_onboard${index+1}".tr(),
+                            decription: "des_onboard${index+1}".tr()),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ...List.generate(
+                            3,
+                            (index) => Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: DotIndicator(active: index == pageNumber),
+                                )),
+                        const Spacer(),
+                        SizedBox(
+                          child: ElevatedButton(
+                            onPressed: pageChangeScreen,
+                            child: Text("next".tr()),
+                          )
+                        ),
+                      ],
+                    ),
+                    const Spacer(
+                      flex: 1,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            
+          );
+        }, 
+      );  
+      
     }
 }
 

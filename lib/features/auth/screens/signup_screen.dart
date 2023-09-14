@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
+import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
@@ -35,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final passwordController = TextEditingController();
   bool passToggle = true;
   String curPhoneCode = '84';
+  String countryname = 'Viet Nam';
 
   bool isEmailValid(String email) {
     return RegExp(
@@ -60,6 +63,16 @@ class _SignupScreenState extends State<SignupScreen> {
     return null;
   }
 
+   void signUpUser() async {
+    FirebaseAuthMethod(FirebaseAuth.instance).signupWithEmai(
+      name: nameController.text, 
+      country: countryname, 
+      email: emailController.text, 
+      password: passwordController.text, 
+      phoneNumber: curPhoneCode + phoneController.text, 
+      context: context);
+   }
+
   @override
   void dispose() {
     nameController.dispose();
@@ -74,6 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     Color? textSpanColor =  Theme.of(context).textTheme.bodyLarge!.color;
+    
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
@@ -153,7 +167,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                    
                     DropdownButtonFormField(
-                      value: 'Viet Nam',
+                      value: countryname,
                       items: listCountry.map((ListCountry country) {
                         return DropdownMenuItem<String>(
                           value: country.countryName,
@@ -166,50 +180,35 @@ class _SignupScreenState extends State<SignupScreen> {
                         prefixIcon: const Icon(Icons.flag_circle)
                       ), 
                       onChanged: (value){
-                        context.read<AuthPhoneCodeCubit>().changePhoneCode(value!);
+                        countryname = value!;
+                        context.read<AuthPhoneCodeCubit>().changePhoneCode(value);
                       }
                     ),
                     const SizedBox(
                       height: 20,
                     ),
 
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 64,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: const Color.fromARGB(255, 97, 97, 97)),
-                              borderRadius: const  BorderRadius.only(
-                                topLeft: Radius.circular(4),
-                                bottomLeft: Radius.circular(4)
-                              )),
-                              
+                    TextFormField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                          prefix: SizedBox(
+                            //color: Colors.red, 
+                            width: 50,
                             child: BlocBuilder<AuthPhoneCodeCubit, String>(
                               builder: (context, curPhoneCode) => Center(
                                 child: Text('+$curPhoneCode', style: const TextStyle(fontSize: 18),)
                               )
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex:4,
-                          child: TextFormField(
-                            controller: phoneController,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                labelText: "phone_number".tr(),
-                                border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(4),
-                                    bottomRight: Radius.circular(4)
-                                  )
-                                ),
-                                prefixIcon: const Icon(Icons.phone)),
+                          labelText: "phone_number".tr(),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(4),
+                              bottomRight: Radius.circular(4)
+                            )
                           ),
-                        ),
-                      ],
+                          prefixIcon: const Icon(Icons.phone)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -265,7 +264,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                     ),
-                    AuthButton(formKey: _formKey, text: "sign_up".tr(),),
+                    AuthButton(
+                      onPressed: signUpUser,
+                      formKey: _formKey, 
+                      text: "sign_up".tr(),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text("or_signup_with".tr()),

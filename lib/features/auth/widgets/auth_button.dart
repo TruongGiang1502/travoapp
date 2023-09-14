@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
+  final Function onPressed; 
   final GlobalKey<FormState> formKey;
   final String text;
-  const AuthButton({super.key, required this.formKey, required this.text});
+  const AuthButton({super.key, required this.formKey, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +24,12 @@ class AuthButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50)
       ),
       child: ElevatedButton(
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Processing Data')),
-              );
+          onPressed: (){
+            if(formKey.currentState!.validate()){
+              onPressed();
             }
           },
+          //  formKey.currentState!.validate()? onPressed : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             elevation: 0

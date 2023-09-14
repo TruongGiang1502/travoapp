@@ -129,7 +129,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       height: 10,
                     ),
 
-                    AuthButton(formKey: _formKey, text: "send".tr(),),
+                    AuthButton(
+                      onPressed: (){},
+                      formKey: _formKey, 
+                      text: "send".tr(),
+                    ),
 
                   ],
                 )),
