@@ -45,14 +45,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  BlocBuilder<ThemeBloc, ThemeData>(
         builder: ((context, theme) {
-          return BlocBuilder<LanguageBloc, String>(
+          return BlocBuilder<LanguageBloc, (String, String)>(
             builder: (
               (context, langCode) {
-                
+                context.setLocale(Locale(langCode.$1, langCode.$2));
                 return MaterialApp(
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,
-                  locale: Locale(langCode),
+                  locale: context.locale,
                   debugShowCheckedModeBanner: false,
                   theme: theme,
                   home: const SplashScreen()

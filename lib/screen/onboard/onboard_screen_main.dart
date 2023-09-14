@@ -6,6 +6,8 @@ import 'package:travo_demo/screen/onboard/utils/onboard_items.dart';
 import 'package:travo_demo/screen/onboard/widget/dotindicator.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
+import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
+import 'package:travo_demo/widgets/blocs/language_bloc/language_event.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
@@ -27,6 +29,10 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
 
   _changeBtnColor (BuildContext context){
     context.read<ButtonColorBloc>().add(ButtonColorEvent());
+  }
+
+  _changeLocale (BuildContext context){
+    context.read<LanguageBloc>().add(LanguageChangeEvent());
   }
 
   void pageChangeScreen(){
@@ -74,16 +80,14 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
                           _changeBtnColor(context);
                           _changeTheme(context);
                         }, 
-                        icon: Tooltip(
-                          message: 'Theme',
-                          child: Icon(Icons.brightness_6, color: color,),
-                        )
+                        icon: Icon(Icons.brightness_6, color: color,),
+                        
                          
                       ),
                       IconButton(
-                        onPressed: () {
-                          
-                        }, 
+                        onPressed: (){
+                          _changeLocale(context);
+                        },
                         icon: Icon(Icons.translate, color: color,)
                       ),
                     ],
