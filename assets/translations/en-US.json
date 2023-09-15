@@ -6,6 +6,7 @@
     "des_onboard2": "Select the day, book your room. We give you the best price.",
     "title_onboard3": "Enjoy your trip",
     "des_onboard3": "Easy discovering new places and share these between your friends and travel together.",
+
     "hi_wc": "Hi, Welcome back!",
     "email": "Email address",
     "password":"Password",
@@ -15,6 +16,7 @@
     "not_account": "Don't have an account?",
     "let_crt_acc": "Let's create your account!",
     "sign_up": "Sign up",
+
     "name": "Name",
     "country": "Country",
     "phone_number": "Phone number",
@@ -24,7 +26,10 @@
     "textspan4": "Privacy Policy ",
     "textspan5": "of this app.",
     "or_signup_with": "or sign up with ",
+
     "forgot_password": "Forgot password?",
     "note_forgot": "You'll get messages soon on your e-mail address",
-    "send": "Send email"
+    "send": "Send email",
+
+    "sign_up_sucess": "Sign Up success"
 }

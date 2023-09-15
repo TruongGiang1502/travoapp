@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
+import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
@@ -61,6 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
       return 'Password must have at least 8 character';
     }
     return null;
+  }
+
+  void loginUser() async {
+    await FirebaseAuthMethod().loginWithEmail(
+      email: emailController.text,
+      password: passwordController.text,
+      context: context
+    );
   }
 
   @override
@@ -201,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
 
                     AuthButton(
-                      onPressed: () {},
+                      onPressed: loginUser,
                       formKey: _formKey, 
                       text:  "Login".tr(),
                     ),

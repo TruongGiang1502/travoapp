@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
@@ -64,8 +63,8 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
    void signUpUser() async {
-    FirebaseAuthMethod(FirebaseAuth.instance).signupWithEmai(
-      name: nameController.text, 
+    await FirebaseAuthMethod().signupWithEmai(
+      username: nameController.text, 
       country: countryname, 
       email: emailController.text, 
       password: passwordController.text, 
