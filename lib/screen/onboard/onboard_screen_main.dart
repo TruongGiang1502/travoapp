@@ -20,7 +20,7 @@ class OnboardScreenMain extends StatefulWidget {
 
 class _OnboardScreenMainState extends State<OnboardScreenMain> {
   late PageController _pageController;
-  int pageNumber = 0;  
+  final ValueNotifier<int> pageNum = ValueNotifier(0);  
 
   _changeTheme (BuildContext context){
     context.read<ThemeBloc>().add(ChangeThemeEvent());
@@ -35,7 +35,7 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
   }
 
   void pageChangeScreen(){
-    if (pageNumber < 2) {
+    if (pageNum.value < 2) {
       _pageController.nextPage(
           duration: const Duration(microseconds: 900),
           curve: Curves.ease);
@@ -111,9 +111,7 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
                         itemCount: 3,
                         controller: _pageController,
                         onPageChanged: (index) {
-                          setState(() {
-                            pageNumber = index;
-                          });
+                            pageNum.value = index;
                         },
                         itemBuilder: (context, index) => OnboardContent(
                             imageUrl: "images/onboard_image${index+1}.png",
@@ -125,10 +123,19 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
                       children: [
                         ...List.generate(
                             3,
-                            (index) => Padding(
+                            (index) => Builder(
+                              builder: (context) {
+                                return Padding(
                                   padding: const EdgeInsets.only(right: 4),
-                                  child: DotIndicator(active: index == pageNumber),
-                                )),
+                                  child: ValueListenableBuilder(
+                                    valueListenable: pageNum, 
+                                    builder: (BuildContext context, int value, Widget? child){
+                                      return DotIndicator(active: index == value);
+                                    }
+                                  ),
+                                );
+                              }
+                            )),
                         const Spacer(),
                         SizedBox(
                           child: ElevatedButton(

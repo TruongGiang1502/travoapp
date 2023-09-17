@@ -7,10 +7,10 @@ class DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: active ? 12 : 4,
-      width: 4,
+      height: 3,
+      width: active ? 20: 8,
       decoration: BoxDecoration(
-        color: Colors.purple[900],
+        color: active ? Colors.orange : Colors.grey,
         borderRadius: BorderRadius.circular(12)
       ),
     );

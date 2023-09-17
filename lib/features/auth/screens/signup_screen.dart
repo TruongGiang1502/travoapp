@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
+import 'package:travo_demo/features/auth/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
@@ -38,31 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String curPhoneCode = '84';
   String countryname = 'Viet Nam';
 
-  bool isEmailValid(String email) {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
-  }
-
-  String? emailValidator(String? email) {
-    if (email!.isEmpty) {
-      return 'Enter email';
-    } else if (!isEmailValid(email)) {
-      return 'Email is not valid';
-    }
-    return null;
-  }
-
-  String? passwordValidator(String? password) {
-    if (password!.isEmpty) {
-      return 'Enter Password';
-    } else if (password.length < 8) {
-      return 'Password must have at least 8 character';
-    }
-    return null;
-  }
-
-   void signUpUser() async {
+  void signUpUser() async {
     await FirebaseAuthMethod().signupWithEmai(
       username: nameController.text, 
       country: countryname, 
@@ -215,7 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     TextFormField(
                       controller: emailController,
-                      validator: emailValidator,
+                      validator: Validator.emailValidator,
                       decoration: InputDecoration(
                           labelText: "email".tr(),
                           border: const OutlineInputBorder(),
@@ -227,7 +204,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     TextFormField(
                       controller: passwordController,
-                      validator: passwordValidator,
+                      validator: Validator.passwordValidator,
                       obscureText: passToggle,
                       decoration: InputDecoration(
                           labelText: "password".tr(),

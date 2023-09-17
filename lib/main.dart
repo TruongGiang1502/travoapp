@@ -18,7 +18,6 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  
   runApp(
     MultiBlocProvider(
       providers: [

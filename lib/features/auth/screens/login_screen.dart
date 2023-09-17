@@ -5,6 +5,7 @@ import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
+import 'package:travo_demo/features/auth/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
@@ -13,6 +14,8 @@ import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
 import 'package:travo_demo/widgets/blocs/language_bloc/language_event.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,7 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool passToggle = true;
-  bool isChecked = false;
+  ValueNotifier <bool> isChecked = ValueNotifier(false);
+  //bool isChecked = false;
 
   _changeTheme (BuildContext context){
     context.read<ThemeBloc>().add(ChangeThemeEvent());
@@ -40,36 +44,22 @@ class _LoginScreenState extends State<LoginScreen> {
     context.read<LanguageBloc>().add(LanguageChangeEvent());
   }
 
-  bool isEmailValid(String email) {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
-  }
-
-  String? emailValidator(String? email) {
-    if (email!.isEmpty) {
-      return 'Enter email';
-    } else if (!isEmailValid(email)) {
-      return 'Email is not valid';
-    }
-    return null;
-  }
-
-  String? passwordValidator(String? password) {
-    if (password!.isEmpty) {
-      return 'Enter Password';
-    } else if (password.length < 8) {
-      return 'Password must have at least 8 character';
-    }
-    return null;
-  }
-
   void loginUser() async {
     await FirebaseAuthMethod().loginWithEmail(
       email: emailController.text,
       password: passwordController.text,
       context: context
     );
+    if(isChecked.value){
+      _savedLoginInfo();
+    }
+  }
+
+  _savedLoginInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('email', emailController.text);
+      prefs.setString('password', passwordController.text);
+      prefs.setBool('isLogin', isChecked.value);
   }
 
   @override
@@ -78,8 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     super.dispose();
   }
-
-  bool isPassWordValid(String password) => password.length >= 8;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     TextFormField(
                       controller: emailController,
-                      validator: emailValidator,
+                      validator: Validator.emailValidator,
                       decoration: InputDecoration(
                           labelText: "email".tr(),
                           border: const OutlineInputBorder(),
@@ -166,9 +154,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     TextFormField(
                       controller: passwordController,
-                      validator: passwordValidator,
+                      validator: Validator.passwordValidator,
                       obscureText: passToggle,
-                      decoration: InputDecoration(
+                      decoration: InputDecoration(  
                           labelText: "password".tr(),
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.lock),
@@ -190,12 +178,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     Row(
                       children: [
-                        Checkbox(
-                          value: isChecked, 
-                          onChanged: (bool? newValue){
-                            setState(() {
-                              isChecked = newValue!;
-                            });
+                        ValueListenableBuilder(
+                          valueListenable: isChecked,
+                          builder: (BuildContext context, bool value, Widget? child) {
+                            return Checkbox(
+                              value: isChecked.value, 
+                              onChanged: (bool? newValue){
+                                  isChecked.value = newValue!;
+                              }
+                            );
                           }
                         ),
                         Text("remember_me".tr(), style: const TextStyle(fontSize: 15),),
