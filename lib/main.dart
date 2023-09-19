@@ -40,7 +40,7 @@ void main() async{
         fallbackLocale: const Locale("en", "US"),
         child: const MyApp(),
       )
-       //const MyApp()
+
     ),
   );
 }

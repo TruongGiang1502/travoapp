@@ -32,7 +32,7 @@ class SettingScreen extends StatelessWidget {
                             fontSize: 35,
                             fontWeight: FontWeight.bold),
                       ),
-                      //Text("hi_wc".tr(), style: const TextStyle(color: Colors.white, fontSize: 14),)
+                      
                     ],
                   ),
             ),

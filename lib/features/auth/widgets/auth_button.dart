@@ -29,7 +29,6 @@ class AuthButton extends StatelessWidget {
               onPressed();
             }
           },
-          //  formKey.currentState!.validate()? onPressed : null,
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50)
