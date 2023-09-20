@@ -8,12 +8,6 @@ import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
 import 'package:travo_demo/features/auth/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
-import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
-import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
-import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
-import 'package:travo_demo/widgets/blocs/language_bloc/language_event.dart';
-import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
-import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -30,19 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool passToggle = true;
   ValueNotifier <bool> isChecked = ValueNotifier(false);
-  //bool isChecked = false;
 
-  _changeTheme (BuildContext context){
-    context.read<ThemeBloc>().add(ChangeThemeEvent());
-  }
-
-  _changeBtnColor (BuildContext context){
-    context.read<ButtonColorBloc>().add(ButtonColorEvent());
-  }
-
-  _changeLocale (BuildContext context){
-    context.read<LanguageBloc>().add(LanguageChangeEvent());
-  }
 
   void loginUser() async {
     await FirebaseAuthMethod().loginWithEmail(
@@ -77,34 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            actions:  [
-              BlocBuilder <ButtonColorBloc, Color>(
-                builder: (
-                  (context, color){
-                    return Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            _changeBtnColor(context);
-                            _changeTheme(context);
-                          }, 
-                          icon: 
-                             Icon(Icons.brightness_6, color: color,),
-                          
-                          
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            _changeLocale(context);
-                          }, 
-                          icon: Icon(Icons.translate, color: color,)
-                        ),
-                      ],
-                    );
-                  }
-                ),
-              )
-            ],
+            
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   borderRadius:
@@ -139,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
+                    
                     TextFormField(
                       controller: emailController,
                       validator: Validator.emailValidator,

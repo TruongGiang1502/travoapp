@@ -7,10 +7,6 @@ import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
-import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
-import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
-import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
-import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -21,14 +17,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
-  _changeTheme (BuildContext context){
-    context.read<ThemeBloc>().add(ChangeThemeEvent());
-  }
-
-  _changeBtnColor (BuildContext context){
-    context.read<ButtonColorBloc>().add(ButtonColorEvent());
-  }
 
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -70,31 +58,6 @@ class _SignupScreenState extends State<SignupScreen> {
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            actions:  [
-              BlocBuilder <ButtonColorBloc, Color>(
-                builder: (
-                  (context, color){
-                    return Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            _changeBtnColor(context);
-                            _changeTheme(context);
-                          }, 
-                          icon:  Icon(Icons.brightness_6, color: color,),
-                          
-                          
-                        ),
-                        IconButton(
-                          onPressed: () {}, 
-                          icon: Icon(Icons.translate, color: color,)
-                        ),
-                      ],
-                    );
-                  }
-                ),
-              )
-            ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   borderRadius:

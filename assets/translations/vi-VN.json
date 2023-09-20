@@ -31,5 +31,27 @@
     "note_forgot": "Bạn sẽ nhận được tin nhắn đến địa chỉ email của bạn",
     "send": "Gửi email",
 
-    "sign_up_sucess": "Đăng ký thành công"
+    "sign_up_sucess": "Đăng ký thành công",
+
+    "hi": "Xin chào",
+    "where": "Bạn muốn đi đâu?",
+    "hotel": "Khách sạn",
+    "fli": "Chuyến bay",
+    "all": "Tất cả",
+    "searchDes": "Tìm kiếm địa điểm",
+    "pplDes": "Địa điểm nổi tiếng",
+    "seeAll": "Xem tất cả",
+
+    "home": "Tr.chủ",
+    "fav": "Yê.thích",
+    "payment": "Th.toán",
+    "user": "Ng.dùng",
+
+    "setting": "Cài đặt",
+    "logout": "Đăng xuất",
+    "lan": "Tiếng Việt",
+
+    "review": "đánh giá",
+    "bookaroom": "Đặt phòng",
+    "night": "đêm"
 }

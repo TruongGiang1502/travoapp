@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travo_demo/features/home/screen/home_screen.dart';
+import 'package:travo_demo/features/mobile/screen/main_screen.dart';
 import 'package:travo_demo/screen/onboard/onboard_screen_main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if(saveEmail != null && savePass != null && saveCheckLogged == true){
       // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MainScreen()), (route) => false);
     } else {
        // ignore: use_build_context_synchronously
        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const OnboardScreenMain()), (route) => false);

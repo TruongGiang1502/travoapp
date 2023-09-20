@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:travo_demo/features/auth/models/user.dart' as model;
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/utils/show_snackbar.dart';
-import 'package:travo_demo/features/home/screen/home_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/home_screen.dart';
 
 class FirebaseAuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;

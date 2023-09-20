@@ -31,5 +31,28 @@
     "note_forgot": "You'll get messages soon on your e-mail address",
     "send": "Send email",
 
-    "sign_up_sucess": "Sign Up success"
+    "sign_up_sucess": "Sign Up success",
+
+    "hi": "Hi",
+    "where": "Where you want to go?",
+    "hotel": "Hotels",
+    "fli": "Flight",
+    "all": "All",
+    "searchDes": "Search your destination",
+    "pplDes": "Popular Destination",
+    "seeAll": "See All",
+
+    "home": "Home",
+    "fav": "Favorite",
+    "payment": "Payment",
+    "user": "User",
+
+    "setting": "Setting",
+    "logout": "Logout",
+    "lan": "English",
+
+    "review": "reviews",
+    "bookaroom": "Book a room",
+    "night": "night"
+
 }
