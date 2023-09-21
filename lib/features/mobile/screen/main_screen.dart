@@ -42,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     return BlocConsumer<LanguageBloc, (String, String)>(
       listener: (BuildContext context, (String, String) state){},
       builder: (BuildContext context, state) {

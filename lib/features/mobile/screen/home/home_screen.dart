@@ -9,11 +9,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100.0), 
+        preferredSize: const Size.fromHeight(110.0), 
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -34,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           ],
           flexibleSpace: Container(
             //width: MediaQuery.of(context).size.width,
-            height: 170,
+            height: 210,
             decoration: const BoxDecoration(
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(50)),
@@ -147,7 +148,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 6,
+              flex: 7,
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('place').snapshots(), 
                 builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot){

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final Function onPressed; 
+  final VoidCallback onPressed; 
   final String text;
   final double width;
   const CustomButton({super.key, required this.text, required this.onPressed, required this.width});
@@ -24,9 +24,7 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50)
       ),
       child: ElevatedButton(
-          onPressed: (){
-            onPressed;
-          },
+          onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50)

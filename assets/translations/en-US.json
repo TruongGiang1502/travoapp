@@ -53,6 +53,9 @@
 
     "review": "reviews",
     "bookaroom": "Book a room",
-    "night": "night"
+    "night": "night",
+
+    "information": "Information",
+    "location": "Location" 
 
 }
