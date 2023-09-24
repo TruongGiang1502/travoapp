@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travo_demo/features/mobile/utils/bottom_bar.dart';
+import 'package:travo_demo/features/mobile/widget/bottom_bar.dart';
 import 'package:travo_demo/features/mobile/utils/global_variables.dart';
 import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
 

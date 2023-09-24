@@ -35,7 +35,16 @@ class _SignupScreenState extends State<SignupScreen> {
       password: passwordController.text, 
       phoneNumber: curPhoneCode + phoneController.text, 
       context: context);
-   }
+    loginUser();
+  }
+  void loginUser() async {
+    await FirebaseAuthMethod().loginWithEmail(
+      email: emailController.text,
+      password: passwordController.text,
+      context: context
+    );
+  }
+
 
   @override
   void dispose() {

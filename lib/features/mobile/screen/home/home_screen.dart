@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/mobile/utils/list_favor.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/result_hotel_screen.dart';
 import 'package:travo_demo/features/mobile/widget/pick_options.dart';
 
@@ -9,7 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -108,24 +109,67 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    PickOptions(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultHotelScreen()));
-                      },
-                      backgroundColor: Colors.orange[100],
-                      imageUrl: 'images/hotel_icon.png',
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        PickOptions(
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultHotelScreen()));
+                          },
+                          backgroundColor: Colors.orange[100],
+                          imageUrl: 'images/hotel_icon.png',
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'hotel'.tr(), 
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.orange[500]
+                          ),
+                        ),
+                      ],
                     ),
                     const Spacer(),
-                    PickOptions(
-                      onPressed: (){},
-                      backgroundColor: Colors.red[100],
-                      imageUrl: 'images/flight_icon.png',
+                    Column(
+                      children: [
+                        PickOptions(
+                          onPressed: (){},
+                          backgroundColor: Colors.red[100],
+                          imageUrl: 'images/flight_icon.png',
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'fli'.tr(), 
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.red[500]
+                          ),
+                        ),
+                      ],
                     ),
                     const Spacer(),
-                    PickOptions(
-                      onPressed: (){},
-                      backgroundColor: Colors.green[100],
-                      imageUrl: 'images/all_icon.png',
+                    Column(
+                      children: [
+                        PickOptions(
+                          onPressed: (){},
+                          backgroundColor: Colors.green[100],
+                          imageUrl: 'images/all_icon.png',
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'all'.tr(), 
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.green[500]
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -168,6 +212,7 @@ class HomeScreen extends StatelessWidget {
                     itemCount: 8,
                     itemBuilder: (BuildContext context, int index){
                       var snap = snapshot.data!.docs[index].data();
+                      ValueNotifier<Color> favorBtnColor = ValueNotifier(isFavor(snap['name']));
                       return Stack(
                         children: [
                           Container(
@@ -189,7 +234,7 @@ class HomeScreen extends StatelessWidget {
                                   snap['name'], 
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold
                                   ),
                                 ),
@@ -214,9 +259,16 @@ class HomeScreen extends StatelessWidget {
                           ),
                           Positioned(
                             left: 140,
-                            child: IconButton(
-                              onPressed: (){}, 
-                              icon: const Icon(Icons.favorite, color: Colors.white, )
+                            child: ValueListenableBuilder(
+                              valueListenable: favorBtnColor,
+                              builder: (BuildContext context, Color value, Widget?child) {
+                                return IconButton(
+                                  onPressed: (){
+                                     favorOnpressed(favorBtnColor, snap);
+                                  }, 
+                                  icon: Icon(Icons.favorite, color: favorBtnColor.value,)
+                                );
+                              }
                             )
                           )
                         ],
@@ -232,5 +284,25 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Color isFavor (String nameDes){
+  for (int i=0; i<desNameFavor.length; i++){
+    if(nameDes == desNameFavor[i].$1){
+      return Colors.red;
+    }
+  }
+  return Colors.white;
+}
+
+void favorOnpressed (ValueNotifier <Color> color, Map<String, dynamic> snap){
+  if(color.value == Colors.white){
+    color.value = Colors.red;
+    desNameFavor.add((snap['name'], snap['image'], snap['rating'].toString()));
+  }
+  else {
+    color.value = Colors.white;
+    desNameFavor.remove((snap['name'], snap['image'], snap['rating'].toString()));
   }
 }

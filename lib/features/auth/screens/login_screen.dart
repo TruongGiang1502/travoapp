@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool passToggle = true;
   ValueNotifier <bool> isChecked = ValueNotifier(false);
-
+  ValueNotifier <bool> ispassToggle = ValueNotifier(false);
 
   void loginUser() async {
     await FirebaseAuthMethod().loginWithEmail(

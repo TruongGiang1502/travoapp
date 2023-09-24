@@ -137,11 +137,11 @@ class ResultHotelScreen extends StatelessWidget {
                                       context, 
                                       MaterialPageRoute(
                                         builder: (context) => 
-                                        DetailHotelScreen(
-                                          snap: snap,
-                                          snapId: snapId,
-                                        ),
-                                      ),
+                                         DetailHotelScreen(
+                                            snap: snap,
+                                            snapId: snapId,
+                                          ),
+                                        )
                                     );
                                   },
                                   text: 'bookaroom'.tr(), 

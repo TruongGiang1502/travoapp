@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 
@@ -14,7 +16,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
-  
+  final _auth = FirebaseAuth.instance;
   @override
   void dispose() {
     emailController.dispose();
@@ -23,6 +25,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void resetPassWord(String email)async{
+      await _auth.sendPasswordResetEmail(email: email);
+    }
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
@@ -78,7 +83,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
 
                     AuthButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        resetPassWord(emailController.text);
+                        Navigator.pushAndRemoveUntil(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen()
+                          ), (route) => false
+                          );
+                      },
                       formKey: _formKey, 
                       text: "send".tr(),
                     ),

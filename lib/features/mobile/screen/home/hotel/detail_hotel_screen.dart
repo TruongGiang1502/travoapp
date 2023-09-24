@@ -6,43 +6,61 @@ import 'package:travo_demo/features/mobile/screen/home/hotel/select_room_screen.
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
-class DetailIcon extends StatelessWidget {
-  final String imageUrl;
-  final String text;
-  const DetailIcon({super.key, required this.imageUrl, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [         
-          SvgPicture.asset(
-            imageUrl,
-            width: 40,
-            height: 40,
-          ),
-          const SizedBox(height: 3,),
-          Text(text, textAlign: TextAlign.center,)
-        ],
-      );
-  }
-}
-
-Stream<QuerySnapshot<Map<String, dynamic>>> setsnapSelectRoom(String snapId) {
-    return FirebaseFirestore.instance.collection('room').where('hotel', isEqualTo: snapId).snapshots();
-}
-
-void naviToSelectRoom (BuildContext context, String snapId){
-  Navigator.push(context, MaterialPageRoute(builder: (context) => SelectRoomScreen(streamsnap: setsnapSelectRoom(snapId))));
-}
-
-class DetailHotelScreen extends StatelessWidget {
+class DetailHotelScreen extends StatefulWidget {
   
   final Map<String, dynamic> snap;
   final String snapId;
   const DetailHotelScreen({super.key, required this.snap, required this.snapId});
 
-  void showBottomSheetCustom(BuildContext context){
+  @override
+  State<DetailHotelScreen> createState() => _DetailHotelScreenState();
+}
+
+class _DetailHotelScreenState extends State<DetailHotelScreen> {
+  
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) { 
+      showBottomSheetCustom(context);
+    });
+    super.initState();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawerScrimColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: NetworkImage(widget.snap['image']), fit: BoxFit.fill),
+        ),
+      ),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Color.fromRGBO(143, 103, 232, 1),
+              Color.fromRGBO(99, 87, 204, 1),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight
+          ),
+          borderRadius: BorderRadius.circular(50)
+        ),
+        child: FloatingActionButton(
+          onPressed: (){
+            showBottomSheetCustom(context);
+          },
+          backgroundColor: Colors.transparent,
+          elevation: 0, 
+          child: const Icon(Icons.arrow_circle_up),
+        ),
+      ),
+    );
+  }
+
+void showBottomSheetCustom(BuildContext context){
     final size = MediaQuery.of(context).size;
     showModalBottomSheet(
       isScrollControlled: true,
@@ -73,7 +91,7 @@ class DetailHotelScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        snap['name'], style: const TextStyle(
+                        widget.snap['name'], style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold
                         ),
@@ -81,7 +99,7 @@ class DetailHotelScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '\$${snap['price']}',
+                            '\$${widget.snap['price']}',
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold
@@ -100,7 +118,7 @@ class DetailHotelScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(Icons.location_on, color: Colors.red,),
-                      Text(snap['location'])
+                      Text(widget.snap['location'])
                     ],
                   ),
                   Divider(
@@ -113,8 +131,8 @@ class DetailHotelScreen extends StatelessWidget {
                       Row(
                         children: [
                           const Icon(Icons.star, color: Colors.yellow,),
-                          Text('${snap['rating']}'), 
-                          Text(' (${snap['total_review']} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
+                          Text('${widget.snap['rating']}'), 
+                          Text(' (${widget.snap['total_review']} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
                         ],
                       ),
                       TextButton(
@@ -143,7 +161,7 @@ class DetailHotelScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical:8.0),
                     child: Text(
-                      snap['information'],
+                      widget.snap['information'],
                       style: const TextStyle(fontSize: 15),
                     ),
                   ),
@@ -170,7 +188,7 @@ class DetailHotelScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      snap['location_description'],
+                      widget.snap['location_description'],
                       style: const TextStyle(fontSize: 15),
                     ),
                   ),
@@ -187,7 +205,7 @@ class DetailHotelScreen extends StatelessWidget {
                   ),
                   CustomButton(
                     onPressed: (){
-                      naviToSelectRoom(context, snapId);
+                      naviToSelectRoom(context, widget.snapId);
                     },
                     text: 'Select room', 
                     width: size.width*0.9
@@ -199,36 +217,34 @@ class DetailHotelScreen extends StatelessWidget {
         );
       });
   }
+}
+
+class DetailIcon extends StatelessWidget {
+  final String imageUrl;
+  final String text;
+  const DetailIcon({super.key, required this.imageUrl, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(snap['image']), fit: BoxFit.fill),
-        ),
-      ),
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color.fromRGBO(143, 103, 232, 1),
-              Color.fromRGBO(99, 87, 204, 1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [         
+          SvgPicture.asset(
+            imageUrl,
+            width: 40,
+            height: 40,
           ),
-          borderRadius: BorderRadius.circular(50)
-        ),
-        child: FloatingActionButton(
-          onPressed: (){
-            showBottomSheetCustom(context);
-          },
-          backgroundColor: Colors.transparent,
-          elevation: 0, 
-          child: const Icon(Icons.arrow_circle_up),
-        ),
-      ),
-    );
+          const SizedBox(height: 3,),
+          Text(text, textAlign: TextAlign.center,)
+        ],
+      );
   }
+}
+
+Stream<QuerySnapshot<Map<String, dynamic>>> setsnapSelectRoom(String snapId) {
+    return FirebaseFirestore.instance.collection('room').where('hotel', isEqualTo: snapId).snapshots();
+}
+
+void naviToSelectRoom (BuildContext context, String snapId){
+  Navigator.push(context, MaterialPageRoute(builder: (context) => SelectRoomScreen(streamsnap: setsnapSelectRoom(snapId))));
 }

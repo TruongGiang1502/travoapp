@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-(String, String) stringService(String servicesName){
-  if(servicesName == "FREE_WIFI"){
-    return ("images/services/free_wifi.svg" ,"Free\nWiFi");
-  }
-  else if (servicesName == "NON_REFUNDABLE"){
-    return ("images/services/non_refund.svg" , "Non-\nRefundable");
-  }
-  else if (servicesName == "FREE_BREAKFAST"){
-    return ("images/services/free_breakfast.svg" , "Free\nBreakast");
-  }
-  else if (servicesName == "NON_SMOKING"){
-    return ("images/services/none_smoking.svg" , "Non-\nSmoking");
-  }
-  else {
-    return ("images/services/24_hour.svg" , "Room\nService");
-  }
-}
+Map <String, (String, String)> servicesOpts = {
+  'FREE_WIFI' : ('images/services/free_wifi.svg', 'Free\nWiFi'),
+  'NON_REFUNDABLE' : ('images/services/non_refund.svg', 'Non-\nRefundable'),
+  'FREE_BREAKFAST' : ('images/services/free_breakfast.svg', 'Free\nBreakast'),
+  'NON_SMOKING' : ('images/services/none_smoking.svg', 'Non-\nSmoking'),
+  'ROOM_SERVICE':('images/services/24_hour.svg', 'Room\nService'),
+};
 
 class ServicesOption extends StatelessWidget {
   final BuildContext context;
@@ -26,26 +16,30 @@ class ServicesOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: services.length,
-      itemBuilder: (BuildContext context, int index){
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [         
-                SvgPicture.asset(
-                  stringService(services[index]).$1,
-                  width: 40,
-                  height: 40,
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: services.length,
+          itemBuilder: (BuildContext context, int index){
+            return SizedBox(
+              width: constraint.maxWidth/services.length,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [         
+                    SvgPicture.asset(
+                      servicesOpts[services[index]]!.$1,
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(height: 3,),
+                    Text(servicesOpts[services[index]]!.$2, textAlign: TextAlign.center,)
+                  ],
                 ),
-                const SizedBox(height: 3,),
-                Text(stringService(services[index]).$2, textAlign: TextAlign.center,)
-              ],
-            ),
+            );
+          },
         );
-      },
+      }
     );
   }
 }

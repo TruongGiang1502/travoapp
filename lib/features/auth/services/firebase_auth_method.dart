@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:travo_demo/features/auth/models/user.dart' as model;
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/utils/show_snackbar.dart';
-import 'package:travo_demo/features/mobile/screen/home/home_screen.dart';
+import 'package:travo_demo/features/mobile/screen/main_screen.dart';
 
 class FirebaseAuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -59,7 +59,7 @@ class FirebaseAuthMethod {
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, 'Login sucess');
       // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MainScreen()), (route) => false);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);
@@ -92,7 +92,17 @@ class FirebaseAuthMethod {
     }
   }
 
-  ///Delete Data
+  ////reset password
+  Future<void> resetPassWord(BuildContext context,  String email) async {
+    try{
+      await _auth.sendPasswordResetEmail(email: email);
+      // ignore: use_build_context_synchronously
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+    } on FirebaseAuthException catch (error){
+      // ignore: use_build_context_synchronously
+      ShowSnackBar.showSnackBar(context, error.message!);
+    }
+  }
 
 }
 

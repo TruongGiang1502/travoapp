@@ -10,6 +10,7 @@ class SelectRoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100.0),
@@ -107,7 +108,7 @@ class SelectRoomScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
                             child: SizedBox(
-                              width: 400,
+                              width: size.width*0.8,
                               height: 100,
                               child: ServicesOption(context: context ,services: snap['services'])
                             ),
@@ -116,34 +117,34 @@ class SelectRoomScreen extends StatelessWidget {
                               color: Colors.grey.withOpacity(0.3),
                               thickness: 2,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '\$${snap['price']}',
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                      ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '\$${snap['price']}',
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold
                                     ),
-                                    Text(
-                                      '/${'night'.tr()}',
-                                      style: const TextStyle(
-                                        color: Colors.grey
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                CustomButton(
-                                  onPressed: (){},
-                                  text: 'Choose'.tr(), 
-                                  width: 0.4
-                                )
-                              ],
-                            )
+                                  ),
+                                  Text(
+                                    '/${'night'.tr()}',
+                                    style: const TextStyle(
+                                      color: Colors.grey
+                                    ),
+                                  )
+                                ],
+                              ),
+                              CustomButton(
+                                onPressed: (){},
+                                text: 'Choose'.tr(), 
+                                width: 0.4
+                              )
+                            ],
+                          )
                         ],
                       ),
                     )
