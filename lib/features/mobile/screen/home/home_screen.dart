@@ -114,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         PickOptions(
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultHotelScreen()));
+                            Navigator.pushNamed(context, ResultHotelScreen.routeName);
                           },
                           backgroundColor: Colors.orange[100],
                           imageUrl: 'images/hotel_icon.png',

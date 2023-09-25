@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/firebase_options.dart';
+import 'package:travo_demo/route.dart';
 import 'package:travo_demo/screen/splash_screen.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
 import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
                   locale: context.locale,
                   debugShowCheckedModeBanner: false,
                   theme: theme,
+                  onGenerateRoute: (settings) => generateRoute(settings),
                   home: const SplashScreen()
                 );
               }

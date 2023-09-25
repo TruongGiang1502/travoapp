@@ -59,7 +59,7 @@ class FirebaseAuthMethod {
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, 'Login sucess');
       // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MainScreen()), (route) => false);
+      Navigator.pushReplacementNamed(context, MainScreen.routeName);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);
@@ -73,7 +73,7 @@ class FirebaseAuthMethod {
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, 'Signed Out');
       // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);
@@ -85,7 +85,7 @@ class FirebaseAuthMethod {
     try {
       await _auth.currentUser!.delete();
        // ignore: use_build_context_synchronously
-       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+       Navigator.pushReplacementNamed(context, LoginScreen.routeName);
     } on FirebaseAuthException catch (error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);
@@ -97,7 +97,7 @@ class FirebaseAuthMethod {
     try{
       await _auth.sendPasswordResetEmail(email: email);
       // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
     } on FirebaseAuthException catch (error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);

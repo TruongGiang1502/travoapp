@@ -1,16 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/mobile/screen/home/hotel/checkout_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/services_option.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 
 class SelectRoomScreen extends StatelessWidget {
+  static const routeName = '/select_room_screen';
   final Stream<QuerySnapshot<Map<String, dynamic>>> streamsnap;
   const SelectRoomScreen({super.key, required this.streamsnap});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100.0),
@@ -57,19 +59,7 @@ class SelectRoomScreen extends StatelessWidget {
                 var snap = snapshot.data!.docs[index].data();
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 2,
-                          offset: const Offset(1, 1)
-                        )
-                      ]
-                    ),
+                  child: ContainerBoxDecor(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -108,7 +98,6 @@ class SelectRoomScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
                             child: SizedBox(
-                              width: size.width*0.8,
                               height: 100,
                               child: ServicesOption(context: context ,services: snap['services'])
                             ),
@@ -139,7 +128,9 @@ class SelectRoomScreen extends StatelessWidget {
                                 ],
                               ),
                               CustomButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  Navigator.pushNamed(context, CheckOutScreen.routeName, arguments: snap);
+                                },
                                 text: 'Choose'.tr(), 
                                 width: 0.4
                               )

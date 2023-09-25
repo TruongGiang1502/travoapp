@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/detail_hotel_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 
 class ResultHotelScreen extends StatelessWidget {
+  static const routeName = '/result_hotel_screen';
   const ResultHotelScreen({super.key});
 
   @override
@@ -55,20 +57,7 @@ class ResultHotelScreen extends StatelessWidget {
               var snapId = snapshot.data!.docs[index].id;
               return Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
-                
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(1, 1)
-                      )
-                    ]
-                  ),
+                child: ContainerBoxDecor(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -133,16 +122,7 @@ class ResultHotelScreen extends StatelessWidget {
                                 ),
                                 CustomButton(
                                   onPressed: (){
-                                    Navigator.push(
-                                      context, 
-                                      MaterialPageRoute(
-                                        builder: (context) => 
-                                         DetailHotelScreen(
-                                            snap: snap,
-                                            snapId: snapId,
-                                          ),
-                                        )
-                                    );
+                                    Navigator.pushNamed(context, DetailHotelScreen.routeName, arguments: (snap, snapId));
                                   },
                                   text: 'bookaroom'.tr(), 
                                   width: 0.4

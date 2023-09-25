@@ -12,6 +12,7 @@ import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
 
 class OnboardScreenMain extends StatefulWidget {
+  static const routeName = '/onboard_screen_main';
   const OnboardScreenMain({super.key});
 
   @override
@@ -40,10 +41,7 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
           duration: const Duration(microseconds: 900),
           curve: Curves.ease);
     } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const LoginScreen()));
+      Navigator.pushNamed(context, LoginScreen.routeName);
     }
   }
 

@@ -43,9 +43,17 @@ class FavoriteScreen extends StatelessWidget {
                   Expanded(
                     flex: 7,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(desNameFavor[index].$1),
-                        Text(desNameFavor[index].$3)
+                        Text(desNameFavor[index].$1, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.star, color: Colors.yellow, size: 16,),
+                            Text(desNameFavor[index].$3, style: const TextStyle(fontSize: 16),),
+                          ],
+                        )
                       ],
                     ),
                   )

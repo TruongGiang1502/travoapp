@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
@@ -12,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/login_screen';
   const LoginScreen({super.key});
 
   @override
@@ -148,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const Spacer(),
                         TextButton(
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordScreen()));
+                            Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
                           }, 
                           child: Text("forgot_password".tr())
                         ),
@@ -201,10 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text("not_account".tr()),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> BlocProvider(
-                                create: (context) => AuthPhoneCodeCubit(),
-                                child: const SignupScreen(),
-                              )));
+                              Navigator.pushNamed(context, SignupScreen.routeName);
                             }, 
                             child: Text("sign_up".tr())
                         ),

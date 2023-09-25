@@ -10,6 +10,7 @@ import 'package:travo_demo/features/auth/widgets/media_button.dart';
 
 
 class SignupScreen extends StatefulWidget {
+  static const routeName = '/signup_screen';
   const SignupScreen({super.key});
 
   @override

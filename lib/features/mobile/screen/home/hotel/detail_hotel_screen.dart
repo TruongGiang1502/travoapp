@@ -7,7 +7,7 @@ import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
 class DetailHotelScreen extends StatefulWidget {
-  
+  static const routeName = '/detail_hotel_screen';
   final Map<String, dynamic> snap;
   final String snapId;
   const DetailHotelScreen({super.key, required this.snap, required this.snapId});
@@ -246,5 +246,6 @@ Stream<QuerySnapshot<Map<String, dynamic>>> setsnapSelectRoom(String snapId) {
 }
 
 void naviToSelectRoom (BuildContext context, String snapId){
-  Navigator.push(context, MaterialPageRoute(builder: (context) => SelectRoomScreen(streamsnap: setsnapSelectRoom(snapId))));
+  //Navigator.push(context, MaterialPageRoute(builder: (context) => SelectRoomScreen(streamsnap: setsnapSelectRoom(snapId))));
+  Navigator.pushNamed(context, SelectRoomScreen.routeName, arguments: setsnapSelectRoom(snapId));
 }

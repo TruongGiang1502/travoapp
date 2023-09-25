@@ -8,6 +8,7 @@ import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
 
 
 class MainScreen extends StatefulWidget {
+  static const routeName = '/main_screen';
   const MainScreen({super.key});
 
   @override

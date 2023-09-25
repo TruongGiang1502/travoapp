@@ -7,6 +7,7 @@ import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 
 
 class ForgotPasswordScreen extends StatefulWidget {
+  static const routeName = '/reset_password_screen';
   const ForgotPasswordScreen({super.key});
 
   @override
