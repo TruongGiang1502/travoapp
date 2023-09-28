@@ -1,18 +1,37 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/add_widget_custom.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/services_option.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   static const routeName = '/checkout_screen';
-  final Map<String, dynamic> snap;
-  const CheckOutScreen({super.key, required this.snap});
+  final SnapRoomModel snapInfo;
+  const CheckOutScreen({super.key, required this.snapInfo});
 
   @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
+  //String contactInfo = '';
+  String promoCode = '';
+  void gotoAddContact  (BuildContext context)async{
+    final contactInfoValue = await Navigator.pushNamed(context, AddContactScreen.routeName);
+    if(contactInfoValue != null){  
+      // ignore: use_build_context_synchronously
+      context.read<GetInfoCubit>().getInfo(contactInfoValue.toString());
+    }
+  }
+  @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         title: const Text('CheckOut Screen'),
@@ -20,22 +39,30 @@ class CheckOutScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            widget1(context,snap),
-            AddWidgetCustom(
-              onPressed: (){},
-              imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
-              title: 'Contact Details', 
-              textFunction: 'Add Contact',
-              heroTag: 'contact_hero'
+            roomInfo(context,widget.snapInfo),
+            BlocBuilder<GetInfoCubit, String>(
+              builder: (context, info) {
+                return AddWidgetCustom(
+                  onPressed: () { 
+                    gotoAddContact(context);
+                  },
+                  imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
+                  title: 'Contact Details',
+                  defaultText: 'AddContact', 
+                  textFunction: info,
+                  heroTag: 'contact_hero'
+                );
+              }
             ),
             AddWidgetCustom(
               onPressed: (){},
               imageUrl: 'images/checkout_icon/addpromo_icon.svg', 
-              title: 'Promo Code', 
-              textFunction: 'Add Promo Code',
+              title: 'Promo Code',
+              defaultText: 'Add Promo Code', 
+              textFunction: promoCode,
               heroTag: 'promo_hero',
             ),
-            widget3(),
+            dateBooking(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: CustomButton(
@@ -52,7 +79,8 @@ class CheckOutScreen extends StatelessWidget {
   }
 }
 
-Widget widget1(BuildContext context ,Map<String, dynamic> snap) {
+Widget roomInfo(BuildContext context ,SnapRoomModel snapInfo) {
+  
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: ContainerBoxDecor(
@@ -68,24 +96,24 @@ Widget widget1(BuildContext context ,Map<String, dynamic> snap) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      snap['name'], 
+                      snapInfo.name!, 
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold
                       ),
                     ),
                     Text(
-                      'Max guest: ${snap['max_guest']}',
+                      'Max guest: ${snapInfo.maxGuest}',
                     ),
                     Text(
-                      snap['type_price'],
+                      snapInfo.typePrice!,
                     ),
                   ],
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    snap['image'],
+                    snapInfo.imageUrl!,
                     width: 70,
                   ),
                 ),
@@ -95,7 +123,7 @@ Widget widget1(BuildContext context ,Map<String, dynamic> snap) {
               padding: const EdgeInsets.only(top: 16),
               child: SizedBox(
                 height: 100,
-                child: ServicesOption(context: context ,services: snap['services'])
+                child: ServicesOption(context: context ,services: snapInfo.services!)
               ),
             ),
             Divider(
@@ -109,7 +137,7 @@ Widget widget1(BuildContext context ,Map<String, dynamic> snap) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '\$${snap['price']}',
+                      '\$${snapInfo.price}',
                       style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold
@@ -133,7 +161,7 @@ Widget widget1(BuildContext context ,Map<String, dynamic> snap) {
   );
 }
 
-Widget widget3(){
+Widget dateBooking(){
   DateTime now = DateTime.now();
   return Padding(
     padding: const EdgeInsets.all(16),
@@ -154,7 +182,7 @@ Widget widget3(){
                 height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [
@@ -192,3 +220,4 @@ Widget widget3(){
     ),
   );
 }
+

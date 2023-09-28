@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Map <String, (String, String)> servicesOpts = {
-  'FREE_WIFI' : ('images/services/free_wifi.svg', 'Free\nWiFi'),
-  'NON_REFUNDABLE' : ('images/services/non_refund.svg', 'Non-\nRefundable'),
-  'FREE_BREAKFAST' : ('images/services/free_breakfast.svg', 'Free\nBreakast'),
-  'NON_SMOKING' : ('images/services/none_smoking.svg', 'Non-\nSmoking'),
-  'ROOM_SERVICE':('images/services/24_hour.svg', 'Room\nService'),
+class ServicesOptions{
+  String imageUrl;
+  String text;
+
+  ServicesOptions({required this.imageUrl, required this.text});
+}
+
+Map <String, ServicesOptions> servicesOpts = {
+  'FREE_WIFI' : ServicesOptions(imageUrl: 'images/services/free_wifi.svg', text:'Free\nWiFi'),
+  'NON_REFUNDABLE' : ServicesOptions(imageUrl: 'images/services/non_refund.svg', text: 'Non-\nRefundable'),
+  'FREE_BREAKFAST' : ServicesOptions(imageUrl: 'images/services/free_breakfast.svg', text: 'Free\nBreakast'),
+  'NON_SMOKING' : ServicesOptions(imageUrl: 'images/services/none_smoking.svg', text: 'Non-\nSmoking'),
+  'ROOM_SERVICE': ServicesOptions(imageUrl: 'images/services/24_hour.svg', text: 'Room\nService'),
 };
 
 class ServicesOption extends StatelessWidget {
@@ -28,12 +35,13 @@ class ServicesOption extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [         
                     SvgPicture.asset(
-                      servicesOpts[services[index]]!.$1,
+                      servicesOpts[services[index]]!.imageUrl,
+                      //servicesOpts[services[index]]!.$1,
                       width: 40,
                       height: 40,
                     ),
                     const SizedBox(height: 3,),
-                    Text(servicesOpts[services[index]]!.$2, textAlign: TextAlign.center,)
+                    Text(servicesOpts[services[index]]!.text, textAlign: TextAlign.center,)
                   ],
                 ),
             );

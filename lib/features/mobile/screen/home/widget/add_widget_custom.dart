@@ -4,14 +4,36 @@ import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.da
 
 class AddWidgetCustom extends StatelessWidget {
   final VoidCallback onPressed;
-  final String imageUrl, title, textFunction, heroTag;
+  final String imageUrl, title, defaultText ,textFunction, heroTag;
   const AddWidgetCustom(
       {super.key,
       required this.imageUrl,
       required this.title,
+      required this.defaultText,
       required this.textFunction,
       required this.onPressed,
       required this.heroTag});
+  Widget textWidget() {
+    if(textFunction==''){
+      return Text(
+        defaultText,
+        style: const TextStyle(
+            color: Color.fromRGBO(97, 85, 204, 1),
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+      );
+    }
+    else {
+      return Text(
+        textFunction,
+        style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 13),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,7 +62,7 @@ class AddWidgetCustom extends StatelessWidget {
               ),
               LayoutBuilder(builder: (context, constraint) {
                 return Container(
-                  width: constraint.maxWidth * 0.75,
+                  width: constraint.maxWidth * 0.9,
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(224, 221, 245, 1),
                       borderRadius: BorderRadius.circular(30)),
@@ -58,13 +80,7 @@ class AddWidgetCustom extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        textFunction,
-                        style: const TextStyle(
-                            color: Color.fromRGBO(97, 85, 204, 1),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      )
+                      textWidget()
                     ],
                   ),
                 );

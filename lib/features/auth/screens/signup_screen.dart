@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
+import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/utils/validate.dart';
@@ -29,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String countryname = 'Viet Nam';
 
   void signUpUser() async {
-    await FirebaseAuthMethod().signupWithEmai(
+    await FirebaseAuthMethod().signupWithEmail(
       username: nameController.text, 
       country: countryname, 
       email: emailController.text, 

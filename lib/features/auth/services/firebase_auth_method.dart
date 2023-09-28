@@ -20,7 +20,7 @@ class FirebaseAuthMethod {
   }
 
   ////SignUp with email
-  Future <void> signupWithEmai({
+  Future <void> signupWithEmail({
     required String username,
     required String country,
     required String email,
@@ -30,16 +30,16 @@ class FirebaseAuthMethod {
   }) async {
     String res = "sign_up_success".tr();
     try{
-      UserCredential credUer = 
+      UserCredential credUser = 
         await _auth.createUserWithEmailAndPassword(email: email, password: password);
       model.Users user = model.Users(
         email: email, 
-        uid: credUer.user!.uid, 
+        uid: credUser.user!.uid, 
         username: username, 
         country: country, 
         phoneNumber: phoneNumber
       );
-      await _firestore.collection('user').doc(credUer.user!.email).set(user.toJson());
+      await _firestore.collection('user').doc(credUser.user!.email).set(user.toJson());
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, res);
     } on FirebaseAuthException catch(error){
@@ -62,7 +62,7 @@ class FirebaseAuthMethod {
       Navigator.pushReplacementNamed(context, MainScreen.routeName);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
-      ShowSnackBar.showSnackBar(context, error.message!);
+      //ShowSnackBar.showSnackBar(context, error.message!);
     }
   }
 

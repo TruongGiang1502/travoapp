@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travo_demo/features/auth/providers/bloc_provider.dart';
+import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/checkout_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/detail_hotel_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/result_hotel_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/select_room_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/main_screen.dart';
 import 'package:travo_demo/screen/onboard/onboard_screen_main.dart';
 
@@ -32,14 +35,25 @@ Route <dynamic> generateRoute (RouteSettings settings){
     case ResultHotelScreen.routeName:
       return MaterialPageRoute(builder: (context) => const ResultHotelScreen());
     case DetailHotelScreen.routeName:
-      final snapandId = settings.arguments as (Map <String, dynamic>, String);
-      return MaterialPageRoute(builder: (context) => DetailHotelScreen(snap: snapandId.$1, snapId: snapandId.$2));
+      final snapInfoandId = settings.arguments as (SnapHotelModel, String);
+      return MaterialPageRoute(builder: (context) => DetailHotelScreen(snapInfo: snapInfoandId.$1, snapId: snapInfoandId.$2));
     case SelectRoomScreen.routeName:
       final streamsnap = settings.arguments as Stream<QuerySnapshot<Map<String, dynamic>>>;
       return MaterialPageRoute(builder: (context) => SelectRoomScreen(streamsnap: streamsnap));
     case CheckOutScreen.routeName:
-      final snap = settings.arguments as Map<String, dynamic>;
-      return MaterialPageRoute(builder: (context) => CheckOutScreen(snap: snap));
+      final snapInfo = settings.arguments as SnapRoomModel;
+      return MaterialPageRoute(builder: (context) => BlocProvider(
+        create: (context) => GetInfoCubit(),
+        child:CheckOutScreen(snapInfo: snapInfo) ,
+      ));
+    case AddContactScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => BlocProvider(
+          create: (context) => AuthPhoneCodeCubit(),
+          child: const AddContactScreen()
+          
+        )
+      );
     default:
       return MaterialPageRoute(builder: (context) => const CircularProgressIndicator());
   }

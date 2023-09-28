@@ -12,7 +12,7 @@ class FavoriteScreen extends StatelessWidget {
         title: const Text('Favor Screen'),
       ),
       body: ListView.builder(
-        itemCount: desNameFavor.length,
+        itemCount: desFavor.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -37,7 +37,7 @@ class FavoriteScreen extends StatelessWidget {
                     flex: 3,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(desNameFavor[index].$2),
+                      child: Image.network(desFavor[index].imageUrl),
                     )
                   ),
                   Expanded(
@@ -46,12 +46,13 @@ class FavoriteScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(desNameFavor[index].$1, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                        //Text(desNameFavor[index].$1, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                        Text(desFavor[index].name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(Icons.star, color: Colors.yellow, size: 16,),
-                            Text(desNameFavor[index].$3, style: const TextStyle(fontSize: 16),),
+                            Text(desFavor[index].rating, style: const TextStyle(fontSize: 16),),
                           ],
                         )
                       ],

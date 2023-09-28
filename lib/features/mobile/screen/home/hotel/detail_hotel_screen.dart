@@ -3,14 +3,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/select_room_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
 class DetailHotelScreen extends StatefulWidget {
   static const routeName = '/detail_hotel_screen';
-  final Map<String, dynamic> snap;
+  final SnapHotelModel snapInfo;
   final String snapId;
-  const DetailHotelScreen({super.key, required this.snap, required this.snapId});
+  const DetailHotelScreen({super.key, required this.snapInfo, required this.snapId});
 
   @override
   State<DetailHotelScreen> createState() => _DetailHotelScreenState();
@@ -33,7 +34,7 @@ class _DetailHotelScreenState extends State<DetailHotelScreen> {
       backgroundColor: Colors.transparent,
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(widget.snap['image']), fit: BoxFit.fill),
+          image: DecorationImage(image: NetworkImage(widget.snapInfo.imageUrl!), fit: BoxFit.fill),
         ),
       ),
       floatingActionButton: Container(
@@ -91,7 +92,7 @@ void showBottomSheetCustom(BuildContext context){
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.snap['name'], style: const TextStyle(
+                        widget.snapInfo.name!, style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold
                         ),
@@ -99,7 +100,7 @@ void showBottomSheetCustom(BuildContext context){
                       Row(
                         children: [
                           Text(
-                            '\$${widget.snap['price']}',
+                            '\$${widget.snapInfo.price}',
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold
@@ -118,7 +119,7 @@ void showBottomSheetCustom(BuildContext context){
                   Row(
                     children: [
                       const Icon(Icons.location_on, color: Colors.red,),
-                      Text(widget.snap['location'])
+                      Text(widget.snapInfo.location!)
                     ],
                   ),
                   Divider(
@@ -131,8 +132,8 @@ void showBottomSheetCustom(BuildContext context){
                       Row(
                         children: [
                           const Icon(Icons.star, color: Colors.yellow,),
-                          Text('${widget.snap['rating']}'), 
-                          Text(' (${widget.snap['total_review']} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
+                          Text('${widget.snapInfo.rating}'), 
+                          Text(' (${widget.snapInfo.totalReview} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
                         ],
                       ),
                       TextButton(
@@ -161,7 +162,7 @@ void showBottomSheetCustom(BuildContext context){
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical:8.0),
                     child: Text(
-                      widget.snap['information'],
+                      widget.snapInfo.information!,
                       style: const TextStyle(fontSize: 15),
                     ),
                   ),
@@ -188,7 +189,7 @@ void showBottomSheetCustom(BuildContext context){
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      widget.snap['location_description'],
+                      widget.snapInfo.locationDesc!,
                       style: const TextStyle(fontSize: 15),
                     ),
                   ),
