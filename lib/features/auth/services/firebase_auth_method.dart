@@ -62,7 +62,7 @@ class FirebaseAuthMethod {
       Navigator.pushReplacementNamed(context, MainScreen.routeName);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
-      //ShowSnackBar.showSnackBar(context, error.message!);
+      ShowSnackBar.showSnackBar(context, error.message!);
     }
   }
 

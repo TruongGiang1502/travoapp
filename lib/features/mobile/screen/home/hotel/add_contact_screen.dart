@@ -21,12 +21,21 @@ class _AddContactScreenState extends State<AddContactScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool passToggle = true;
-  //String curPhoneCode = '84';
+
   String countryname = 'Viet Nam';
 
   String information() {
     final phoneCode = listCountry.firstWhere((element) => element.countryName == countryname).phoneCode;
     return 'Name: ${nameController.text}\nPhone: +${phoneCode + phoneController.text}\nEmail: ${emailController.text}';
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override

@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
               flexibleSpace: Container(
-                //width: MediaQuery.of(context).size.width,
+                
                 height: 210,
                 decoration: const BoxDecoration(
                     borderRadius:

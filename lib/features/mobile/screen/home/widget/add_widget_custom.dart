@@ -5,6 +5,7 @@ import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.da
 class AddWidgetCustom extends StatelessWidget {
   final VoidCallback onPressed;
   final String imageUrl, title, defaultText ,textFunction, heroTag;
+  final double sizeText;
   const AddWidgetCustom(
       {super.key,
       required this.imageUrl,
@@ -12,7 +13,8 @@ class AddWidgetCustom extends StatelessWidget {
       required this.defaultText,
       required this.textFunction,
       required this.onPressed,
-      required this.heroTag});
+      required this.heroTag, 
+      required this.sizeText});
   Widget textWidget() {
     if(textFunction==''){
       return Text(
@@ -26,10 +28,10 @@ class AddWidgetCustom extends StatelessWidget {
     else {
       return Text(
         textFunction,
-        style: const TextStyle(
+        style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 13),
+            fontSize: sizeText),
       );
     }
   }
