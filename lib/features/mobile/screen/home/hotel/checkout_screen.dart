@@ -76,53 +76,48 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         child: ValueListenableBuilder(
                           valueListenable: pageNumber,
                           builder: (BuildContext context, int value, Widget? child) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  flex: 9,
-                                  child: TextNameCheckOutPageView(
+                            return SingleChildScrollView(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextNameCheckOutPageView(
                                     text: 'Book and review', 
                                     curPageNumber: value, 
                                     thisPageNumber: 0
-                                  )
-                                ),
-                                const Expanded(
-                                  flex: 3,
-                                  child: Divider(
-                                    height: 5,
-                                    indent: 10,
-                                    endIndent: 10,
-                                    thickness: 2,
-                                    color: Colors.white,
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 5,
-                                  child: TextNameCheckOutPageView(
+                                  //Icon(Icons.arrow_right),
+                                  const Expanded(
+                                    flex: 1,
+                                    child: Divider(
+                                      height: 5,
+                                      indent: 10,
+                                      endIndent: 10,
+                                      thickness: 2,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextNameCheckOutPageView(
                                     text: 'Payment', 
                                     curPageNumber: value, 
                                     thisPageNumber: 1
-                                  )
-                                ),
-                                const Expanded(
-                                  flex: 3,
-                                  child: Divider(
-                                    height: 5,
-                                    indent: 10,
-                                    endIndent: 10,
-                                    thickness: 2,
-                                    color: Colors.white,
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 5,
-                                  child: TextNameCheckOutPageView(
+                                  const Expanded(
+                                    flex: 1,
+                                    child: Divider(
+                                      height: 5,
+                                      indent: 10,
+                                      endIndent: 10,
+                                      thickness: 2,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextNameCheckOutPageView(
                                     text: 'Confirm', 
                                     curPageNumber: value, 
                                     thisPageNumber: 2
-                                  )
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             );
                           }
                         ),

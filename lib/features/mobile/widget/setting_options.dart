@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class SettingOption extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
@@ -13,8 +11,6 @@ class SettingOption extends StatelessWidget {
       required this.icon,
       required this.text,
       this.color = Colors.black});
-
-  
 
   @override
   Widget build(BuildContext context) {
