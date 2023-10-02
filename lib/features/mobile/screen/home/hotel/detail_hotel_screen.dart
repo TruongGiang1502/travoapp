@@ -141,7 +141,7 @@ void showBottomSheetCustom(BuildContext context){
                         child: Text(
                           'seeAll'.tr(), 
                           style: TextStyle(
-                            color: navigationBarColor,
+                            color: indigo,
                             fontWeight: FontWeight.bold
                           ),
                         ),

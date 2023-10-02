@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/features/auth/utils/validate.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/info_guest_model.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 
 class AddContactScreen extends StatefulWidget {
@@ -24,9 +25,15 @@ class _AddContactScreenState extends State<AddContactScreen> {
 
   String countryname = 'Viet Nam';
 
-  String information() {
+  InfoGuest information() {
     final phoneCode = listCountry.firstWhere((element) => element.countryName == countryname).phoneCode;
-    return 'Name: ${nameController.text}\nPhone: +${phoneCode + phoneController.text}\nEmail: ${emailController.text}';
+    final infoGuest = InfoGuest(
+      name: nameController.text, 
+      email: emailController.text, 
+      phoneNumber: phoneCode + phoneController.text
+    );
+    return infoGuest;
+    
   }
 
   @override

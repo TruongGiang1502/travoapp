@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travo_demo/utils/color.dart';
 
 class TextNameCheckOutPageView extends StatelessWidget {
   final String text;
@@ -19,7 +20,7 @@ class TextNameCheckOutPageView extends StatelessWidget {
         Container(
           width: 20,
           decoration: BoxDecoration(
-            color: isActive? Colors.white: Colors.grey,
+            color: isActive? Colors.white: linkWater!.withOpacity(0.3),
             shape: BoxShape.circle,
         
           ),
@@ -27,7 +28,7 @@ class TextNameCheckOutPageView extends StatelessWidget {
             child: Text(
               '${thisPageNumber+1}',
               style: TextStyle(
-                color: isActive?Colors.purple:Colors.white
+                color: isActive?indigo:Colors.white
               ),
             ),
           ),
@@ -38,7 +39,8 @@ class TextNameCheckOutPageView extends StatelessWidget {
         Text(
           text,
           style: TextStyle(
-            color: isActive?Colors.white:Colors.grey
+            color: isActive?Colors.white:linkWater,
+            fontWeight: isActive?FontWeight.bold:FontWeight.normal
           ),
         ),
       ],

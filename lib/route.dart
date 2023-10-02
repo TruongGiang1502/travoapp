@@ -5,6 +5,7 @@ import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/hotel/add_card_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_promo_code.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/checkout_screen.dart';
@@ -70,6 +71,9 @@ Route <dynamic> generateRoute (RouteSettings settings){
 
     case AddPromoCodeScreen.routeName:
       return MaterialPageRoute(builder: (context) => const AddPromoCodeScreen());
+
+    case AddCardScreen.routeName:
+      return MaterialPageRoute(builder: (context) => const AddCardScreen());
       
     default:
       return MaterialPageRoute(builder: (context) => const CircularProgressIndicator());

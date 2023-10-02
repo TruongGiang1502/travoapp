@@ -85,7 +85,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                     curPageNumber: value, 
                                     thisPageNumber: 0
                                   ),
-                                  //Icon(Icons.arrow_right),
                                   const Expanded(
                                     flex: 1,
                                     child: Divider(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_promo_code.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/info_guest_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/add_widget_custom.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
@@ -23,24 +24,24 @@ class BookAndReview extends StatelessWidget {
         child: Column(
           children: [
             roomInfo(context, snapInfo),
-            BlocBuilder<GetInfoCubit, String>(
+            BlocBuilder<GetInfoCubit, List <InfoGuest>>(
               builder: (context, info) {
-                return AddWidgetCustom(
+                return AddInfoGuestCustom(
                   onPressed: () { 
                     gotoAddContact(context);
                   },
                   imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
                   title: 'Contact Details',
                   defaultText: 'AddContact', 
-                  textFunction: info,
+                  listInfoGuest: info,
                   heroTag: 'contact_hero',
-                  sizeText: 13,
+                  textSize: 13,
                 );
               }
             ),
             BlocBuilder<GetPromoCodeCubit, String>(
               builder: (context, promoCode) {
-                return AddWidgetCustom(
+                return AddPromoCodeCustom(
                   onPressed: (){
                     gotPromoCode(context);
                   },
@@ -275,9 +276,9 @@ Future <DateTime> showSelectDate(BuildContext context)async{
 
 void gotoAddContact (BuildContext context)async{
   final contactInfoValue = await Navigator.pushNamed(context, AddContactScreen.routeName);
-  if(contactInfoValue != null){  
+  if(contactInfoValue != null && contactInfoValue is InfoGuest){  
     // ignore: use_build_context_synchronously
-    context.read<GetInfoCubit>().getInfo(contactInfoValue.toString());
+    context.read<GetInfoCubit>().getInfo(contactInfoValue);
   }
 }
 

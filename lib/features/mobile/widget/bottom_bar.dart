@@ -22,7 +22,7 @@ class BottomBar extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: curPageNumber == widgetNumber
-              ? navigationBarColor2
+              ? linkWater
               : Colors.transparent),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,8 +31,8 @@ class BottomBar extends StatelessWidget {
           Icon(
             icon,
             color: curPageNumber == widgetNumber
-                ? navigationBarColor
-                : navigationBarColor2,
+                ? indigo
+                : linkWater,
             size: 28,
           ),
           const SizedBox(
@@ -43,8 +43,8 @@ class BottomBar extends StatelessWidget {
             style: TextStyle(
                 fontSize: 16,
                 color: curPageNumber == widgetNumber
-                    ? navigationBarColor
-                    : navigationBarColor2),
+                    ? indigo
+                    : linkWater),
           ),
         ],
       ),
