@@ -11,7 +11,7 @@ class Validator {
 
   static String? emailValidator(String? email) {
     if (email!.isEmpty) {
-      return 'Enter email';
+      return 'Please enter email';
     } else if (!isEmailValid(email)) {
       return 'Email is not valid';
     }
@@ -20,11 +20,17 @@ class Validator {
 
   static String? passwordValidator(String? password) {
     if (password!.isEmpty) {
-      return 'Enter Password';
+      return 'Please enter Password';
     } else if (password.length < 8) {
       return 'Password must have at least 8 character';
     }
     return null;
   }
-        
+
+  static String? checkNull(String? text) {
+    if (text!.isEmpty || text == '') {
+      return 'Please enter this field';
+    } 
+    return null;
+  }      
 }

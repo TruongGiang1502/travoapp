@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
-import 'package:travo_demo/features/auth/utils/validate.dart';
+import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
 
@@ -217,6 +217,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: signUpUser,
                       formKey: _formKey, 
                       text: "sign_up".tr(),
+                      width: 0.75,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),

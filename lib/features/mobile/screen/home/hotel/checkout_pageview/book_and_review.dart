@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_promo_code.dart';
-import 'package:travo_demo/features/mobile/screen/home/models/info_guest_model.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/guest_info_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/add_widget_custom.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_promo_cubit.dart';
-import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
+import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/services_option.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 

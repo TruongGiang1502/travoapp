@@ -4,14 +4,15 @@ class AuthButton extends StatelessWidget {
   final Function onPressed; 
   final GlobalKey<FormState> formKey;
   final String text;
-  const AuthButton({super.key, required this.formKey, required this.text, required this.onPressed});
+  final double width;
+  const AuthButton({super.key, required this.formKey, required this.text, required this.onPressed, required this.width});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
       height: 50,
-      width: size.width*0.75,
+      width: size.width*width,
       decoration:BoxDecoration(
         gradient: const LinearGradient(
           colors: [

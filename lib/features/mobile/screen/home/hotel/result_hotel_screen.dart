@@ -3,7 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/detail_hotel_screen.dart';
-import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
+import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 
 import '../models/snap_model.dart';

@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
-import 'package:travo_demo/features/auth/utils/validate.dart';
-import 'package:travo_demo/features/mobile/screen/home/models/info_guest_model.dart';
-import 'package:travo_demo/features/mobile/widget/custom_button.dart';
+import 'package:travo_demo/features/auth/widgets/auth_button.dart';
+import 'package:travo_demo/utils/validate.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/guest_info_model.dart';
+import 'package:travo_demo/widgets/pick_country_button.dart';
+import 'package:travo_demo/widgets/text_field_custom.dart';
 
 class AddContactScreen extends StatefulWidget {
   static const routeName = '/add_contact_screen';
@@ -47,7 +50,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    //final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
@@ -82,86 +85,71 @@ class _AddContactScreenState extends State<AddContactScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextFormField(
+                    TextFieldCustom(
                       controller: nameController,
-                      decoration: InputDecoration(
-                          labelText: "name".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.account_circle_sharp)),
+                      validator: Validator.checkNull, 
+                      labelText: "name".tr(), 
+                      inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                      keyboardType: TextInputType.name,
+                      prefix: null,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    DropdownButtonFormField(
-                        value: countryname,
-                        items: listCountry.map((ListCountry country) {
-                          return DropdownMenuItem<String>(
-                            value: country.countryName,
-                            child: Text(country.countryName),
-                          );
-                        }).toList(),
-                        decoration: InputDecoration(
-                            labelText: "country".tr(),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.flag_circle)),
-                        onChanged: (value) {
-                          countryname = value!;
-                          context
-                              .read<AuthPhoneCodeCubit>()
-                              .changePhoneCode(value);
-                        }),
+                    const PickCountryButton(
+                      isChangePhoneCode: true,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: phoneController,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                          prefix: SizedBox(
-                            //color: Colors.red,
-                            width: 50,
-                            child: BlocBuilder<AuthPhoneCodeCubit, String>(
-                                builder: (context, curPhoneCode) => Center(
-                                        child: Text(
-                                          '+$curPhoneCode',
-                                          style: const TextStyle(fontSize: 18),
-                                        )
-                                      )
-                                    ),
+                    TextFieldCustom(
+                      controller: phoneController, 
+                      validator: Validator.checkNull, 
+                      labelText: 'Phone Number', 
+                      inputFormat: FilteringTextInputFormatter.digitsOnly, 
+                      keyboardType: TextInputType.number, 
+                      prefix: BlocBuilder<AuthPhoneCodeCubit, String>(
+                        builder: (context, curPhoneCode) => Center(
+                          widthFactor: 0.1,
+                          child: Text(
+                            '+$curPhoneCode',
+                            style: const TextStyle(fontSize: 18),
+                            textAlign: TextAlign.left ,
                           ),
-                          labelText: "phone_number".tr(),
-                          border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(4),
-                                  bottomRight: Radius.circular(4))),
-                          prefixIcon: const Icon(Icons.phone)),
+                        )
+                        ),
                     ),
+                    
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
+                    
+                    TextFieldCustom(
                       controller: emailController,
-                      validator: Validator.emailValidator,
-                      decoration: InputDecoration(
-                          labelText: "email".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.email)),
+                      validator: Validator.emailValidator, 
+                      labelText: "email".tr(), 
+                      inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                      keyboardType: TextInputType.name,
+                      prefix: null,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    CustomButton(
-                        onPressed: () => Navigator.pop(
-                              context, information()
-                            ),
-                        text: 'Done',
-                        width: size.width)
+                    AuthButton(
+                      formKey: _formKey, 
+                      text: 'Done', 
+                      onPressed: () => 
+                        Navigator.pop(
+                          context, information()
+                        ),
+                      width: 1,
+                    ),
                   ],
                 )
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/mobile/screen/home/hotel/add_card_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/payment_options_card.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
@@ -7,11 +8,13 @@ import 'package:travo_demo/utils/color.dart';
 class CheckOutPayment extends StatelessWidget {
   const CheckOutPayment({super.key});
 
+  
   @override
   Widget build(BuildContext context) {
     ValueNotifier <bool> isMiniMarketChosen = ValueNotifier(false);
     ValueNotifier <bool> isCardChosen = ValueNotifier(false);
     ValueNotifier <bool> isBankChosen = ValueNotifier(false);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -84,7 +87,9 @@ Widget addCardBuider(String text){
           children: [
             FloatingActionButton(
               heroTag: 'addCard_hero',
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pushNamed(context, AddCardScreen.routeName);
+              },
               backgroundColor: Colors.white,
               child: const Icon(
                 Icons.add,

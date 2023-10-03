@@ -43,105 +43,101 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100.0),
-          child: AppBar(
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(50)),
-                  image: DecorationImage(
-                      image: AssetImage('images/auth_background_appbar.png'),
-                      fit: BoxFit.cover)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        "CheckOut".tr(),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold),
+      resizeToAvoidBottomInset: false,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100.0),
+        child: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+                borderRadius:
+                    BorderRadius.only(bottomLeft: Radius.circular(50)),
+                image: DecorationImage(
+                    image: AssetImage('images/auth_background_appbar.png'),
+                    fit: BoxFit.cover)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      "CheckOut".tr(),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ValueListenableBuilder(
+                        valueListenable: pageNumber,
+                        builder: (BuildContext context, int value, Widget? child) {
+                          return SingleChildScrollView(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextNameCheckOutPageView(
+                                  text: 'Book and review', 
+                                  curPageNumber: value, 
+                                  thisPageNumber: 0
+                                ),
+                                linesAppbarPageView(),
+                                TextNameCheckOutPageView(
+                                  text: 'Payment', 
+                                  curPageNumber: value, 
+                                  thisPageNumber: 1
+                                ),
+                                linesAppbarPageView(),
+                                TextNameCheckOutPageView(
+                                  text: 'Confirm', 
+                                  curPageNumber: value, 
+                                  thisPageNumber: 2
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: ValueListenableBuilder(
-                          valueListenable: pageNumber,
-                          builder: (BuildContext context, int value, Widget? child) {
-                            return SingleChildScrollView(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextNameCheckOutPageView(
-                                    text: 'Book and review', 
-                                    curPageNumber: value, 
-                                    thisPageNumber: 0
-                                  ),
-                                  const Expanded(
-                                    flex: 1,
-                                    child: Divider(
-                                      height: 5,
-                                      indent: 10,
-                                      endIndent: 10,
-                                      thickness: 2,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  TextNameCheckOutPageView(
-                                    text: 'Payment', 
-                                    curPageNumber: value, 
-                                    thisPageNumber: 1
-                                  ),
-                                  const Expanded(
-                                    flex: 1,
-                                    child: Divider(
-                                      height: 5,
-                                      indent: 10,
-                                      endIndent: 10,
-                                      thickness: 2,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  TextNameCheckOutPageView(
-                                    text: 'Confirm', 
-                                    curPageNumber: value, 
-                                    thisPageNumber: 2
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-        body: PageView(
-          controller: pageController,
-          onPageChanged: (index){
-            pageNumber.value = index;
-          },
-          children: [
-            BookAndReview(
-              onPressed: nextScreen ,
-              snapInfo: widget.snapInfo
-            ),
-            const CheckOutPayment(),
-            const ConfirmScreen(),
-          ],
-        )
-      );
+      ),
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (index){
+          pageNumber.value = index;
+        },
+        children: [
+          BookAndReview(
+            onPressed: nextScreen ,
+            snapInfo: widget.snapInfo
+          ),
+          const CheckOutPayment(),
+          const ConfirmScreen(),
+        ],
+      )
+    );
   }
+}
+
+Widget linesAppbarPageView(){
+  return const Expanded(
+    flex: 1,
+    child: Divider(
+      height: 5,
+      indent: 10,
+      endIndent: 10,
+      thickness: 2,
+      color: Colors.white,
+    ),
+  );
 }

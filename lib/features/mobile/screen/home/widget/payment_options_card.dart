@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
+import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/utils/color.dart';
 
 class PaymentOptionsCard extends StatelessWidget {

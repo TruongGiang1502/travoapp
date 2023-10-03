@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/checkout_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
-import 'package:travo_demo/features/mobile/screen/home/widget/container_decor.dart';
+import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/services_option.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 

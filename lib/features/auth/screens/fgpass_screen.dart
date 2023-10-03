@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
-import 'package:travo_demo/features/auth/utils/validate.dart';
+import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 
 
@@ -95,6 +95,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       },
                       formKey: _formKey, 
                       text: "send".tr(),
+                      width: 0.75,
                     ),
 
                   ],

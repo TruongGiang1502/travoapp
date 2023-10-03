@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
-import 'package:travo_demo/features/auth/utils/validate.dart';
+import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -158,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: loginUser,
                       formKey: _formKey, 
                       text:  "Login".tr(),
+                      width: 0.75,
                     ),
 
                     Padding(

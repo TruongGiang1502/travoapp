@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travo_demo/features/mobile/screen/home/models/info_guest_model.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/guest_info_model.dart';
 
 
 class GetInfoCubit extends Cubit<List<InfoGuest>>{
