@@ -50,7 +50,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final size = MediaQuery.of(context).size;
+
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
@@ -97,33 +97,32 @@ class _AddContactScreenState extends State<AddContactScreen> {
                       labelText: "name".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
                       keyboardType: TextInputType.name,
-                      prefix: null,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const PickCountryButton(
+                    PickCountryButton(
+                      countryName: countryname,
                       isChangePhoneCode: true,
+                      onChanged: (value){
+                        countryname = value!;
+                        context.read<AuthPhoneCodeCubit>().changePhoneCode(value);
+                      }
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFieldCustom(
-                      controller: phoneController, 
-                      validator: Validator.checkNull, 
-                      labelText: 'Phone Number', 
-                      inputFormat: FilteringTextInputFormatter.digitsOnly, 
-                      keyboardType: TextInputType.number, 
-                      prefix: BlocBuilder<AuthPhoneCodeCubit, String>(
-                        builder: (context, curPhoneCode) => Center(
-                          widthFactor: 0.1,
-                          child: Text(
-                            '+$curPhoneCode',
-                            style: const TextStyle(fontSize: 18),
-                            textAlign: TextAlign.left ,
-                          ),
-                        )
-                        ),
+                    BlocBuilder<AuthPhoneCodeCubit, String>(
+                      builder: (context, curPhoneCode) {
+                        return TextFieldCustom(
+                          controller: phoneController, 
+                          validator: Validator.checkNull, 
+                          labelText: 'Phone Number', 
+                          inputFormat: FilteringTextInputFormatter.digitsOnly, 
+                          keyboardType: TextInputType.number, 
+                          prefixText: '+$curPhoneCode | ',
+                        );
+                      }
                     ),
                     
                     const SizedBox(
@@ -136,7 +135,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
                       labelText: "email".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
                       keyboardType: TextInputType.name,
-                      prefix: null,
                     ),
                     const SizedBox(
                       height: 20,

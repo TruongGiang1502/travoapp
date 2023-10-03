@@ -62,7 +62,6 @@ class _AddPromoCodeScreenState extends State<AddPromoCodeScreen> {
               labelText: 'Promo Code', 
               inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
               keyboardType: TextInputType.text, 
-              prefix: null
             ),
 
             const SizedBox(height: 10,),

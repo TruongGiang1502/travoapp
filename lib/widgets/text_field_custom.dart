@@ -10,7 +10,8 @@ class TextFieldCustom extends StatelessWidget {
   final TextInputFormatter inputFormat;
   final int lengthInput;
   final TextInputType keyboardType;
-  final Widget? prefix;
+  final Widget? prefixIcon;
+  final String prefixText;
   const TextFieldCustom(
       {super.key,
       required this.controller,
@@ -18,7 +19,8 @@ class TextFieldCustom extends StatelessWidget {
       required this.labelText,
       required this.inputFormat,
       required this.keyboardType,
-      required this.prefix,
+      this.prefixText = '',
+      this.prefixIcon,
       this.lengthInput = 40, });
 
   @override
@@ -34,13 +36,14 @@ class TextFieldCustom extends StatelessWidget {
             inputFormatters: [inputFormat, LengthLimitingTextInputFormatter(lengthInput)],
             keyboardType: keyboardType,
             decoration: InputDecoration(
+              prefixText: prefixText,
               border: InputBorder.none,
               labelText: labelText,
               labelStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 18,
                   fontWeight: FontWeight.normal),
-              prefixIcon: prefix
+              prefixIcon: prefixIcon
             ),
           ),
         ),

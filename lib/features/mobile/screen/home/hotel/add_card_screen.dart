@@ -21,6 +21,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final expDateController = TextEditingController();
   final cvvController = TextEditingController();
 
+  String countryname = 'Viet Nam';
+
   @override
   void dispose() {
     nameController.dispose();
@@ -77,7 +79,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   labelText: 'Name', 
                   inputFormat: FilteringTextInputFormatter.singleLineFormatter,
                   keyboardType: TextInputType.name,
-                  prefix: null,
                 ),
                 const SizedBox(height: 20,),
                 TextFieldCustom(
@@ -87,7 +88,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   inputFormat: FilteringTextInputFormatter.digitsOnly,
                   lengthInput: 20,
                   keyboardType: TextInputType.number,
-                  prefix: Padding(
+                  prefixIcon: Padding(
                     padding: const EdgeInsets.only(right: 16),
                     child: SvgPicture.asset('images/checkout_icon/card_num_icon.svg'),
                   ),
@@ -104,7 +105,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         inputFormat: FilteringTextInputFormatter.singleLineFormatter,
                         lengthInput: 5,
                         keyboardType: TextInputType.datetime,
-                        prefix: null,
+
                       )
                     ),
                     const SizedBox(
@@ -118,13 +119,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         inputFormat: FilteringTextInputFormatter.digitsOnly,
                         lengthInput: 3,
                         keyboardType: TextInputType.number,
-                        prefix: null,
                       )
                     ),
                   ],
                 ),
                 const SizedBox(height: 20,),
-                const PickCountryButton(),
+                PickCountryButton(
+                  countryName: countryname,
+                  onChanged: (value){
+                    countryname = value!;
+                  },
+                ),
                 const SizedBox(height: 20,),
                 CustomButton(
                   onPressed: (){}, 

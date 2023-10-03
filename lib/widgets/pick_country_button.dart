@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
 
 class PickCountryButton extends StatelessWidget {
+  final String countryName;
   final bool isChangePhoneCode;
-  const PickCountryButton({super.key, this.isChangePhoneCode = false});
+  final Function(String?) onChanged;
+  const PickCountryButton({super.key, this.isChangePhoneCode = false, required this.countryName,required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
-    String countryname = 'Viet Nam';
+
     return ContainerBoxDecor(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -19,7 +19,7 @@ class PickCountryButton extends StatelessWidget {
         ),
         child: Center(
           child: DropdownButtonFormField(
-            value: countryname,
+            value: countryName,
             style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18),
             items: listCountry.map((ListCountry country) {
               return DropdownMenuItem<String>(
@@ -35,12 +35,7 @@ class PickCountryButton extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.normal),
             ),
-            onChanged: (value){
-              countryname = value!;
-              isChangePhoneCode
-                ?context.read<AuthPhoneCodeCubit>().changePhoneCode(value)
-                :(){};
-            }
+            onChanged: onChanged
           )
         ),
       ),
