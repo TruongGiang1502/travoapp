@@ -13,6 +13,7 @@ import 'package:travo_demo/features/mobile/screen/home/hotel/detail_hotel_screen
 import 'package:travo_demo/features/mobile/screen/home/hotel/result_hotel_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/select_room_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_card_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_promo_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/main_screen.dart';
@@ -57,6 +58,7 @@ Route <dynamic> generateRoute (RouteSettings settings){
         providers: [
           BlocProvider(create:(context) => GetInfoCubit(),),
           BlocProvider(create:(context) => GetPromoCodeCubit()),
+          BlocProvider(create: (context) => GetCardCubit())
         ],
         child:CheckOutScreen(snapInfo: snapInfo) ,
       ));

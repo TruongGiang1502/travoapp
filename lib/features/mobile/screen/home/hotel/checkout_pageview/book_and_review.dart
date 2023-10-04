@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_promo_code.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/guest_info_model.dart';
@@ -9,6 +8,8 @@ import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/add_widget_custom.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_promo_cubit.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/pick_date.dart';
+import 'package:travo_demo/features/mobile/utils/show_dialog.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/services_option.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
@@ -27,8 +28,8 @@ class BookAndReview extends StatelessWidget {
             BlocBuilder<GetInfoCubit, List <InfoGuest>>(
               builder: (context, info) {
                 return AddInfoGuestCustom(
-                  onPressed: () { 
-                    gotoAddContact(context);
+                  onPressed: () {
+                    addContactCheck(context, info, snapInfo); 
                   },
                   imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
                   title: 'Contact Details',
@@ -141,7 +142,7 @@ class BookAndReview extends StatelessWidget {
                     )
                   ],
                 ),
-                const Text('1 room')
+                Text('${snapInfo.total} room')
               ],
             )
           ],
@@ -152,9 +153,68 @@ class BookAndReview extends StatelessWidget {
 }
 
 Widget dateBooking(BuildContext context){
-  DateTime now = DateTime.now();
-  //DateTime pickDate = DateTime.now();
-  ValueNotifier <DateTime> pickedDate = ValueNotifier(DateTime.now());
+  
+  ValueNotifier <DateTime> pickedDateCheckin = ValueNotifier(DateTime.now());
+  ValueNotifier <DateTime> pickedDateCheckout = ValueNotifier(DateTime.now());
+
+  Future <DateTime> showSelectCheckinDate(BuildContext context)async{
+    final DateTime picked = (
+      await showDatePicker(
+        context: context, 
+        initialDate: DateTime.now(), 
+        firstDate: DateTime.now(), 
+        lastDate: DateTime(DateTime.now().year+1),
+        builder: (BuildContext context, Widget? child){
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.pink,
+              buttonTheme: ButtonThemeData(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1)
+                )
+              )
+            ), 
+            child: child!
+          );
+        }
+      )
+    )??DateTime.now();
+    pickedDateCheckout.value = picked;
+    return picked;
+  }
+
+  Future <DateTime> showSelectCheckoutDate(BuildContext context)async{
+    final DateTime picked = (
+      await showDatePicker(
+        context: context, 
+        initialDate: pickedDateCheckout.value, 
+        firstDate: pickedDateCheckin.value, 
+        lastDate: DateTime(DateTime.now().year+2),
+        builder: (BuildContext context, Widget? child){
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.pink,
+              buttonTheme: ButtonThemeData(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1)
+                )
+              )
+            ), 
+            child: child!
+          );
+        }
+      )
+    )??DateTime.now();
+    return picked;
+  }
+
+  void checkinSelectDate() async {
+    pickedDateCheckin.value = (await showSelectCheckinDate(context));
+  }
+  void checkoutSelectDate() async {
+    pickedDateCheckout.value = (await showSelectCheckoutDate(context));
+  }
+
   return Padding(
     padding: const EdgeInsets.all(16),
     child: ContainerBoxDecor(
@@ -176,67 +236,35 @@ Widget dateBooking(BuildContext context){
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset('images/checkout_icon/date1_icon.svg'),
-                      const SizedBox(width: 10,),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Check-in'),
-                          Text(DateFormat('E, d/MM').format(now), style: const TextStyle(fontWeight: FontWeight.bold),),
-                        ],
+                  PickDate(
+                    onPressed: checkinSelectDate, 
+                    iconUrl: 'images/checkout_icon/date1_icon.svg', 
+                    text: 'Check-in', 
+                    dateValueWidget: ValueListenableBuilder(
+                        valueListenable: pickedDateCheckin,
+                        builder: (BuildContext context, DateTime value, Widget? child) {
+                          return Text(
+                            DateFormat('E, d/MM').format(pickedDateCheckin.value), 
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          );
+                        }
                       ),
-                    ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 2,
-                          offset: const Offset(1, 1)
-                        )
-                      ]
+                  PickDate(
+                    onPressed: checkoutSelectDate, 
+                    iconUrl: 'images/checkout_icon/date2_icon.svg', 
+                    text: 'Check-out', 
+                    dateValueWidget: ValueListenableBuilder(
+                        valueListenable: pickedDateCheckout,
+                        builder: (BuildContext context, DateTime value, Widget? child) {
+                          return Text(
+                            DateFormat('E, d/MM').format(pickedDateCheckout.value), 
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          );
+                        }
                     ),
-                    child: ElevatedButton(
-                      onPressed: ()async{
-                        pickedDate.value = (await showSelectDate(context));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50)
-                        ),
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset('images/checkout_icon/date2_icon.svg'),
-                          const SizedBox(width: 10,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Check-out', style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black),),
-                              ValueListenableBuilder(
-                                valueListenable: pickedDate,
-                                builder: (BuildContext context, DateTime value, Widget? child) {
-                                  return Text(
-                                    DateFormat('E, d/MM').format(pickedDate.value), 
-                                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                  );
-                                }
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  )
+                  
                 ],
               ),
               
@@ -248,30 +276,13 @@ Widget dateBooking(BuildContext context){
   );
 }
 
-Future <DateTime> showSelectDate(BuildContext context)async{
-  final DateTime picked = (
-      await showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(), 
-      firstDate: DateTime.now(), 
-      lastDate: DateTime(2030),
-      builder: (BuildContext context, Widget? child){
-        return Theme(
-          data: ThemeData(
-            primarySwatch: Colors.pink,
-            
-            buttonTheme: ButtonThemeData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(1)
-              )
-            )
-          ), 
-          child: child!
-        );
-      }
-    )
-  )??DateTime.now();
-  return picked;
+void addContactCheck(BuildContext context ,List<InfoGuest> list, SnapRoomModel snapInfo){
+  if(list.length < int.parse(snapInfo.maxGuest!)) {
+    gotoAddContact(context);
+  }
+  else {
+    ShowDialog.showSimpleDialog(context, 'Full slot', 'The number of guests has reached the limit.');
+  }
 }
 
 void gotoAddContact (BuildContext context)async{

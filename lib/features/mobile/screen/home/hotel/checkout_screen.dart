@@ -121,7 +121,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             onPressed: nextScreen ,
             snapInfo: widget.snapInfo
           ),
-          const CheckOutPayment(),
+          CheckOutPayment(
+            onPressed: nextScreen,
+          ),
           const ConfirmScreen(),
         ],
       )

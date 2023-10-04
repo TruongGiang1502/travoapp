@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travo_demo/features/mobile/widget/custom_button.dart';
+import 'package:travo_demo/features/auth/widgets/auth_button.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/card_info_model.dart';
 import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/widgets/pick_country_button.dart';
 import 'package:travo_demo/widgets/text_field_custom.dart';
@@ -32,7 +33,16 @@ class _AddCardScreenState extends State<AddCardScreen> {
     super.dispose();
   }
 
-  void notChange(){}
+  PayCard cardInfo(){
+    final cardInfo = PayCard(
+      name: nameController.text, 
+      cardNumber: cardNumberController.text, 
+      expDate: expDateController.text, 
+      cvv: cvvController.text, 
+      country: countryname
+    );
+    return cardInfo;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +141,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   },
                 ),
                 const SizedBox(height: 20,),
-                CustomButton(
-                  onPressed: (){}, 
+                AuthButton(
+                  formKey: formKey,
+                  onPressed: (){
+                    Navigator.pop(context, cardInfo());
+                  }, 
                   text: 'Add Card', 
                   width: 1
                 )

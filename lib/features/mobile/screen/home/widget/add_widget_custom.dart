@@ -53,10 +53,11 @@ class AddInfoGuestCustom extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Guest information ${index+1}', 
+                        'Customer ${index+1}', 
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic
+                          fontStyle: FontStyle.italic,
+                          color: Colors.red
                         ),
                       ),
                       Text(

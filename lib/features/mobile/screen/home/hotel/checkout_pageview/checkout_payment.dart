@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_card_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/models/card_info_model.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_card_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/payment_options_card.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
 
 class CheckOutPayment extends StatelessWidget {
-  const CheckOutPayment({super.key});
+  final VoidCallback onPressed;
+  const CheckOutPayment({super.key, required this.onPressed});
 
   
   @override
@@ -35,7 +39,7 @@ class CheckOutPayment extends StatelessWidget {
             isChosen: isCardChosen, 
             iconUrl: 'images/checkout_icon/credit_card.svg', 
             text: 'Credit / Debit Card',
-            child: addCardBuider(''),
+            child: addCardBuider(),
             onChanged: (){
               isMiniMarketChosen.value = false;
               isBankChosen.value = false;
@@ -57,9 +61,7 @@ class CheckOutPayment extends StatelessWidget {
             height: 10,
           ),
           CustomButton(
-            onPressed: (){
-
-            }, 
+            onPressed: onPressed,
             text: 'Done', 
             width: 1
           )
@@ -76,7 +78,7 @@ Widget addCard(Widget? child){
   return child;
 }
 
-Widget addCardBuider(String text){
+Widget addCardBuider(){
   return LayoutBuilder(builder: (context, constraint) {
       return Container(
         width: constraint.maxWidth * 0.9,
@@ -88,7 +90,7 @@ Widget addCardBuider(String text){
             FloatingActionButton(
               heroTag: 'addCard_hero',
               onPressed: (){
-                Navigator.pushNamed(context, AddCardScreen.routeName);
+                gotoGetCardScreen(context);
               },
               backgroundColor: Colors.white,
               child: const Icon(
@@ -99,30 +101,60 @@ Widget addCardBuider(String text){
             const SizedBox(
               width: 10,
             ),
-            addCardtWidget(text),
+            BlocBuilder<GetCardCubit, PayCard>(
+              builder: (context, cardInfo) {
+                return addCardtWidget(cardInfo);
+              }
+            ),
           ],
         ),
       );
     });
 }
 
-Widget addCardtWidget(String text) {
-    if(text==''){
-      return Text(
-        'Add Card',
-        style: TextStyle(
-            color: indigo,
-            fontWeight: FontWeight.bold,
-            fontSize: 18),
-      );
-    }
-    else {
-      return Text(
-        text,
-        style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 13),
-      );
-    }
+Widget addCardtWidget(PayCard cardInfo) {
+  if(cardInfo.name==''){
+    return Text(
+      'Add Card',
+      style: TextStyle(
+          color: indigo,
+          fontWeight: FontWeight.bold,
+          fontSize: 18),
+    );
   }
+  else {
+    return SizedBox(
+      width: 200,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            cardInfo.name, 
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 5,),
+          Text(
+            '${cardInfo.cardNumber} (${cardInfo.country})', 
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 12
+            )
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void gotoGetCardScreen(BuildContext context)async{
+  final cardInfo = await Navigator.pushNamed(context, AddCardScreen.routeName);
+  if(cardInfo != null && cardInfo is PayCard){
+    // ignore: use_build_context_synchronously
+    context.read<GetCardCubit>().getCard(cardInfo);
+  }
+}
+
