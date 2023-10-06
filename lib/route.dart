@@ -15,7 +15,9 @@ import 'package:travo_demo/features/mobile/screen/home/hotel/select_room_screen.
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_card_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_paytype_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_promo_cubit.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/bloc/time_check_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/main_screen.dart';
 import 'package:travo_demo/screen/onboard/onboard_screen_main.dart';
 
@@ -53,14 +55,17 @@ Route <dynamic> generateRoute (RouteSettings settings){
       return MaterialPageRoute(builder: (context) => SelectRoomScreen(streamsnap: streamsnap));
 
     case CheckOutScreen.routeName:
-      final snapInfo = settings.arguments as SnapRoomModel;
+      final snapInfo = settings.arguments as (SnapRoomModel, String);
       return MaterialPageRoute(builder: (context) => MultiBlocProvider(
         providers: [
           BlocProvider(create:(context) => GetInfoCubit(),),
           BlocProvider(create:(context) => GetPromoCodeCubit()),
-          BlocProvider(create: (context) => GetCardCubit())
+          BlocProvider(create: (context) => GetCardCubit()),
+          BlocProvider(create: (context) => TimeCheckinCubit()),
+          BlocProvider(create: (context) => TimeCheckoutCubit()),
+          BlocProvider(create: (context) => PayTypeCubit()),
         ],
-        child:CheckOutScreen(snapInfo: snapInfo) ,
+        child:CheckOutScreen(snapInfo: snapInfo.$1, roomID: snapInfo.$2,) ,
       ));
 
     case AddContactScreen.routeName:

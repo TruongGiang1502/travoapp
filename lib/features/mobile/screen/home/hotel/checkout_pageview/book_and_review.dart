@@ -8,6 +8,7 @@ import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/add_widget_custom.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_promo_cubit.dart';
+import 'package:travo_demo/features/mobile/screen/home/widget/bloc/time_check_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/pick_date.dart';
 import 'package:travo_demo/features/mobile/utils/show_dialog.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
@@ -56,13 +57,17 @@ class BookAndReview extends StatelessWidget {
               }
             ),
             dateBooking(context),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: CustomButton(
-                onPressed: onPressed,
-                text: 'Payment', 
-                width: MediaQuery.of(context).size.width
-              ),
+            BlocBuilder<GetInfoCubit, List<InfoGuest>>(
+              builder: (context, info) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: CustomButton(
+                    onPressed: info.isNotEmpty?onPressed : () {showCheckEmptyConsumer(context);},
+                    text: 'Payment', 
+                    width: MediaQuery.of(context).size.width
+                  ),
+                );
+              }
             ),
           ],
         ),
@@ -154,10 +159,7 @@ class BookAndReview extends StatelessWidget {
 
 Widget dateBooking(BuildContext context){
   
-  ValueNotifier <DateTime> pickedDateCheckin = ValueNotifier(DateTime.now());
-  ValueNotifier <DateTime> pickedDateCheckout = ValueNotifier(DateTime.now());
-
-  Future <DateTime> showSelectCheckinDate(BuildContext context)async{
+  void showSelectCheckinDate(BuildContext context, DateTime timeCheckout)async{
     final DateTime picked = (
       await showDatePicker(
         context: context, 
@@ -179,16 +181,20 @@ Widget dateBooking(BuildContext context){
         }
       )
     )??DateTime.now();
-    pickedDateCheckout.value = picked;
-    return picked;
+    // ignore: use_build_context_synchronously
+    context.read<TimeCheckinCubit>().getCheckinTime(picked);
+    if(timeCheckout.difference(picked).inDays < 0){
+      // ignore: use_build_context_synchronously
+      context.read<TimeCheckoutCubit>().getCheckoutTime(picked);
+    }
   }
 
-  Future <DateTime> showSelectCheckoutDate(BuildContext context)async{
+  void showSelectCheckoutDate(BuildContext context, DateTime checkinDate)async{
     final DateTime picked = (
       await showDatePicker(
         context: context, 
-        initialDate: pickedDateCheckout.value, 
-        firstDate: pickedDateCheckin.value, 
+        initialDate: checkinDate, 
+        firstDate: checkinDate, 
         lastDate: DateTime(DateTime.now().year+2),
         builder: (BuildContext context, Widget? child){
           return Theme(
@@ -205,14 +211,8 @@ Widget dateBooking(BuildContext context){
         }
       )
     )??DateTime.now();
-    return picked;
-  }
-
-  void checkinSelectDate() async {
-    pickedDateCheckin.value = (await showSelectCheckinDate(context));
-  }
-  void checkoutSelectDate() async {
-    pickedDateCheckout.value = (await showSelectCheckoutDate(context));
+    // ignore: use_build_context_synchronously
+    context.read<TimeCheckoutCubit>().getCheckoutTime(picked);
   }
 
   return Padding(
@@ -233,39 +233,42 @@ Widget dateBooking(BuildContext context){
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  PickDate(
-                    onPressed: checkinSelectDate, 
-                    iconUrl: 'images/checkout_icon/date1_icon.svg', 
-                    text: 'Check-in', 
-                    dateValueWidget: ValueListenableBuilder(
-                        valueListenable: pickedDateCheckin,
-                        builder: (BuildContext context, DateTime value, Widget? child) {
-                          return Text(
-                            DateFormat('E, d/MM').format(pickedDateCheckin.value), 
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                          );
-                        }
-                      ),
-                  ),
-                  PickDate(
-                    onPressed: checkoutSelectDate, 
-                    iconUrl: 'images/checkout_icon/date2_icon.svg', 
-                    text: 'Check-out', 
-                    dateValueWidget: ValueListenableBuilder(
-                        valueListenable: pickedDateCheckout,
-                        builder: (BuildContext context, DateTime value, Widget? child) {
-                          return Text(
-                            DateFormat('E, d/MM').format(pickedDateCheckout.value), 
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                          );
-                        }
-                    ),
-                  )
-                  
-                ],
+              BlocBuilder<TimeCheckinCubit, DateTime>(
+                builder: (context, timeCheckin) {
+                  return BlocBuilder<TimeCheckoutCubit, DateTime>(
+                    builder: (context, timeCheckout) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          PickDate(
+                            onPressed: (){
+                              showSelectCheckinDate(context, timeCheckout);
+                            }, 
+                            iconUrl: 'images/checkout_icon/date1_icon.svg', 
+                            text: 'Check-in', 
+                            dateValueWidget: Text(
+                              DateFormat('E, d/MM').format(timeCheckin), 
+                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                            ),
+                              
+                          ), 
+                          PickDate(
+                            onPressed: (){
+                              showSelectCheckoutDate(context, timeCheckin);
+                            }, 
+                            iconUrl: 'images/checkout_icon/date2_icon.svg', 
+                            text: 'Check-out', 
+                            dateValueWidget: Text(
+                                DateFormat('E, d/MM').format(timeCheckout), 
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                              )
+                          )
+                            
+                        ],
+                      );
+                    }
+                  );
+                }
               ),
               
             ],
@@ -299,4 +302,10 @@ void gotPromoCode (BuildContext context) async {
     // ignore: use_build_context_synchronously
     context.read<GetPromoCodeCubit>().getPromoCode(promoCodeValue.toString());
   }
-} 
+}
+
+void showCheckEmptyConsumer(BuildContext context){
+  ShowDialog.showSimpleDialog(
+    context, 'No Customer', 'You should have add a least customer in "Contact Details" field'
+  );
+}

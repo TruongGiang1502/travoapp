@@ -18,12 +18,13 @@ class SelectRoomScreen extends StatefulWidget {
 }
 
 class _SelectRoomScreenState extends State<SelectRoomScreen> {
-  @override
-  Widget build(BuildContext context) {
-    Future<ConnectivityResult> checkInternet () async {
+  Future<ConnectivityResult> checkInternet () async {
       final connectivityResult = await Connectivity().checkConnectivity();
       return connectivityResult;
     }
+  @override
+  Widget build(BuildContext context) {
+    
 
     return FutureBuilder<ConnectivityResult>(
       future: checkInternet(),
@@ -96,6 +97,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                   itemBuilder: (BuildContext context, int index){
                     var snap = snapshot.data?.docs[index].data();
                     SnapRoomModel snapInfo = SnapRoomModel.fromSnap(snap);
+                    var snapRoomId = snapshot.data?.docs[index].id;
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: ContainerBoxDecor(
@@ -168,7 +170,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                                   ),
                                   CustomButton(
                                     onPressed: (){
-                                      Navigator.pushNamed(context, CheckOutScreen.routeName, arguments: snapInfo);
+                                      Navigator.pushNamed(context, CheckOutScreen.routeName, arguments: (snapInfo, snapRoomId));
                                     },
                                     text: 'Choose'.tr(), 
                                     width: 0.4

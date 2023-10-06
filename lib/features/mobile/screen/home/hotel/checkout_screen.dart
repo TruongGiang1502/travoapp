@@ -9,7 +9,8 @@ import 'package:travo_demo/features/mobile/screen/home/widget/text_name_checkout
 class CheckOutScreen extends StatefulWidget {
   static const routeName = '/checkout_screen';
   final SnapRoomModel snapInfo;
-  const CheckOutScreen({super.key, required this.snapInfo});
+  final String roomID;
+  const CheckOutScreen({super.key, required this.snapInfo, required this.roomID});
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -35,7 +36,18 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     if (pageNumber.value < 2) {
       pageController.nextPage(
           duration: const Duration(microseconds: 900),
-          curve: Curves.ease);
+          curve: Curves.ease
+      );
+    } else {
+    }
+  }
+
+  void previousScreen(){
+    if (pageNumber.value > 0) {
+      pageController.previousPage(
+          duration: const Duration(microseconds: 900),
+          curve: Curves.ease
+      );
     } else {
     }
   }
@@ -112,6 +124,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         ),
       ),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index){
           pageNumber.value = index;
@@ -124,7 +137,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           CheckOutPayment(
             onPressed: nextScreen,
           ),
-          const ConfirmScreen(),
+          ConfirmScreen(snapInfo: widget.snapInfo, roomId: widget.roomID, previousPage: previousScreen,),
         ],
       )
     );

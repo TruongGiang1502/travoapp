@@ -13,4 +13,12 @@ class PayCard {
     required this.country
   });
 
+  Map<String, String> toJson() =>{
+    "name": name,
+    "cardNumber": cardNumber,
+    "exp_date": expDate,
+    "cvv": cvv,
+    "country": country 
+  };
+
 }

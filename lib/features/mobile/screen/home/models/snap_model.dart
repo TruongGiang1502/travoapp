@@ -51,11 +51,12 @@ class SnapHotelModel {
 }
 
 class SnapRoomModel {
-  String? imageUrl, maxGuest, name, price, total, typePrice;
+  String? hotelId ,imageUrl, maxGuest, name, price, total, typePrice;
   List<dynamic>? services;
 
   SnapRoomModel.fromSnap(Map<String, dynamic>? snap){
     if(snap == null){
+      hotelId = '';
       imageUrl = failImage;
       maxGuest = '0';
       name = failData;
@@ -65,6 +66,7 @@ class SnapRoomModel {
       services = [];
     }
     else {
+      hotelId = snap['hotel'];
       imageUrl = snap['image'];
       maxGuest = snap['max_guest'].toString();
       name = snap['name'];

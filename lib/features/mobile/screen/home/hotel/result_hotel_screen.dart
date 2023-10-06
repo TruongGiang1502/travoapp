@@ -93,7 +93,7 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
                 itemBuilder: (BuildContext context, int index){
                   var snap = snapshot.data?.docs[index].data();
                   SnapHotelModel snapInfo = SnapHotelModel.fromSnap(snap);
-                  var snapId = snapshot.data?.docs[index].id;
+                  var snapHotelId = snapshot.data?.docs[index].id;
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ContainerBoxDecor(
@@ -161,7 +161,7 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
                                     ),
                                     CustomButton(
                                       onPressed: (){
-                                        bookAroom(context, snapInfo, snapId);
+                                        bookAroom(context, snapInfo, snapHotelId);
                                       },
                                       text: 'bookaroom'.tr(), 
                                       width: 0.4

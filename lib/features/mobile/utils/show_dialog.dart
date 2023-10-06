@@ -63,11 +63,38 @@ class ShowDialog {
               onPressed: () {
                 Navigator.of(context).pop(); // Đóng hộp thoại
               },
-              child: const Text('Cancel'),
+              child: const Text('OK'),
             ),
           ],
         );
       },
     );
   }
+  static void showSimpleDialogAndNavigate(BuildContext context, String title, String text, String routeName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+         
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20)
+          ),
+          title: Text(title),
+          content: Text(text),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, routeName); // Đóng hộp thoại
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
 }
+}
+
+
+

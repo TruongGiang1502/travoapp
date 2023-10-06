@@ -13,7 +13,7 @@ class InfoGuest{
   Map<String, String> toJson() =>{
     "name": name,
     "email": email,
-    "phone_num": phoneNumber
+    "phone_num": '+$phoneNumber'
   };
 
 
