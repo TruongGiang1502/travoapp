@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:travo_demo/features/mobile/screen/home/flights/book_flight_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/utils/list_favor.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/result_hotel_screen.dart';
@@ -168,7 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Column(
                           children: [
                             PickOptions(
-                              onPressed: (){},
+                              onPressed: (){
+                                Navigator.pushNamed(context, BookFlightScreen.routeName);
+                              },
                               backgroundColor: Colors.red[100],
                               imageUrl: 'images/flight_icon.png',
                             ),
