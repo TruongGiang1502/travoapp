@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           );
         }
-        else if(snapshot.data == ConnectivityResult.none){
+        else if(snapshot.data == ConnectivityResult.none || snapshot.data == ConnectivityResult.other){
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -254,7 +254,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: 8,
                         itemBuilder: (BuildContext context, int index){
                           var snap = snapshot.data?.docs[index].data();
+                          if(snap==null){
+                            return const Center(
+                              child: Text('No data found'),
+                            );
+                          }
                           SnapPlaceModel snapInfo = SnapPlaceModel.fromSnap(snap);
+                          
                           ValueNotifier<Color> favorBtnColor = ValueNotifier(isFavor(snapInfo.name!));
                           return Stack(
                             children: [

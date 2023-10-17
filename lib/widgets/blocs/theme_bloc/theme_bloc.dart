@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travo_demo/utils/color.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
@@ -12,6 +13,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
   } 
   
   static final _lightTheme = ThemeData(
+    scaffoldBackgroundColor: themeLightColor,
     brightness: Brightness.light,
   );
 

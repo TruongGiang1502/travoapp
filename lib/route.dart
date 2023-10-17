@@ -6,6 +6,8 @@ import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/book_flight_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/flights/result_flight_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/flights/select_seat_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_card_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_contact_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_promo_code.dart';
@@ -85,7 +87,13 @@ Route <dynamic> generateRoute (RouteSettings settings){
 
     case BookFlightScreen.routeName:
       return MaterialPageRoute(builder: (context) => const BookFlightScreen());
-      
+
+    case ResultFlightScreen.routeName:
+      return MaterialPageRoute(builder: (context) => const ResultFlightScreen());
+
+    case SelectSeatScreen.routeName:
+      return MaterialPageRoute(builder: (context) => const SelectSeatScreen());   
+
     default:
       return MaterialPageRoute(builder: (context) => const CircularProgressIndicator());
   }

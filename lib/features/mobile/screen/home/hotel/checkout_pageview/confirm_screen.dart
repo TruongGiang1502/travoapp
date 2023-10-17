@@ -308,7 +308,8 @@ void paynow(
 
 Widget payNowButton(BuildContext context, String roomId,
     String hotelId, String? userId, String? userEmail) {
-  return BlocBuilder<GetInfoCubit, List<InfoGuest>>(builder: (context, info) {
+  return BlocBuilder<GetInfoCubit, List<InfoGuest>>(
+      builder: (context, info) {
     return BlocBuilder<GetPromoCodeCubit, String>(
         builder: (context, promoCode) {
       return BlocBuilder<TimeCheckinCubit, DateTime>(
