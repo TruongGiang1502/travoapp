@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
 class SelectSeatScreen extends StatefulWidget {
@@ -11,6 +12,164 @@ class SelectSeatScreen extends StatefulWidget {
 }
 
 class _SelectSeatScreenState extends State<SelectSeatScreen> {
+  ValueNotifier<String> seatNof = ValueNotifier('---');
+  ValueNotifier<String> typeClassSeat = ValueNotifier('--------');
+  Widget seatFlight(BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: SizedBox(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              'Bussiness Class',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18 
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('  A'),
+                Text(' B'),
+                Text(''),
+                Text('C '),
+                Text('D  ')
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            buissinessSeat(seat, 1),
+            buissinessSeat(seat, 2),
+            buissinessSeat(seat, 3),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              'Economy Class',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18 
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('  A'),
+                Text(' B'),
+                Text('C'),
+                Text(''),
+                Text('D'),
+                Text('E '),
+                Text('F  ')
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            economySeat(seat, 1),
+            economySeat(seat, 2),
+            economySeat(seat, 3),
+            economySeat(seat, 4),
+            economySeat(seat, 5),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buissinessSeat(Function seat, int rowNumber){
+    return ValueListenableBuilder(
+      valueListenable: seatNof,
+      builder: (context, seatPosi, child) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                seat('A', rowNumber, 'b', seatPosi),
+                seat('B', rowNumber, 'b', seatPosi),
+                Text(
+                  '$rowNumber',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+
+                  ),
+                ),
+                seat('C', rowNumber, 'b', seatPosi),
+                seat('D', rowNumber, 'b', seatPosi)
+              ],
+            ),
+            const SizedBox(height: 5,)
+          ],
+        );
+      }
+    );
+  }
+
+  Widget economySeat(Function seat, int rowNumber){
+    return ValueListenableBuilder(
+      valueListenable: seatNof,
+      builder: (context, seatPosi, child) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                seat('A', rowNumber, 'e', seatPosi),
+                seat('B', rowNumber, 'e', seatPosi),
+                seat('C', rowNumber, 'e', seatPosi),
+                Text(
+                  '$rowNumber',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ), 
+                ),
+                seat('D', rowNumber, 'e', seatPosi),
+                seat('E', rowNumber, 'e', seatPosi),
+                seat('F', rowNumber, 'e', seatPosi)
+              ],
+            ),
+            const SizedBox(height: 20,)
+          ],
+        );
+      }
+    );
+  }
+
+  Widget seat(String type, int rowNumber, String typeSeat, String seatPos){
+    String seatChose = '$typeSeat$type$rowNumber';
+    bool isChosen = seatChose == seatPos;
+    return GestureDetector(
+      onTap: () {
+        if(isChosen){
+          seatNof.value = '---';
+          typeClassSeat.value = '--------';
+        }
+        else{
+          seatNof.value = seatChose;
+          typeSeat == 'b'? typeClassSeat.value = 'Bussiness Class':typeClassSeat.value = 'Economy Class';
+        } 
+      },
+      child: SvgPicture.asset(
+        'images/seat_airline/seat_airline.svg',
+        height: 25,
+        width: 25,
+        color: seatPos==seatChose?indigo:Colors.red ,
+      ),
+    );
+  }
+
+  //MAIN
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -35,7 +194,8 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 35,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.bold
+                    ),  
                   ),
                 ],
               ),
@@ -46,163 +206,133 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      height: size.height * 0.2,
-                      width: size.width * 0.3,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: whiteColor),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CustomPaint(
-                        size: Size(
-                            size.width * 0.5,
-                            (size.width * 0.4 * 1.4366197183098592)
-                                .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                        painter: HeadRPSCustomPainter(),
-                      ),
-                      Stack(
-                        alignment: Alignment.topCenter,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 10,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.4,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: whiteColor),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SvgPicture.asset('images/seat_airline/icon_pick_seat.svg'),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'Seat',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: greyColor
+                                        ),
+                                      ),
+                                      ValueListenableBuilder(
+                                        valueListenable: seatNof, 
+                                        builder: (context, seatValue, child){
+                                          return Column(
+                                            children: [
+                                              Text(
+                                                seatValue.substring(1),
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: indigo
+                                                ),
+                                              )
+                                            ],
+                                          );
+                                        }
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              ValueListenableBuilder(
+                                valueListenable: typeClassSeat, 
+                                builder: (context, typeSeat, child){
+                                  return Center(
+                                    child: Text(
+                                      typeSeat,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  );
+                                }
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: linkWater,
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '\$215',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: indigo
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 19,
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
                           CustomPaint(
                             size: Size(
-                                size.width * 0.56,
-                                (size.width * 0.8 * 1.6234309623430963)
+                                size.width * 0.5,
+                                (size.width * 0.4 * 1.4366197183098592)
                                     .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                            painter: BodyRPSCustomPainter(),
+                            painter: HeadRPSCustomPainter(),
                           ),
-                          seatFilght(context)
+                          Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              CustomPaint(
+                                size: Size(
+                                    size.width * 0.6,
+                                    (size.width * 0.8 * 1.6234309623430963)
+                                        .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                                painter: BodyRPSCustomPainter(),
+                              ),
+                              seatFlight(context)
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                ),
-              )
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              CustomButton(onPressed: (){}, text: 'Processed', width: 1)
             ],
           ),
         ));
   }
-}
-
-Widget seatFilght(BuildContext context){
-  return Padding(
-    padding: const EdgeInsets.all(8),
-    child: SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text(
-            'Bussiness Class',
-            style: TextStyle(
-               fontWeight: FontWeight.bold,
-               fontSize: 18 
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          buissinessSeat(seat(), 1),
-          buissinessSeat(seat(), 2),
-          buissinessSeat(seat(), 3),
-           const SizedBox(
-            height: 10,
-          ),
-          const Text(
-            'Bussiness Class',
-            style: TextStyle(
-               fontWeight: FontWeight.bold,
-               fontSize: 18 
-            ),
-          ),
-           const SizedBox(
-            height: 10,
-          ),
-          economySeat(seat(), 1),
-          economySeat(seat(), 2),
-          economySeat(seat(), 3),
-          economySeat(seat(), 4),
-          economySeat(seat(), 5),
-
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buissinessSeat(Widget seat, int rowNumber){
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          seat,
-          seat,
-          Text(
-            '$rowNumber',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-
-            ),
-          ),
-          seat,
-          seat
-        ],
-      ),
-      const SizedBox(height: 5,)
-    ],
-  );
-}
-Widget economySeat(Widget seat, int rowNumber){
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          seat,
-          seat,
-          seat,
-          Text(
-            '$rowNumber',
-             style: const TextStyle(
-              fontWeight: FontWeight.bold,
-             ), 
-          ),
-          seat,
-          seat,
-          seat
-        ],
-      ),
-      const SizedBox(height: 5,)
-    ],
-  );
-}
-Widget seat(){
-  return GestureDetector(
-    onTap: () {
-      
-    },
-    child: SvgPicture.asset(
-      'images/seat_airline/seat_airline.svg',
-      height: 25,
-      width: 25,
-      color: Colors.red,
-    ),
-  );
 }
 
 class HeadRPSCustomPainter extends CustomPainter {

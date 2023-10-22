@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/select_seat_screen.dart';
+import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
+import 'package:travo_demo/widgets/container_decor.dart';
 
 class ResultFlightScreen extends StatelessWidget {
   static const routeName = '/result_fly_screen';
@@ -393,6 +396,30 @@ void chooseFilterSheet(BuildContext context){
                           max: 5000,
                           activeColor: indigo,
                         ),
+                        utilityButton(
+                          onPressed: (){}, 
+                          iconUrl: 'images/flight_screen_icon/facilities.svg', 
+                          text: 'Facilities'
+                        ),
+                        utilityButton(
+                          onPressed: (){}, 
+                          iconUrl: 'images/flight_screen_icon/sort_by.svg', 
+                          text: 'Sort by'
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CustomButton(
+                            onPressed: (){}, 
+                            text: 'Apply', 
+                            width: 1),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CustomButtonOption2(
+                            onPressed: (){}, 
+                            text: 'Reset', 
+                            width: 1),
+                        )
                       ],
                     );
                   })
@@ -402,6 +429,42 @@ void chooseFilterSheet(BuildContext context){
         )
       );
     });
+}
+
+Widget utilityButton({
+  required VoidCallback onPressed,
+  required String iconUrl,
+  required String text
+}){
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 4.0),
+    child: ContainerBoxDecor(
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            )
+          ),
+          child: Row(
+            children: [
+              SvgPicture.asset(iconUrl),
+              const SizedBox(width: 10,),
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                ),
+              )
+            ],
+          )
+        ),
+      ),
+  );
 }
 
 Widget selectTypeButton(
