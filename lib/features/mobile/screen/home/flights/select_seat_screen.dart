@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:travo_demo/features/mobile/screen/home/flights/check_out_flight.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
@@ -328,7 +329,11 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                   )
                 ],
               ),
-              CustomButton(onPressed: (){}, text: 'Processed', width: 1)
+              CustomButton(
+                onPressed: (){
+                  Navigator.pushNamed(context, CheckOutFlight.routeName);
+                }, 
+                text: 'Processed', width: 1)
             ],
           ),
         ));

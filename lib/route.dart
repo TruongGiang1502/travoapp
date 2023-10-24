@@ -6,6 +6,7 @@ import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/book_flight_screen.dart';
+import 'package:travo_demo/features/mobile/screen/home/flights/check_out_flight.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/result_flight_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/select_seat_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_card_screen.dart';
@@ -92,7 +93,18 @@ Route <dynamic> generateRoute (RouteSettings settings){
       return MaterialPageRoute(builder: (context) => const ResultFlightScreen());
 
     case SelectSeatScreen.routeName:
-      return MaterialPageRoute(builder: (context) => const SelectSeatScreen());   
+      return MaterialPageRoute(builder: (context) => const SelectSeatScreen());
+
+    case CheckOutFlight.routeName:
+      return MaterialPageRoute(builder: (context) => 
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => GetCardCubit()),
+            BlocProvider(create: (context) => PayTypeCubit()),
+          ], 
+          child: const CheckOutFlight()
+        )
+      );   
 
     default:
       return MaterialPageRoute(builder: (context) => const CircularProgressIndicator());
