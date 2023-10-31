@@ -27,15 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final size = MediaQuery.of(context).size;
     return FutureBuilder<ConnectivityResult>(
       future: checkInternet(),
-      builder: (context, snapshot) {
-        connection = snapshot.data??ConnectivityResult.none;
-        if(snapshot.connectionState == ConnectionState.waiting && connection != snapshot.data){
+      builder: (context, snapInternet) {
+        connection = snapInternet.data??ConnectivityResult.none;
+        if(snapInternet.connectionState == ConnectionState.waiting && connection != snapInternet.data){
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
-        else if(snapshot.data == ConnectivityResult.none || snapshot.data == ConnectivityResult.other){
+        else if(snapInternet.data == ConnectivityResult.none || snapInternet.data == ConnectivityResult.other){
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     stream: FirebaseFirestore.instance.collection('place').snapshots(), 
                     builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot){
                       
-                      if(snapshot.connectionState == ConnectionState.waiting){
+                      if(snapshot.connectionState == ConnectionState.waiting && connection != snapInternet.data){
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
