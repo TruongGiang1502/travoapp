@@ -208,7 +208,7 @@ void showBottomSheetCustom(BuildContext context){
                     onPressed: (){
                       naviToSelectRoom(context, widget.snapId);
                     },
-                    text: 'Select room', 
+                    text: 'select_room'.tr(), 
                     width: size.width*0.9
                   )
                 ],

@@ -66,7 +66,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Select Room".tr(),
+                        "select_room".tr(),
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -87,8 +87,8 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                   );
                 }
                 else if(snapshot.hasError || !snapshot.hasData || snapshot.data!.docs.isEmpty){
-                  return const Center(
-                    child: Text('We have some error! Please try again'),
+                  return Center(
+                    child: Text("have_some_error".tr()),
                   );
                 }
                 return ListView.builder(
@@ -120,7 +120,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                                         ),
                                       ),
                                       Text(
-                                        'Max guest: ${snapInfo.maxGuest}',
+                                        '${"max_guest".tr()}: ${snapInfo.maxGuest}',
                                       ),
                                       Text(
                                         snapInfo.typePrice!,
@@ -172,7 +172,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                                     onPressed: (){
                                       Navigator.pushNamed(context, CheckOutScreen.routeName, arguments: (snapInfo, snapRoomId));
                                     },
-                                    text: 'Choose'.tr(), 
+                                    text: 'choose'.tr(), 
                                     width: 0.4
                                   )
                                 ],

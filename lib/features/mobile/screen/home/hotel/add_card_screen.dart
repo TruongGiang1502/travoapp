@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,12 +60,12 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Add Card",
-                    style: TextStyle(
+                    "addcard".tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
@@ -86,7 +87,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 TextFieldCustom(
                   controller: nameController,
                   validator: Validator.checkNull,
-                  labelText: 'Name', 
+                  labelText: "name".tr(), 
                   inputFormat: FilteringTextInputFormatter.singleLineFormatter,
                   keyboardType: TextInputType.name,
                 ),
@@ -94,7 +95,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 TextFieldCustom(
                   controller: cardNumberController,
                   validator: Validator.checkNull,
-                  labelText: 'Card Number', 
+                  labelText: "cardnum".tr(), 
                   inputFormat: FilteringTextInputFormatter.digitsOnly,
                   lengthInput: 20,
                   keyboardType: TextInputType.number,
@@ -111,7 +112,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       child: TextFieldCustom(
                         controller: expDateController,
                         validator: Validator.checkNull,
-                        labelText: 'Exp. Date', 
+                        labelText: "expdate".tr(), 
                         inputFormat: FilteringTextInputFormatter.singleLineFormatter,
                         lengthInput: 5,
                         keyboardType: TextInputType.datetime,
@@ -146,7 +147,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   onPressed: (){
                     Navigator.pop(context, cardInfo());
                   }, 
-                  text: 'Add Card', 
+                  text: "addcard".tr(), 
                   width: 1
                 )
               ],

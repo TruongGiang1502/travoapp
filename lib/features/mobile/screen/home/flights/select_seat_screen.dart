@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/check_out_flight.dart';
@@ -22,9 +23,9 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'Bussiness Class',
-              style: TextStyle(
+            Text(
+              "bussiness_class".tr(),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18 
               ),
@@ -51,9 +52,9 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              'Economy Class',
-              style: TextStyle(
+            Text(
+              "economy_class".tr(),
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18 
               ),
@@ -158,14 +159,14 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
         }
         else{
           seatNof.value = seatChose;
-          typeSeat == 'b'? typeClassSeat.value = 'Bussiness Class':typeClassSeat.value = 'Economy Class';
+          typeSeat == 'b'? typeClassSeat.value = "bussiness_class".tr():typeClassSeat.value = "economy_class".tr();
         } 
       },
       child: SvgPicture.asset(
         'images/seat_airline/seat_airline.svg',
         height: 25,
         width: 25,
-        color: seatPos==seatChose?indigo:Colors.red ,
+        colorFilter: ColorFilter.mode(seatPos==seatChose?indigo:Colors.red, BlendMode.srcIn)
       ),
     );
   }
@@ -187,12 +188,12 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Select Seat",
-                    style: TextStyle(
+                    "select_seat".tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.bold
@@ -235,7 +236,7 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                                   Column(
                                     children: [
                                       Text(
-                                        'Seat',
+                                        "seat".tr(),
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: greyColor
@@ -333,7 +334,7 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                 onPressed: (){
                   Navigator.pushNamed(context, CheckOutFlight.routeName);
                 }, 
-                text: 'Processed', width: 1)
+                text: "select".tr(), width: 1)
             ],
           ),
         ));

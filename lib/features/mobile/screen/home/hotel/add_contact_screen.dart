@@ -64,12 +64,12 @@ class _AddContactScreenState extends State<AddContactScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Add Contact",
-                    style: TextStyle(
+                    "add_contact".tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
@@ -117,7 +117,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                         return TextFieldCustom(
                           controller: phoneController, 
                           validator: Validator.checkNull, 
-                          labelText: 'Phone Number', 
+                          labelText: "phone_number".tr(), 
                           inputFormat: FilteringTextInputFormatter.digitsOnly, 
                           keyboardType: TextInputType.number, 
                           prefixText: '+$curPhoneCode | ',
@@ -141,7 +141,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                     ),
                     AuthButton(
                       formKey: _formKey, 
-                      text: 'Done', 
+                      text: "done".tr(), 
                       onPressed: () => 
                         Navigator.pop(
                           context, information()

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
@@ -27,10 +28,10 @@ class PickCountryButton extends StatelessWidget {
                 child: Text(country.countryName),
               );
             }).toList(),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              labelText: 'Country',
-              labelStyle: TextStyle(
+              labelText: "country".tr(),
+              labelStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 18,
                   fontWeight: FontWeight.normal),

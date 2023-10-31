@@ -1,12 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/providers/auth_phonecode_cubit.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
-import 'package:travo_demo/features/auth/utils/list_country.dart';
 import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
+import 'package:travo_demo/widgets/pick_country_button.dart';
+import 'package:travo_demo/widgets/text_field_custom.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -24,7 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool passToggle = true;
+  ValueNotifier <bool> passToggle = ValueNotifier(true);
   String curPhoneCode = '84';
   String countryname = 'Viet Nam';
 
@@ -103,31 +105,20 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
-                    TextFormField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                          labelText: "name".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.account_circle_sharp)),
+                    TextFieldCustom(
+                      controller: nameController, 
+                      validator: Validator.checkNull, 
+                      labelText: "name".tr(), 
+                      inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                      keyboardType: TextInputType.text
                     ),
+                    
                     const SizedBox(
                       height: 20,
                     ),
-                   
-                    DropdownButtonFormField(
-                      value: countryname,
-                      items: listCountry.map((ListCountry country) {
-                        return DropdownMenuItem<String>(
-                          value: country.countryName,
-                          child: Text(country.countryName),
-                        );
-                      }).toList(),
-                      decoration: InputDecoration(
-                        labelText: "country".tr(),
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.flag_circle)
-                      ), 
+                    PickCountryButton(
+                      countryName: countryname,
+                      isChangePhoneCode: true,
                       onChanged: (value){
                         countryname = value!;
                         context.read<AuthPhoneCodeCubit>().changePhoneCode(value);
@@ -136,64 +127,54 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    BlocBuilder<AuthPhoneCodeCubit, String>(
+                      builder: (context, curPhoneCode) {
+                        return TextFieldCustom(
+                          controller: phoneController, 
+                          validator: Validator.checkNull, 
+                          labelText: "phone_number".tr(), 
+                          inputFormat: FilteringTextInputFormatter.digitsOnly, 
+                          keyboardType: TextInputType.number, 
+                          prefixText: '+$curPhoneCode | ',
+                        );
+                      }
+                    ),
+                    
+                    const SizedBox(
+                      height: 20,
+                    ),
 
-                    TextFormField(
-                      controller: phoneController,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                          prefix: SizedBox(
-                            //color: Colors.red, 
-                            width: 50,
-                            child: BlocBuilder<AuthPhoneCodeCubit, String>(
-                              builder: (context, curPhoneCode) => Center(
-                                child: Text('+$curPhoneCode', style: const TextStyle(fontSize: 18),)
-                              )
-                            ),
-                          ),
-                          labelText: "phone_number".tr(),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(4),
-                              bottomRight: Radius.circular(4)
-                            )
-                          ),
-                          prefixIcon: const Icon(Icons.phone)),
+                    TextFieldCustom(
+                      controller: emailController, 
+                      validator: Validator.emailValidator, 
+                      labelText: "email".tr(), 
+                      inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                      keyboardType: TextInputType.text
                     ),
                     const SizedBox(
                       height: 20,
                     ),
 
-                    TextFormField(
-                      controller: emailController,
-                      validator: Validator.emailValidator,
-                      decoration: InputDecoration(
-                          labelText: "email".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.email)),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    TextFormField(
-                      controller: passwordController,
-                      validator: Validator.passwordValidator,
-                      obscureText: passToggle,
-                      decoration: InputDecoration(
-                          labelText: "password".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.lock),
+                    ValueListenableBuilder(
+                      valueListenable: passToggle,
+                      builder: (context, isHide, child) {
+                        return TextFieldCustom(
+                          controller: passwordController, 
+                          validator: Validator.passwordValidator,
+                          obscureText: isHide, 
+                          labelText: "password".tr(), 
+                          inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                          keyboardType: TextInputType.text,
                           suffix: InkWell(
-                            onTap: () {
-                              setState(() {
-                                passToggle = !passToggle;
-                              });
-                            },
-                            child: Icon(
-                              passToggle? Icons.visibility : Icons.visibility_off
-                            ),
-                          )
-                        ),
+                                onTap: () {
+                                  passToggle.value = !isHide;
+                                },
+                                child: Icon(
+                                  isHide? Icons.visibility : Icons.visibility_off
+                                ),
+                              ),
+                        );
+                      }
                     ),
                     const SizedBox(
                       height: 20,

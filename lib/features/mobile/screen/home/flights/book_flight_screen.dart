@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/list_flight_pageview/multi_city_list.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/list_flight_pageview/one_way_list.dart';
@@ -44,12 +45,12 @@ class _BookFlightScreenState extends State<BookFlightScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Book Flight",
-                    style: TextStyle(
+                    "book_flight".tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
@@ -83,7 +84,7 @@ class _BookFlightScreenState extends State<BookFlightScreen> {
                             isChosen: pagenum == 0, 
                             onPressed: (){
                               pageController.jumpToPage(0);
-                            }, text: 'One Way'
+                            }, text: "one_way".tr()
                           ),
                         ),
                         Expanded(
@@ -92,7 +93,7 @@ class _BookFlightScreenState extends State<BookFlightScreen> {
                             onPressed: (){
                               pageController.jumpToPage(1);
                             }, 
-                            text: 'Round Trip'
+                            text: "round_trip".tr()
                           ),
                         ),
                         Expanded(
@@ -101,7 +102,7 @@ class _BookFlightScreenState extends State<BookFlightScreen> {
                             onPressed: (){
                               pageController.jumpToPage(2);
                             }, 
-                            text: 'Multi City'
+                            text: "multi_city".tr()
                           ),
                         )
                       ],

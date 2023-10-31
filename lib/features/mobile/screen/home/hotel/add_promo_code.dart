@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
@@ -35,12 +36,12 @@ class _AddPromoCodeScreenState extends State<AddPromoCodeScreen> {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Promo Code",
-                    style: TextStyle(
+                    "promocode".tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
@@ -59,7 +60,7 @@ class _AddPromoCodeScreenState extends State<AddPromoCodeScreen> {
             TextFieldCustom(
               controller: promoCodeController, 
               validator: Validator.checkNull, 
-              labelText: 'Promo Code', 
+              labelText: "promocode".tr(), 
               inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
               keyboardType: TextInputType.text, 
             ),
@@ -69,7 +70,7 @@ class _AddPromoCodeScreenState extends State<AddPromoCodeScreen> {
               onPressed: () => Navigator.pop(
                     context, promoCodeController.text
                   ),
-              text: 'Done',
+              text: "done".tr(),
               width: 200)
           ],
         ),

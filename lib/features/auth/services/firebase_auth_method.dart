@@ -59,7 +59,7 @@ class FirebaseAuthMethod {
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, 'Login sucess');
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, MainScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(context, MainScreen.routeName, (route) => false);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);
@@ -73,7 +73,7 @@ class FirebaseAuthMethod {
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, 'Signed Out');
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (route) => false);
     } on FirebaseAuthException catch(error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);
@@ -81,23 +81,23 @@ class FirebaseAuthMethod {
   }
 
   ////Delete user
-  Future<void> deleteUser(BuildContext context) async {
-    try {
-      await _auth.currentUser!.delete();
-       // ignore: use_build_context_synchronously
-       Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-    } on FirebaseAuthException catch (error){
-      // ignore: use_build_context_synchronously
-      ShowSnackBar.showSnackBar(context, error.message!);
-    }
-  }
+  // Future<void> deleteUser(BuildContext context) async {
+  //   try {
+  //     await _auth.currentUser!.delete();
+  //      // ignore: use_build_context_synchronously
+  //      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+  //   } on FirebaseAuthException catch (error){
+  //     // ignore: use_build_context_synchronously
+  //     ShowSnackBar.showSnackBar(context, error.message!);
+  //   }
+  // }
 
   ////reset password
   Future<void> resetPassWord(BuildContext context,  String email) async {
     try{
       await _auth.sendPasswordResetEmail(email: email);
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (route) => false);
     } on FirebaseAuthException catch (error){
       // ignore: use_build_context_synchronously
       ShowSnackBar.showSnackBar(context, error.message!);

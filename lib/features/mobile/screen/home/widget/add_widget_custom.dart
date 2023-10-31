@@ -121,7 +121,12 @@ class AddInfoGuestCustom extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              childBuilderWidget(heroTag, onPressed, textWidget, 1)
+              childBuilderWidget(
+                heroTag, 
+                onPressed, 
+                textWidget, 
+                listInfoGuest.isEmpty? 0.7 :1
+              )
             ],
           ),
         ),

@@ -46,6 +46,9 @@
     "fav": "Favorite",
     "payment": "Payment",
     "user": "User",
+    "user_title": "User",
+
+    "favourite": "Favourite",
 
     "setting": "Setting",
     "logout": "Logout",
@@ -56,6 +59,82 @@
     "night": "night",
 
     "information": "Information",
-    "location": "Location" 
+    "location": "Location",
+    
+    "select_room": "Select Room",
+    "have_some_error": "We have some error! Please try again",
+    "max_guest": "Max guest",
+    "choose": "Choose",
 
-}
+    "free_wifi": "Free\nWiFi",
+    "non_refund": "Non-\nRefundable",
+    "free_breakfast": "Free\nBreakfast",
+    "non_smoke": "Non-\nSmoking",
+    "room_service": "Room\nService",
+
+    "checkout": "Check out",
+    "book_review": "Book and review",
+    "payment_check": "Payment",
+    "confirm": "Confirm",
+
+    "contact_detail": "Contact Details",
+    "add_contact": "Add Contact",
+    "promocode": "Promo Code",
+    "add_promocode": "Add Promo Code",
+    "booking_date": "Booking Date",
+    "check_in": "Check in",
+    "check_out": "Check out",
+    "room": "room",
+
+    "done": "Done",
+
+    "cash": "Cash",
+    "credit/debit": "Credit / Debit Card",
+    "bank": "Bank Transfer",
+    "addcard": "Add Card",
+    "cardnum": "Card Number",
+    "expdate": "Exp. Date",
+
+    "taxefee": "Taxes and fee",
+    "free": "Free",
+    "total": "Total",
+    "paynow": "Pay Now",
+    "change": "Change",
+
+    "book_flight": "Book Flight",
+    "one_way": "One way",
+    "round_trip": "Round trip",
+    "multi_city": "Multi city",
+    "from": "From",
+    "to": "To",
+    "depature": "Depature",
+    "return": "Return",
+    "select_date": "Select Date",
+    "passer_title": "Passenger",
+    "passenger": "Passenger",
+    "class": "Class",
+    "search": "Search",
+    "economy": "Economy",
+
+    "select_flight": "Select Flight",
+    "arrive": "Arrive",
+    "fly_no": "Flight No.",
+    "price": "Price",
+
+    "chose_filter": "Choose your filter",
+    "transit": "Transit",
+    "direct": "Direct",
+    "transit_duration": "Transit Duration",
+    "facility": "Facilities",
+    "sort_by": "Sort by",
+    "apply": "Apply",
+    "reset": "Reset",
+
+    "bussiness_class": "Bussiness class",
+    "economy_class": "Economy class",
+    "select_seat": "Select Seat",
+    "seat": "Seat",
+    "select": "Select",
+
+    "fly_book": "Book ticket"
+} 

@@ -23,6 +23,7 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    ValueNotifier <int> dataNum = ValueNotifier(9);
     return FutureBuilder<ConnectivityResult>(
       future: checkInternet(),
       builder: (context, snapshot) {
@@ -87,95 +88,117 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
                   child: Text('We have some error! Please try again'),
                 );
               }
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: 8,
-                itemBuilder: (BuildContext context, int index){
-                  var snap = snapshot.data?.docs[index].data();
-                  SnapHotelModel snapInfo = SnapHotelModel.fromSnap(snap);
-                  var snapHotelId = snapshot.data?.docs[index].id;
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ContainerBoxDecor(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [                     
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20)
-                            ),
-                            child: Image.network(
-                              snapInfo.imageUrl!,
-                              width: 320,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(snapInfo.name!, style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold
-                                ),),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.location_on, color: Colors.red,),
-                                    Text(snapInfo.location!),
-                                  ],
+              return ValueListenableBuilder(
+                valueListenable: dataNum,
+                builder: (context, dataNumber, child) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: dataNumber,
+                    itemBuilder: (BuildContext context, int index){
+                      var snap = snapshot.data?.docs[index].data();
+                      SnapHotelModel snapInfo = SnapHotelModel.fromSnap(snap);
+                      var snapHotelId = snapshot.data?.docs[index].id;
+                      int totalDataSnap = snapshot.data!.docs.length;
+                      void loadmore(){
+                        int dataNotLoad = totalDataSnap - dataNumber;
+                        if(dataNotLoad > 8){
+                          dataNum.value += 8;
+                        }
+                        else{
+                          dataNum.value += dataNotLoad;
+                        }
+                      }
+                      return (index == dataNum.value - 1 && dataNumber < totalDataSnap)? 
+                      TextButton(
+                        onPressed: loadmore,
+                        child: const Text(
+                          'Loadmore'
+                        )
+                      )
+                      :Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ContainerBoxDecor(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [                     
+                              ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(20)
                                 ),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star, color: Colors.yellow,),
-                                    Text('${snapInfo.rating}'), 
-                                    Text(' (${snapInfo.totalReview} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
-                                  ],
+                                child: Image.network(
+                                  snapInfo.imageUrl!,
+                                  width: 320,
                                 ),
-                                Divider(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  thickness: 2,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    Text(snapInfo.name!, style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                    ),),
+                                    Row(
                                       children: [
-                                        Text(
-                                          '\$${snapInfo.price}',
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                        Text(
-                                          '/${'night'.tr()}',
-                                          style: const TextStyle(
-                                            color: Colors.grey
-                                          ),
-                                        )
+                                        const Icon(Icons.location_on, color: Colors.red,),
+                                        Text(snapInfo.location!),
                                       ],
                                     ),
-                                    CustomButton(
-                                      onPressed: (){
-                                        bookAroom(context, snapInfo, snapHotelId);
-                                      },
-                                      text: 'bookaroom'.tr(), 
-                                      width: 0.4
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.star, color: Colors.yellow,),
+                                        Text('${snapInfo.rating}'), 
+                                        Text(' (${snapInfo.totalReview} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
+                                      ],
+                                    ),
+                                    Divider(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      thickness: 2,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '\$${snapInfo.price}',
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                            Text(
+                                              '/${'night'.tr()}',
+                                              style: const TextStyle(
+                                                color: Colors.grey
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        CustomButton(
+                                          onPressed: (){
+                                            bookAroom(context, snapInfo, snapHotelId);
+                                          },
+                                          text: 'bookaroom'.tr(), 
+                                          width: 0.4
+                                        )
+                                      ],
                                     )
                                   ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   );
-                },
+                }
               );
             }
           ),

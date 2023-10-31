@@ -46,6 +46,9 @@
     "fav": "Yê.thích",
     "payment": "Th.toán",
     "user": "Ng.dùng",
+    "user_title": "Người dùng",
+
+    "favourite": "Yêu thích",
 
     "setting": "Cài đặt",
     "logout": "Đăng xuất",
@@ -56,5 +59,82 @@
     "night": "đêm",
 
     "information": "Thông tin thêm",
-    "location": "Vị trí"
+    "location": "Vị trí",
+
+    "select_room": "Chọn phòng",
+    "have_some_error": "Đã xảy ra lỗi! Vui lòng thử lại sau",
+    "max_guest": "Số khách tối đa",
+    "choose": "Chọn",
+
+    "free_wifi": "WiFi\nmiễn phí",
+    "non_refund": "Không\noàn lại",
+    "free_breakfast": "Bữa sáng\nmiễn phí",
+    "non_smoke": "Không\nhút thuốc",
+    "room_service": "Dịch vụ\nphòng",
+
+    "checkout": "Thanh toán",
+    "book_review": "Đặt phòng",
+    "payment_check": "Thanh toán",
+    "confirm": "Xác nhận",
+
+    "contact_detail": "Thông tin liên lạc",
+    "add_contact": "Thêm liên lạc",
+    "promocode": "Mã giảm giá",
+    "add_promocode": "Thêm mã giảm giá",
+    "booking_date": "Chọn ngày",
+    "check_in": "Ngày nhận",
+    "check_out": "Ngày trả",
+    "room":"phòng",
+
+    "done": "Xong",
+
+    "cash": "Tiền mặt",
+    "credit/debit": "Thẻ tín dụng / ghi nợ",
+    "bank": "Chuyển ngân hàng",
+    "addcard": "Thêm thẻ",
+    "cardnum": "Số thẻ",
+    "expdate": "Hạn thẻ",
+
+    "taxefee": "Thuế và phí",
+    "free": "Miễn phí",
+    "total": "Tổng",
+    "paynow": "Thanh toán ngay",
+    "change": "Thay đổi",
+
+    "book_flight": "Đặt máy bay",
+    "one_way": "Một chiều",
+    "round_trip": "Có khứ hồi",
+    "multi_city": "Quá cảnh",
+    "from": "Từ",
+    "to": "Đến",
+    "depature": "Khởi hành",
+    "return": "Khứ hồi",
+    "select_date": "Chọn ngày",
+    "passer_title": "Khách",
+    "passenger": "khách",
+    "class": "Hạng vé",
+    "search": "Tìm kiếm",
+    "economy": "Phổ thông",
+
+    "select_flight": "Chọn chuyến bay",
+    "arrive": "Đến",
+    "fly_no": "Chuyến bay số",
+    "price": "Giá",
+
+    "chose_filter": "Bộ lọc của bạn",
+    "transit": "Quá cảnh",
+    "direct": "Trực tiếp",
+    "transit_duration": "Thời gian bay",
+    "facility": "Tiện nghi",
+    "sort_by": "Sắp xếp theo",
+    "apply": "Thêm",
+    "reset": "Mặc định",
+
+    "bussiness_class": "Hạng thương gia",
+    "economy_class": "Hạng phổ thông",
+    "select_seat": "Chọn ghế",
+    "seat": "Ghế",
+    "select": "Chọn",
+
+    "fly_book": "Đặt vé"
 }

@@ -5,8 +5,6 @@ import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/screen/onboard/widget/dotindicator.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
-import 'package:travo_demo/widgets/blocs/language_bloc/language_bloc.dart';
-import 'package:travo_demo/widgets/blocs/language_bloc/language_event.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_bloc.dart';
 import 'package:travo_demo/widgets/blocs/theme_bloc/theme_event.dart';
 
@@ -31,9 +29,9 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
     context.read<ButtonColorBloc>().add(ButtonColorEvent());
   }
 
-  _changeLocale (BuildContext context){
-    context.read<LanguageBloc>().add(LanguageChangeEvent());
-  }
+  // _changeLocale (BuildContext context){
+  //   context.read<LanguageBloc>().add(LanguageChangeEvent());
+  // }
 
   void pageChangeScreen(){
     if (pageNum.value < 2) {
@@ -61,12 +59,11 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
   
   @override
   Widget build(BuildContext context) {
-
-    return
-      BlocConsumer<LanguageBloc, (String, String)>(
-        listener: (BuildContext context, (String, String) state){},
-        builder: (BuildContext context, state){
-          return Scaffold(
+     ValueNotifier <Locale> locale = ValueNotifier(context.locale);
+    return ValueListenableBuilder(
+      valueListenable: locale,
+      builder: (context, langCode, child) {
+        return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -87,7 +84,15 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
                           ),
                           IconButton(
                             onPressed: (){
-                              _changeLocale(context);
+                               if(langCode == const Locale('en', 'US')){
+                                  context.setLocale(const Locale('vi', 'VN'));
+                                  //locale.value = const Locale('vi', 'VN');
+                                }
+                                else{
+                                  context.setLocale(const Locale('en', 'US'));
+                                  //locale.value = const Locale('en', 'US');
+                                }
+                              // _changeLocale(context);
                             },
                             icon: Icon(Icons.translate, color: color,)
                           ),
@@ -152,8 +157,8 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
             ),
             
           );
-        }, 
-      );  
+      }
+    );  
       
     }
 }

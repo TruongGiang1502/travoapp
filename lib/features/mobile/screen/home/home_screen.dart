@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  ConnectivityResult connection = ConnectivityResult.none;
   Future<ConnectivityResult> checkInternet () async {
     final connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult;
@@ -23,16 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
     final size = MediaQuery.of(context).size;
     return FutureBuilder<ConnectivityResult>(
       future: checkInternet(),
       builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+        connection = snapshot.data??ConnectivityResult.none;
+        if(snapshot.connectionState == ConnectionState.waiting && connection != snapshot.data){
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
+
         else if(snapshot.data == ConnectivityResult.none || snapshot.data == ConnectivityResult.other){
           return Center(
             child: Row(
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const Text('No internet found! Please try again!'),
                 TextButton(onPressed: (){
-                  setState(() {});
+                  //setState(() {});
                 }, child: const Text('Try again'))
               ],
             )
@@ -328,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                   )
                  
-                )
+                ),
               ],
             ),
           ),

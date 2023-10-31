@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/select_seat_screen.dart';
@@ -25,12 +26,12 @@ class ResultFlightScreen extends StatelessWidget {
                   image: DecorationImage(
                       image: AssetImage('images/auth_background_appbar.png'),
                       fit: BoxFit.cover)),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Select Flight',
-                    style: TextStyle(
+                     "select_flight".tr(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
@@ -103,9 +104,9 @@ class ResultFlightScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    infoText('Depature', '05:21 am'),
+                                    infoText("depature".tr(), '05:21 am'),
                                     const SizedBox(height: 10,),
-                                     infoText('Flight No.', 'NNS24'),
+                                     infoText("fly_no".tr(), 'NNS24'),
                                   ],
                                 ),
                                 const SizedBox(height: 10,),
@@ -114,9 +115,9 @@ class ResultFlightScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   
                                   children: [
-                                    infoText('Arrive', '08:43 am'),
+                                    infoText("arrive".tr(), '08:43 am'),
                                     const SizedBox(height: 10,),
-                                    infoText('Price', '\$215'),
+                                    infoText("price".tr(), '\$215'),
                                   ],
                                 ),
                               ],
@@ -253,9 +254,9 @@ void chooseFilterSheet(BuildContext context){
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Choose your filter',
-                  style: TextStyle(
+                Text(
+                  "chose_filter".tr(),
+                  style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
                   ),
@@ -263,9 +264,9 @@ void chooseFilterSheet(BuildContext context){
                 const SizedBox(height: 10,),
           
                 //Select transit
-                const Text(
-                  'Transit',
-                  style: TextStyle(
+                Text(
+                  "transit".tr(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18
                   ),
@@ -282,7 +283,7 @@ void chooseFilterSheet(BuildContext context){
                             onPressed: (){
                               typeChosen.value = 'direct';
                             }, 
-                            text: 'Direct'
+                            text: "direct".tr()
                           );
                         }
                       ),
@@ -296,7 +297,7 @@ void chooseFilterSheet(BuildContext context){
                             onPressed: (){
                               typeChosen.value = '1transit';
                             }, 
-                            text: '1 Transit'
+                            text: '1 ${"transit".tr()}'
                           );
                         }
                       ),
@@ -310,7 +311,7 @@ void chooseFilterSheet(BuildContext context){
                             onPressed: (){
                               typeChosen.value = 'overtransit';
                             }, 
-                            text: '+2 Transit'
+                            text: '+2 ${"transit".tr()}'
                           );
                         }
                       ),
@@ -319,9 +320,9 @@ void chooseFilterSheet(BuildContext context){
                 ),
           
                 //Transit duration
-                const Text(
-                  'Transit Duration',
-                  style: TextStyle(
+                Text(
+                  "transit_duration".tr(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18
                   ),
@@ -355,38 +356,48 @@ void chooseFilterSheet(BuildContext context){
                     );
                   }
                 ),
+                Text(
+                  "price".tr(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18
+                  ),
+                ),
                 ValueListenableBuilder(
                   valueListenable: budgetFlight, 
                   builder: (context, budget, child) {
                     return Column(
                       children: [
-                        Row(
-                          children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                              '${budget.start.toInt()}\$ ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                color: indigo
+                              ),
+                            ),
                             Text(
-                            '${budget.start.toInt()}\$ ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              color: indigo
+                              ' - ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                color: indigo
+                              ),
                             ),
-                          ),
-                          Text(
-                            ' - ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              color: indigo
+                            Text(
+                              ' ${budget.end.toInt()}\$',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                color: indigo
+                              ),
                             ),
+                            ],
                           ),
-                          Text(
-                            ' ${budget.end.toInt()}\$',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              color: indigo
-                            ),
-                          ),
-                          ],
                         ),
                         RangeSlider(
                           values: budget, 
@@ -399,25 +410,25 @@ void chooseFilterSheet(BuildContext context){
                         utilityButton(
                           onPressed: (){}, 
                           iconUrl: 'images/flight_screen_icon/facilities.svg', 
-                          text: 'Facilities'
+                          text: "facility".tr()
                         ),
                         utilityButton(
                           onPressed: (){}, 
                           iconUrl: 'images/flight_screen_icon/sort_by.svg', 
-                          text: 'Sort by'
+                          text: "sort_by".tr()
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: CustomButton(
                             onPressed: (){}, 
-                            text: 'Apply', 
+                            text: "apply".tr(), 
                             width: 1),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: CustomButtonOption2(
                             onPressed: (){}, 
-                            text: 'Reset', 
+                            text: "reset".tr(), 
                             width: 1),
                         )
                       ],

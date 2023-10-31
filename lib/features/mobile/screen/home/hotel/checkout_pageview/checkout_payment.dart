@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/add_card_screen.dart';
@@ -26,7 +27,7 @@ class CheckOutPayment extends StatelessWidget {
           PaymentOptionsCard(
             isChosen: isCashChosen,
             iconUrl: 'images/checkout_icon/mini_market.svg',
-            text: 'Cash at Hotel',
+            text: "cash".tr(),
             onChanged: () {
               isCardChosen.value = false;
               isBankChosen.value = false;
@@ -38,7 +39,7 @@ class CheckOutPayment extends StatelessWidget {
           PaymentOptionsCard(
             isChosen: isCardChosen,
             iconUrl: 'images/checkout_icon/credit_card.svg',
-            text: 'Credit / Debit Card',
+            text: "credit/debit".tr(),
             child: addCardBuider(),
             onChanged: () {
               isCashChosen.value = false;
@@ -51,7 +52,7 @@ class CheckOutPayment extends StatelessWidget {
           PaymentOptionsCard(
             isChosen: isBankChosen,
             iconUrl: 'images/checkout_icon/bank_transfer.svg',
-            text: 'Bank Transfer',
+            text:"bank".tr(),
             onChanged: () {
               isCardChosen.value = false;
               isCashChosen.value = false;
@@ -73,7 +74,7 @@ class CheckOutPayment extends StatelessWidget {
                     cardInfo: cardInfo
                   );
                 }, 
-                text: 'Done', 
+                text: "done".tr(), 
                 width: 1
               );
             }
@@ -125,7 +126,7 @@ Widget addCardBuider() {
 Widget addCardtWidget(PayCard cardInfo) {
   if (cardInfo.name == '') {
     return Text(
-      'Add Card',
+      "addcard".tr(),
       style:
           TextStyle(color: indigo, fontWeight: FontWeight.bold, fontSize: 18),
     );

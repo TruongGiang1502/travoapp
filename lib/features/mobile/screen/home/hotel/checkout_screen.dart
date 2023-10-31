@@ -75,7 +75,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 Column(
                   children: [
                     Text(
-                      "CheckOut".tr(),
+                      "checkout".tr(),
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 35,
@@ -94,19 +94,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 TextNameCheckOutPageView(
-                                  text: 'Book and review', 
+                                  text: "book_review".tr(), 
                                   curPageNumber: value, 
                                   thisPageNumber: 0
                                 ),
                                 linesAppbarPageView(),
                                 TextNameCheckOutPageView(
-                                  text: 'Payment', 
+                                  text: "payment_check".tr(), 
                                   curPageNumber: value, 
                                   thisPageNumber: 1
                                 ),
                                 linesAppbarPageView(),
                                 TextNameCheckOutPageView(
-                                  text: 'Confirm', 
+                                  text: "confirm".tr(), 
                                   curPageNumber: value, 
                                   thisPageNumber: 2
                                 ),

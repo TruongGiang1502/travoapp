@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
 import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
+import 'package:travo_demo/widgets/text_field_custom.dart';
 
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -71,13 +73,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
-                    TextFormField(
-                      controller: emailController,
-                      validator: Validator.emailValidator,
-                      decoration: InputDecoration(
-                          labelText: "email".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.email)),
+                    TextFieldCustom(
+                      controller: emailController, 
+                      validator: Validator.emailValidator, 
+                      labelText: "email".tr(), 
+                      inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                      keyboardType: TextInputType.text
                     ),
                     const SizedBox(
                       height: 10,
@@ -86,12 +87,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     AuthButton(
                       onPressed: (){
                         resetPassWord(emailController.text);
-                        Navigator.pushAndRemoveUntil(
-                          context, 
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen()
-                          ), (route) => false
-                          );
+                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (route) => false);
                       },
                       formKey: _formKey, 
                       text: "send".tr(),

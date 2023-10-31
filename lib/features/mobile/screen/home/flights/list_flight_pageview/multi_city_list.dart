@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/flights/result_flight_screen.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/options_flight.dart';
@@ -20,7 +21,7 @@ class MultiCityList extends StatelessWidget {
               onPressed: (){
                 Navigator.pushNamed(context, ResultFlightScreen.routeName);
               }, 
-              text: 'Search', 
+              text: "search".tr(), 
               width: 1
             )
           ],
@@ -40,7 +41,7 @@ Widget selectFlight(BuildContext context, int flyNum){
         Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
-                'Flight $flyNum',
+                '${"fli".tr()} $flyNum',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18
@@ -57,11 +58,11 @@ Widget selectFlight(BuildContext context, int flyNum){
                       return OptionToFlight(
                           onPressed: () {},
                           context: context,
-                          title: 'From',
+                          title: "from".tr(),
                           text: name,
                           icon: Icons.airplanemode_active_outlined,
                           isAngleIcon: true,
-                          iconColor: indigo!);
+                          iconColor: indigo);
                     }),
                 ValueListenableBuilder(
                   valueListenable: toAirport,
@@ -69,7 +70,7 @@ Widget selectFlight(BuildContext context, int flyNum){
                     return OptionToFlight(
                         onPressed: () {},
                         context: context,
-                        title: 'To',
+                        title: "to".tr(),
                         text: toAirport.value,
                         icon: Icons.location_on,
                         iconColor: Colors.orange
@@ -107,24 +108,24 @@ Widget selectFlight(BuildContext context, int flyNum){
         OptionToFlight(
           onPressed: (){}, 
           context: context, 
-          title: 'Depature', 
-          text: 'Select Date',
+          title: "depature".tr(), 
+          text: "select_date".tr(),
           iconColor: Colors.red,
           iconSvgUrl: 'images/flight_screen_icon/time_flight.svg' 
         ),
         OptionToFlight(
           onPressed: (){}, 
           context: context, 
-          title: 'Passenger', 
-          text: '1 Passenger',
+          title: "passer_title".tr(), 
+          text: '1 ${"passenger".tr()}',
           iconColor: Colors.red,
           iconSvgUrl: 'images/flight_screen_icon/passenger.svg' 
         ),
         OptionToFlight(
           onPressed: (){}, 
           context: context, 
-          title: 'Class', 
-          text: 'Economy',
+          title: "class".tr(), 
+          text: "economy".tr(),
           iconColor: Colors.red,
           iconSvgUrl: 'images/flight_screen_icon/class.svg' 
         ),

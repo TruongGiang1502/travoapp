@@ -19,10 +19,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if(saveEmail != null && savePass != null && saveCheckLogged == true){
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, MainScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(context, MainScreen.routeName, (route) => false);
     } else {
        // ignore: use_build_context_synchronously
-       Navigator.pushReplacementNamed(context, OnboardScreenMain.routeName);
+       Navigator.pushNamedAndRemoveUntil(context, OnboardScreenMain.routeName, (route) => false);
     }
     
   }

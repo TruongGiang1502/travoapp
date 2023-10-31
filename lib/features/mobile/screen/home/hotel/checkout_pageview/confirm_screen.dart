@@ -75,8 +75,14 @@ Widget roomInfo(BuildContext context, SnapRoomModel snapInfo) {
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(
-                      'Max guest: ${snapInfo.maxGuest}',
+                      '${"max_guest".tr()}: ${snapInfo.maxGuest}',
+                    ),
+                    const SizedBox(
+                      height: 5,
                     ),
                     Text(
                       snapInfo.typePrice!,
@@ -105,14 +111,14 @@ Widget roomInfo(BuildContext context, SnapRoomModel snapInfo) {
                       builder: (context, chekinTime) {
                     return timeChosen(
                         iconUrl: 'images/checkout_icon/date1_icon.svg',
-                        text: 'Check-in',
+                        text: "check_in".tr(),
                         time: chekinTime);
                   }),
                   BlocBuilder<TimeCheckoutCubit, DateTime>(
                       builder: (context, chekoutTime) {
                     return timeChosen(
                         iconUrl: 'images/checkout_icon/date2_icon.svg',
-                        text: 'Check-out',
+                        text: "check_out".tr(),
                         time: chekoutTime);
                   }),
                 ],
@@ -179,9 +185,9 @@ Widget payCalulate(
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('Taxes and Fees'), Text('Free')],
+              children: [Text("taxefee".tr()), Text("free".tr())],
             ),
             Divider(
               color: Colors.grey.withOpacity(0.3),
@@ -190,9 +196,9 @@ Widget payCalulate(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Total',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  "total".tr(),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '\$${int.parse(snapInfo.price!) * days}',
@@ -212,11 +218,11 @@ String namePayMethod(String methodName) {
   String payMethodFullName;
   switch (methodName) {
     case 'cash':
-      payMethodFullName = 'Cash at Hotel';
+      payMethodFullName = "cash".tr();
     case 'card':
-      payMethodFullName = 'Credit / Debit Card';
+      payMethodFullName = "credit/debit".tr();
     default:
-      payMethodFullName = 'Bank Transfer';
+      payMethodFullName = "bank".tr();
   }
   return payMethodFullName;
 }
@@ -257,7 +263,7 @@ Widget paymentMethod(String methodName, VoidCallback previousPage) {
             TextButton(
                 onPressed: previousPage,
                 child: Text(
-                  'Change',
+                  "change".tr(),
                   style:
                       TextStyle(fontWeight: FontWeight.normal, color: indigo),
                 ))
@@ -342,7 +348,7 @@ Widget payNowButton(BuildContext context, String roomId,
                         ShowDialog.showSimpleDialog(context, 'Failed', 'Some error occured! Please try again later');
                       }
                     },
-                    text: 'Pay Now',
+                    text: "paynow".tr(),
                     width: 1),
               );
             });

@@ -33,8 +33,8 @@ class BookAndReview extends StatelessWidget {
                     addContactCheck(context, info, snapInfo); 
                   },
                   imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
-                  title: 'Contact Details',
-                  defaultText: 'AddContact', 
+                  title: "contact_detail".tr(),
+                  defaultText: "add_contact".tr(), 
                   listInfoGuest: info,
                   heroTag: 'contact_hero',
                   textSize: 13,
@@ -48,8 +48,8 @@ class BookAndReview extends StatelessWidget {
                     gotPromoCode(context);
                   },
                   imageUrl: 'images/checkout_icon/addpromo_icon.svg', 
-                  title: 'Promo Code',
-                  defaultText: 'Add Promo Code', 
+                  title: "promocode".tr(),
+                  defaultText: "add_promocode".tr(), 
                   textFunction: promoCode,
                   heroTag: 'promo_hero',
                   sizeText: 20,
@@ -63,7 +63,7 @@ class BookAndReview extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: CustomButton(
                     onPressed: info.isNotEmpty?onPressed : () {showCheckEmptyConsumer(context);},
-                    text: 'Payment', 
+                    text: "payment_check".tr(), 
                     width: MediaQuery.of(context).size.width
                   ),
                 );
@@ -147,7 +147,7 @@ class BookAndReview extends StatelessWidget {
                     )
                   ],
                 ),
-                Text('${snapInfo.total} room')
+                Text('${snapInfo.total} ${"room".tr()}')
               ],
             )
           ],
@@ -223,9 +223,9 @@ Widget dateBooking(BuildContext context){
         child: SizedBox(
           child: Column(
             children: [
-              const Text(
-                'Booking Date', 
-                style: TextStyle(
+              Text(
+                "booking_date".tr(), 
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20
                 ),
@@ -245,7 +245,7 @@ Widget dateBooking(BuildContext context){
                               showSelectCheckinDate(context, timeCheckout);
                             }, 
                             iconUrl: 'images/checkout_icon/date1_icon.svg', 
-                            text: 'Check-in', 
+                            text: "check_in".tr(), 
                             dateValueWidget: Text(
                               DateFormat('E, d/MM').format(timeCheckin), 
                               style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
@@ -257,7 +257,7 @@ Widget dateBooking(BuildContext context){
                               showSelectCheckoutDate(context, timeCheckin);
                             }, 
                             iconUrl: 'images/checkout_icon/date2_icon.svg', 
-                            text: 'Check-out', 
+                            text: "check_out".tr(), 
                             dateValueWidget: Text(
                                 DateFormat('E, d/MM').format(timeCheckout), 
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),

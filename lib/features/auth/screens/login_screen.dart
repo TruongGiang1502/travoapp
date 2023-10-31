@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
@@ -7,6 +8,7 @@ import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travo_demo/widgets/text_field_custom.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -21,9 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool passToggle = true;
+  ValueNotifier <bool> passToggle = ValueNotifier(true);
+
   ValueNotifier <bool> isChecked = ValueNotifier(false);
-  ValueNotifier <bool> ispassToggle = ValueNotifier(false);
 
   void loginUser() async {
     await FirebaseAuthMethod().loginWithEmail(
@@ -93,38 +95,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    
-                    TextFormField(
-                      controller: emailController,
-                      validator: Validator.emailValidator,
-                      decoration: InputDecoration(
-                          labelText: "email".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.email)),
+                    TextFieldCustom(
+                      controller: emailController, 
+                      validator: Validator.emailValidator, 
+                      labelText: "email".tr(), 
+                      inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                      keyboardType: TextInputType.text
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-
-                    TextFormField(
-                      controller: passwordController,
-                      validator: Validator.passwordValidator,
-                      obscureText: passToggle,
-                      decoration: InputDecoration(  
-                          labelText: "password".tr(),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.lock),
+                    ValueListenableBuilder(
+                      valueListenable: passToggle,
+                      builder: (context, isHide, child) {
+                        return TextFieldCustom(
+                          controller: passwordController, 
+                          validator: Validator.passwordValidator,
+                          obscureText: isHide, 
+                          labelText: "password".tr(), 
+                          inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
+                          keyboardType: TextInputType.text,
                           suffix: InkWell(
-                            onTap: () {
-                              setState(() {
-                                passToggle = !passToggle;
-                              });
-                            },
-                            child: Icon(
-                              passToggle? Icons.visibility : Icons.visibility_off
-                            ),
-                          )
-                        ),
+                                onTap: () {
+                                  passToggle.value = !isHide;
+                                },
+                                child: Icon(
+                                  isHide? Icons.visibility : Icons.visibility_off
+                                ),
+                              ),
+                        );
+                      }
                     ),
                     const SizedBox(
                       height: 10,
