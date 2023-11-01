@@ -23,6 +23,7 @@ import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_paytype_c
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_promo_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/time_check_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/main_screen.dart';
+import 'package:travo_demo/features/mobile/screen/payment/detail_booking_info.dart';
 import 'package:travo_demo/screen/onboard/onboard_screen_main.dart';
 
 Route <dynamic> generateRoute (RouteSettings settings){
@@ -47,6 +48,9 @@ Route <dynamic> generateRoute (RouteSettings settings){
     case MainScreen.routeName:
       return MaterialPageRoute(builder: (context) => const MainScreen());
 
+    case DetailBookingInfo.routeName:
+      final snap = settings.arguments as (SnapBookingShowModel, SnapRoomModel, String);
+      return MaterialPageRoute(builder: (context) => DetailBookingInfo(snapBookingShowModel: snap.$1, snapRoomModel: snap.$2, idBooking: snap.$3,));
     case ResultHotelScreen.routeName:
       return MaterialPageRoute(builder: (context) => const ResultHotelScreen());
 

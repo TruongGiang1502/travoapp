@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/detail_hotel_screen.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
-
 import '../models/snap_model.dart';
 
 class ResultHotelScreen extends StatefulWidget {
@@ -26,13 +25,13 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
     ValueNotifier <int> dataNum = ValueNotifier(9);
     return FutureBuilder<ConnectivityResult>(
       future: checkInternet(),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+      builder: (context, snapInternet) {
+        if(snapInternet.connectionState == ConnectionState.waiting){
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        else if(snapshot.data == ConnectivityResult.none){
+        else if(snapInternet.data == ConnectivityResult.none){
           return Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

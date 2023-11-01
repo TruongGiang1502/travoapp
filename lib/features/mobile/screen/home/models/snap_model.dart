@@ -1,4 +1,6 @@
-String failImage = 'https://cdn.dribbble.com/users/936407/screenshots/2536049/media/f2087724b9d677904b39212de99726bc.gif';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+String failImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Flag_of_None_%28square%29.svg/2048px-Flag_of_None_%28square%29.svg.png';
 String failData = 'Failed load data';
 
 class SnapPlaceModel {
@@ -74,6 +76,27 @@ class SnapRoomModel {
       total = snap['total'].toString();
       typePrice = snap['type_price'];
       services = snap['services'];
+    }
+  }
+}
+
+class SnapBookingShowModel {
+  String? roomId, paymentMethod;
+  Timestamp? timeStart, timeEnd;
+  List<dynamic>? guest;
+  SnapBookingShowModel.fromSnap(Map<String, dynamic>? snap){
+    if(snap == null){
+      timeStart = Timestamp.now();
+      timeEnd = Timestamp.now();
+      roomId = failImage;
+      guest = [];
+      paymentMethod = failData;
+    } else {
+      timeStart = snap['date_start'] ?? Timestamp.now();
+      timeEnd =  snap['date_end']?? Timestamp.now();
+      roomId = snap['room'] ?? failImage;
+      guest = snap['guest'] ?? [];
+      paymentMethod = snap['type_payment']??failData;
     }
   }
 }

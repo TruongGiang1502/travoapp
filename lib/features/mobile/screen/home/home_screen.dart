@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const Text('No internet found! Please try again!'),
                 TextButton(onPressed: (){
-                  //setState(() {});
+                  setState(() {});
                 }, child: const Text('Try again'))
               ],
             )
