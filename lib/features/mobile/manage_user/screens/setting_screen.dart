@@ -76,7 +76,7 @@ class SettingScreen extends StatelessWidget {
           ),
           SettingOption(
             onPressed: (){
-              ShowDialog.showLogoutConfirmationDialog(context,);
+              ShowDialog.showLogoutConfirmationDialog(context);
             }, 
             icon: Icons.logout, 
             text: 'logout'.tr(),
