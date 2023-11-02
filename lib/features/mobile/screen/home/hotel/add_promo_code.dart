@@ -15,10 +15,12 @@ class AddPromoCodeScreen extends StatefulWidget {
 
 class _AddPromoCodeScreenState extends State<AddPromoCodeScreen> {
   final promoCodeController = TextEditingController();
+  final promoCodeFocus = FocusNode();
 
   @override
   void dispose() {
     promoCodeController.dispose();
+    promoCodeFocus.dispose();
     super.dispose();
   }
   @override
@@ -58,7 +60,8 @@ class _AddPromoCodeScreenState extends State<AddPromoCodeScreen> {
         child: Column(
           children: [
             TextFieldCustom(
-              controller: promoCodeController, 
+              controller: promoCodeController,
+              focusNode: promoCodeFocus, 
               validator: Validator.checkNull, 
               labelText: "promocode".tr(), 
               inputFormat: FilteringTextInputFormatter.singleLineFormatter, 

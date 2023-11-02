@@ -22,6 +22,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final cardNumberController = TextEditingController();
   final expDateController = TextEditingController();
   final cvvController = TextEditingController();
+  final nameFocus = FocusNode();
+  final cardFocus = FocusNode();
+  final expDateFocus = FocusNode();
+  final cvvFocus = FocusNode();
 
   String countryname = 'Viet Nam';
 
@@ -31,6 +35,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
     cardNumberController.dispose();
     expDateController.dispose();
     cvvController.dispose();
+    nameFocus.dispose();
+    cardFocus.dispose();
+    expDateFocus.dispose();
+    cvvFocus.dispose();
     super.dispose();
   }
 
@@ -86,6 +94,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               children: [
                 TextFieldCustom(
                   controller: nameController,
+                  focusNode: nameFocus,
                   validator: Validator.checkNull,
                   labelText: "name".tr(), 
                   inputFormat: FilteringTextInputFormatter.singleLineFormatter,
@@ -94,6 +103,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 const SizedBox(height: 20,),
                 TextFieldCustom(
                   controller: cardNumberController,
+                  focusNode: cardFocus,
                   validator: Validator.checkNull,
                   labelText: "cardnum".tr(), 
                   inputFormat: FilteringTextInputFormatter.digitsOnly,
@@ -111,6 +121,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     Expanded(
                       child: TextFieldCustom(
                         controller: expDateController,
+                        focusNode: expDateFocus,
                         validator: Validator.checkNull,
                         labelText: "expdate".tr(), 
                         inputFormat: FilteringTextInputFormatter.singleLineFormatter,
@@ -125,6 +136,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     Expanded(
                       child: TextFieldCustom(
                         controller: cvvController,
+                        focusNode: cvvFocus,
                         validator: Validator.checkNull,
                         labelText: 'CVV', 
                         inputFormat: FilteringTextInputFormatter.digitsOnly,

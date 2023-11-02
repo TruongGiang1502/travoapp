@@ -26,6 +26,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameFocus = FocusNode();
+  final phoneFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
   ValueNotifier <bool> passToggle = ValueNotifier(true);
   String curPhoneCode = '84';
   String countryname = 'Viet Nam';
@@ -55,6 +59,11 @@ class _SignupScreenState extends State<SignupScreen> {
     phoneController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    passToggle.dispose();
+    nameFocus.dispose();
+    passwordFocus.dispose();
+    phoneFocus.dispose();
+    emailFocus.dispose();
     super.dispose();
   }
 
@@ -106,7 +115,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFieldCustom(
-                      controller: nameController, 
+                      controller: nameController,
+                      focusNode: nameFocus, 
                       validator: Validator.checkNull, 
                       labelText: "name".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
@@ -130,7 +140,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     BlocBuilder<AuthPhoneCodeCubit, String>(
                       builder: (context, curPhoneCode) {
                         return TextFieldCustom(
-                          controller: phoneController, 
+                          controller: phoneController,
+                          focusNode: phoneFocus, 
                           validator: Validator.checkNull, 
                           labelText: "phone_number".tr(), 
                           inputFormat: FilteringTextInputFormatter.digitsOnly, 
@@ -145,7 +156,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
 
                     TextFieldCustom(
-                      controller: emailController, 
+                      controller: emailController,
+                      focusNode: emailFocus, 
                       validator: Validator.emailValidator, 
                       labelText: "email".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
@@ -159,7 +171,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       valueListenable: passToggle,
                       builder: (context, isHide, child) {
                         return TextFieldCustom(
-                          controller: passwordController, 
+                          controller: passwordController,
+                          focusNode: passwordFocus, 
                           validator: Validator.passwordValidator,
                           obscureText: isHide, 
                           labelText: "password".tr(), 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,11 @@ class DetailHotelScreen extends StatefulWidget {
 }
 
 class _DetailHotelScreenState extends State<DetailHotelScreen> {
+
+  Future<ConnectivityResult> checkInternet () async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult;
+  }
   
   @override
   void initState() {
@@ -29,35 +35,60 @@ class _DetailHotelScreenState extends State<DetailHotelScreen> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawerScrimColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(widget.snapInfo.imageUrl!), fit: BoxFit.fill),
-        ),
-      ),
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color.fromRGBO(143, 103, 232, 1),
-              Color.fromRGBO(99, 87, 204, 1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight
-          ),
-          borderRadius: BorderRadius.circular(50)
-        ),
-        child: FloatingActionButton(
-          onPressed: (){
-            showBottomSheetCustom(context);
-          },
+    return FutureBuilder<ConnectivityResult>(
+      future: checkInternet(),
+      builder: (context, snapInternet) {
+        if(snapInternet.connectionState == ConnectionState.waiting){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        else if(snapInternet.data == ConnectivityResult.none){
+          return Scaffold(
+            body: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('No internet found! Please try again!'),
+                  TextButton(onPressed: (){
+                    setState(() {});
+                  }, child: const Text('Try again'))
+                ],
+              )
+            ),
+          );
+        }
+        return Scaffold(
+          drawerScrimColor: Colors.transparent,
           backgroundColor: Colors.transparent,
-          elevation: 0, 
-          child: const Icon(Icons.arrow_circle_up),
-        ),
-      ),
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: NetworkImage(widget.snapInfo.imageUrl!), fit: BoxFit.fill),
+            ),
+          ),
+          floatingActionButton: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color.fromRGBO(143, 103, 232, 1),
+                  Color.fromRGBO(99, 87, 204, 1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight
+              ),
+              borderRadius: BorderRadius.circular(50)
+            ),
+            child: FloatingActionButton(
+              onPressed: (){
+                showBottomSheetCustom(context);
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0, 
+              child: const Icon(Icons.arrow_circle_up),
+            ),
+          ),
+        );
+      }
     );
   }
 

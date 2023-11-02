@@ -3,6 +3,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 String failImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Flag_of_None_%28square%29.svg/2048px-Flag_of_None_%28square%29.svg.png';
 String failData = 'Failed load data';
 
+class SnapUserModel {
+  String? country, email, phoneNumber, uid, userName;
+  SnapUserModel.fromSnap(Map<String, dynamic>? snap) {
+  if(snap ==null){
+      country = failData;
+      email = failData;
+      phoneNumber = failData;
+      uid = failData;
+      userName = failData;
+    }
+    else{
+      country = snap['country'] ?? failData;
+      email = snap['email'] ?? failData;
+      phoneNumber = snap['phoneNumber'] ?? failData;
+      uid = snap['uid'] ?? failData;
+      userName = snap['username'] ?? failData;
+    }
+  }
+}
+
 class SnapPlaceModel {
   String? name, imageUrl, rating;
 
@@ -12,8 +32,8 @@ class SnapPlaceModel {
       imageUrl = failImage;
       rating = '0';
     } else {
-      name = snap['name'];
-      imageUrl = snap['image'];
+      name = snap['name'] ?? failData;
+      imageUrl = snap['image'] ?? failImage;
       rating = snap['rating'].toString();
     }
   }

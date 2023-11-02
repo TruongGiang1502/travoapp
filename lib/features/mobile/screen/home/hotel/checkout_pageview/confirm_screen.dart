@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
 
-class ConfirmScreen extends StatelessWidget {
+class ConfirmScreen extends StatefulWidget {
   final SnapRoomModel snapInfo;
   final String roomId;
   final VoidCallback previousPage;
@@ -26,31 +27,65 @@ class ConfirmScreen extends StatelessWidget {
       {super.key, required this.snapInfo, required this.roomId, required this.previousPage});
 
   @override
+  State<ConfirmScreen> createState() => _ConfirmScreenState();
+}
+
+class _ConfirmScreenState extends State<ConfirmScreen> {
+  Future<ConnectivityResult> checkInternet () async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult;
+  }
+  @override
   Widget build(BuildContext context) {
     String? userEmail = FirebaseAuth.instance.currentUser?.email.toString();
     String? userId = FirebaseAuth.instance.currentUser?.uid.toString();
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          roomInfo(context, snapInfo),
-          BlocBuilder<TimeCheckinCubit, DateTime>(
-              builder: (context, checkinTime) {
-            return BlocBuilder<TimeCheckoutCubit, DateTime>(
-                builder: (context, checkoutTime) {
-              return payCalulate(
-                  checkinTime: checkinTime,
-                  checkoutTime: checkoutTime,
-                  snapInfo: snapInfo);
-            });
-          }),
-          BlocBuilder<PayTypeCubit, String>(
-            builder: (context, payMethod) {
-              return paymentMethod(payMethod, previousPage);
-            },
+    ConnectivityResult connection = ConnectivityResult.none;
+    return FutureBuilder<ConnectivityResult>(
+      future: checkInternet(),
+      builder: (context, snapInternet) {
+        if(snapInternet.connectionState == ConnectionState.waiting && connection != snapInternet.data){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        else if(snapInternet.data == ConnectivityResult.none || snapInternet.data == ConnectivityResult.other || userEmail == null){
+          return Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('No internet found! Please try again!'),
+                TextButton(onPressed: (){
+                  setState(() {});
+                }, child: const Text('Try again'))
+              ],
+            )
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              roomInfo(context, widget.snapInfo),
+              BlocBuilder<TimeCheckinCubit, DateTime>(
+                  builder: (context, checkinTime) {
+                return BlocBuilder<TimeCheckoutCubit, DateTime>(
+                    builder: (context, checkoutTime) {
+                  return payCalulate(
+                      checkinTime: checkinTime,
+                      checkoutTime: checkoutTime,
+                      snapInfo: widget.snapInfo);
+                });
+              }),
+              BlocBuilder<PayTypeCubit, String>(
+                builder: (context, payMethod) {
+                  return paymentMethod(payMethod, widget.previousPage);
+                },
+              ),
+              payNowButton(context, widget.roomId, widget.snapInfo.hotelId!, userId, userEmail),
+            ],
           ),
-          payNowButton(context, roomId, snapInfo.hotelId!, userId, userEmail),
-        ],
-      ),
+        );
+      }
     );
   }
 }

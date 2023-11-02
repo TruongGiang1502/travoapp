@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,77 +11,111 @@ import 'package:travo_demo/features/mobile/utils/show_dialog.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/utils/color.dart';
 
-class CheckOutPayment extends StatelessWidget {
+class CheckOutPayment extends StatefulWidget {
   final VoidCallback onPressed;
   const CheckOutPayment({super.key, required this.onPressed});
 
+  @override
+  State<CheckOutPayment> createState() => _CheckOutPaymentState();
+}
+
+class _CheckOutPaymentState extends State<CheckOutPayment> {
+  Future<ConnectivityResult> checkInternet () async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult;
+  }
+   ConnectivityResult connection = ConnectivityResult.none;
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> isCashChosen = ValueNotifier(false);
     ValueNotifier<bool> isCardChosen = ValueNotifier(false);
     ValueNotifier<bool> isBankChosen = ValueNotifier(false);
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          PaymentOptionsCard(
-            isChosen: isCashChosen,
-            iconUrl: 'images/checkout_icon/mini_market.svg',
-            text: "cash".tr(),
-            onChanged: () {
-              isCardChosen.value = false;
-              isBankChosen.value = false;
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          PaymentOptionsCard(
-            isChosen: isCardChosen,
-            iconUrl: 'images/checkout_icon/credit_card.svg',
-            text: "credit/debit".tr(),
-            child: addCardBuider(),
-            onChanged: () {
-              isCashChosen.value = false;
-              isBankChosen.value = false;
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          PaymentOptionsCard(
-            isChosen: isBankChosen,
-            iconUrl: 'images/checkout_icon/bank_transfer.svg',
-            text:"bank".tr(),
-            onChanged: () {
-              isCardChosen.value = false;
-              isCashChosen.value = false;
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          BlocBuilder<GetCardCubit, PayCard>(
-            builder: (context, cardInfo) {
-              return CustomButton(
-                onPressed: (){
-                  goToConfirmPage(
-                    context: context, 
-                    onPressed: onPressed, 
-                    isCash: isCashChosen.value, 
-                    isCard: isCardChosen.value, 
-                    isBank: isBankChosen.value, 
-                    cardInfo: cardInfo
+    return FutureBuilder<ConnectivityResult>(
+      future: checkInternet(),
+      builder: (context, snapInternet) {
+        if(snapInternet.connectionState == ConnectionState.waiting && connection != snapInternet.data){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        else if(snapInternet.data == ConnectivityResult.none || snapInternet.data == ConnectivityResult.other){
+          return Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('No internet found! Please try again!'),
+                TextButton(onPressed: (){
+                  setState(() {});
+                }, child: const Text('Try again'))
+              ],
+            )
+          );
+        }
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              PaymentOptionsCard(
+                isChosen: isCashChosen,
+                iconUrl: 'images/checkout_icon/mini_market.svg',
+                text: "cash".tr(),
+                onChanged: () {
+                  isCardChosen.value = false;
+                  isBankChosen.value = false;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              PaymentOptionsCard(
+                isChosen: isCardChosen,
+                iconUrl: 'images/checkout_icon/credit_card.svg',
+                text: "credit/debit".tr(),
+                child: addCardBuider(),
+                onChanged: () {
+                  isCashChosen.value = false;
+                  isBankChosen.value = false;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              PaymentOptionsCard(
+                isChosen: isBankChosen,
+                iconUrl: 'images/checkout_icon/bank_transfer.svg',
+                text:"bank".tr(),
+                onChanged: () {
+                  isCardChosen.value = false;
+                  isCashChosen.value = false;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              BlocBuilder<GetCardCubit, PayCard>(
+                builder: (context, cardInfo) {
+                  return CustomButton(
+                    onPressed: (){
+                      goToConfirmPage(
+                        context: context, 
+                        onPressed: widget.onPressed, 
+                        isCash: isCashChosen.value, 
+                        isCard: isCardChosen.value, 
+                        isBank: isBankChosen.value, 
+                        cardInfo: cardInfo
+                      );
+                    }, 
+                    text: "done".tr(), 
+                    width: 1
                   );
-                }, 
-                text: "done".tr(), 
-                width: 1
-              );
-            }
-          )
-        ],
-      ),
+                }
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 }

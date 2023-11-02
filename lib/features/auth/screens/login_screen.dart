@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:travo_demo/features/auth/screens/fgpass_screen.dart';
 import 'package:travo_demo/features/auth/screens/signup_screen.dart';
 import 'package:travo_demo/features/auth/services/firebase_auth_method.dart';
+import 'package:travo_demo/utils/color.dart';
 import 'package:travo_demo/utils/validate.dart';
 import 'package:travo_demo/features/auth/widgets/auth_button.dart';
 import 'package:travo_demo/features/auth/widgets/media_button.dart';
@@ -23,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final emailFocus = FocusNode();
+  final passwordFocus = FocusNode();
   ValueNotifier <bool> passToggle = ValueNotifier(true);
 
   ValueNotifier <bool> isChecked = ValueNotifier(false);
@@ -49,6 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
+    passToggle.dispose();
+    isChecked.dispose();
     super.dispose();
   }
 
@@ -96,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFieldCustom(
-                      controller: emailController, 
+                      controller: emailController,
+                      focusNode: emailFocus, 
                       validator: Validator.emailValidator, 
                       labelText: "email".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
@@ -109,7 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       valueListenable: passToggle,
                       builder: (context, isHide, child) {
                         return TextFieldCustom(
-                          controller: passwordController, 
+                          controller: passwordController,
+                          focusNode: passwordFocus, 
                           validator: Validator.passwordValidator,
                           obscureText: isHide, 
                           labelText: "password".tr(), 
@@ -135,11 +144,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         ValueListenableBuilder(
                           valueListenable: isChecked,
                           builder: (BuildContext context, bool value, Widget? child) {
-                            return Checkbox(
-                              value: isChecked.value, 
-                              onChanged: (bool? newValue){
-                                  isChecked.value = newValue!;
-                              }
+                            return Transform.scale(
+                              scale: 1.2,
+                              child: Checkbox(
+                                side: BorderSide.none,
+                                value: value,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                checkColor: indigo,
+                                fillColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    return linkWater!;
+                                  }
+                                ),
+                                onChanged: (index) {
+                                  isChecked.value = index!;
+                                }
+                              ),
                             );
                           }
                         ),
@@ -149,7 +170,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: (){
                             Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
                           }, 
-                          child: Text("forgot_password".tr())
+                          child: Text(
+                            "forgot_password".tr(),
+                            style: TextStyle(
+                              color: indigo
+                            ),
+                          )
                         ),
                       ],
                     ),
@@ -203,7 +229,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {
                               Navigator.pushNamed(context, SignupScreen.routeName);
                             }, 
-                            child: Text("sign_up".tr())
+                            child: Text(
+                              "sign_up".tr(),
+                              style: TextStyle(
+                                color: indigo
+                              ),
+                            )
                         ),
                       ],
                     )

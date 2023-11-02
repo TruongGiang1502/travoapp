@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,63 +16,97 @@ import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/services_option.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 
-class BookAndReview extends StatelessWidget {
+class BookAndReview extends StatefulWidget {
   final SnapRoomModel snapInfo;
   final VoidCallback onPressed;
   const BookAndReview({super.key, required this.onPressed,required this.snapInfo});
 
   @override
+  State<BookAndReview> createState() => _BookAndReviewState();
+}
+
+class _BookAndReviewState extends State<BookAndReview> {
+  Future<ConnectivityResult> checkInternet () async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult;
+  }
+   ConnectivityResult connection = ConnectivityResult.none;
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
-          children: [
-            roomInfo(context, snapInfo),
-            BlocBuilder<GetInfoCubit, List <InfoGuest>>(
-              builder: (context, info) {
-                return AddInfoGuestCustom(
-                  onPressed: () {
-                    addContactCheck(context, info, snapInfo); 
-                  },
-                  imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
-                  title: "contact_detail".tr(),
-                  defaultText: "add_contact".tr(), 
-                  listInfoGuest: info,
-                  heroTag: 'contact_hero',
-                  textSize: 13,
-                );
-              }
+    return FutureBuilder<ConnectivityResult>(
+      future: checkInternet(),
+      builder: (context, snapInternet) {
+        if(snapInternet.connectionState == ConnectionState.waiting && connection != snapInternet.data){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        else if(snapInternet.data == ConnectivityResult.none || snapInternet.data == ConnectivityResult.other){
+          return Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('No internet found! Please try again!'),
+                TextButton(onPressed: (){
+                  setState(() {});
+                }, child: const Text('Try again'))
+              ],
+            )
+          );
+        }
+        return SingleChildScrollView(
+            child: Column(
+              children: [
+                roomInfo(context, widget.snapInfo),
+                BlocBuilder<GetInfoCubit, List <InfoGuest>>(
+                  builder: (context, info) {
+                    return AddInfoGuestCustom(
+                      onPressed: () {
+                        addContactCheck(context, info, widget.snapInfo); 
+                      },
+                      imageUrl: 'images/checkout_icon/addcontact_icon.svg', 
+                      title: "contact_detail".tr(),
+                      defaultText: "add_contact".tr(), 
+                      listInfoGuest: info,
+                      heroTag: 'contact_hero',
+                      textSize: 13,
+                    );
+                  }
+                ),
+                BlocBuilder<GetPromoCodeCubit, String>(
+                  builder: (context, promoCode) {
+                    return AddPromoCodeCustom(
+                      onPressed: (){
+                        gotPromoCode(context);
+                      },
+                      imageUrl: 'images/checkout_icon/addpromo_icon.svg', 
+                      title: "promocode".tr(),
+                      defaultText: "add_promocode".tr(), 
+                      textFunction: promoCode,
+                      heroTag: 'promo_hero',
+                      sizeText: 20,
+                    );
+                  }
+                ),
+                dateBooking(context),
+                BlocBuilder<GetInfoCubit, List<InfoGuest>>(
+                  builder: (context, info) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: CustomButton(
+                        onPressed: info.isNotEmpty?widget.onPressed : () {showCheckEmptyConsumer(context);},
+                        text: "payment_check".tr(), 
+                        width: MediaQuery.of(context).size.width
+                      ),
+                    );
+                  }
+                ),
+              ],
             ),
-            BlocBuilder<GetPromoCodeCubit, String>(
-              builder: (context, promoCode) {
-                return AddPromoCodeCustom(
-                  onPressed: (){
-                    gotPromoCode(context);
-                  },
-                  imageUrl: 'images/checkout_icon/addpromo_icon.svg', 
-                  title: "promocode".tr(),
-                  defaultText: "add_promocode".tr(), 
-                  textFunction: promoCode,
-                  heroTag: 'promo_hero',
-                  sizeText: 20,
-                );
-              }
-            ),
-            dateBooking(context),
-            BlocBuilder<GetInfoCubit, List<InfoGuest>>(
-              builder: (context, info) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: CustomButton(
-                    onPressed: info.isNotEmpty?onPressed : () {showCheckEmptyConsumer(context);},
-                    text: "payment_check".tr(), 
-                    width: MediaQuery.of(context).size.width
-                  ),
-                );
-              }
-            ),
-          ],
-        ),
-      );
+          );
+      }
+    );
   }
 }
 

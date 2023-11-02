@@ -19,9 +19,12 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  FocusNode emailFocus = FocusNode();
   final _auth = FirebaseAuth.instance;
+
   @override
   void dispose() {
+    emailFocus.dispose();
     emailController.dispose();
     super.dispose();
   }
@@ -74,7 +77,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   children: [
 
                     TextFieldCustom(
-                      controller: emailController, 
+                      controller: emailController,
+                      focusNode: emailFocus, 
                       validator: Validator.emailValidator, 
                       labelText: "email".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 

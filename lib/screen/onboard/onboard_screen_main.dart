@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travo_demo/features/auth/screens/login_screen.dart';
+import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import 'package:travo_demo/screen/onboard/widget/dotindicator.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_bloc.dart';
 import 'package:travo_demo/widgets/blocs/btn_color_bloc/btn_color_event.dart';
@@ -140,12 +141,11 @@ class _OnboardScreenMainState extends State<OnboardScreenMain> {
                               }
                             )),
                         const Spacer(),
-                        SizedBox(
-                          child: ElevatedButton(
-                            onPressed: pageChangeScreen,
-                            child: Text("next".tr()),
-                          )
-                        ),
+                        CustomButton(
+                          onPressed: pageChangeScreen, 
+                          text: "next".tr(), 
+                          width: 0.3
+                        )
                       ],
                     ),
                     const Spacer(

@@ -35,16 +35,18 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
           );
         }
         else if(snapshot.data == ConnectivityResult.none){
-          return Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('No internet found! Please try again!'),
-                TextButton(onPressed: (){
-                  setState(() {});
-                }, child: const Text('Try again'))
-              ],
-            )
+          return Scaffold(
+            body: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('No internet found! Please try again!'),
+                  TextButton(onPressed: (){
+                    setState(() {});
+                  }, child: const Text('Try again'))
+                ],
+              )
+            ),
           );
         }
         return Scaffold(

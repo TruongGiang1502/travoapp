@@ -23,8 +23,9 @@ class _AddContactScreenState extends State<AddContactScreen> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  bool passToggle = true;
+  final nameFocus = FocusNode();
+  final phoneFocus = FocusNode();
+  final emailFocus = FocusNode();
 
   String countryname = 'Viet Nam';
 
@@ -44,7 +45,10 @@ class _AddContactScreenState extends State<AddContactScreen> {
     nameController.dispose();
     phoneController.dispose();
     emailController.dispose();
-    passwordController.dispose();
+    nameFocus.dispose();
+    emailFocus.dispose();
+    phoneFocus.dispose();
+
     super.dispose();
   }
 
@@ -93,6 +97,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                   children: [
                     TextFieldCustom(
                       controller: nameController,
+                      focusNode: nameFocus,
                       validator: Validator.checkNull, 
                       labelText: "name".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 
@@ -115,7 +120,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                     BlocBuilder<AuthPhoneCodeCubit, String>(
                       builder: (context, curPhoneCode) {
                         return TextFieldCustom(
-                          controller: phoneController, 
+                          controller: phoneController,
+                          focusNode: phoneFocus, 
                           validator: Validator.checkNull, 
                           labelText: "phone_number".tr(), 
                           inputFormat: FilteringTextInputFormatter.digitsOnly, 
@@ -131,6 +137,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                     
                     TextFieldCustom(
                       controller: emailController,
+                      focusNode: emailFocus,
                       validator: Validator.emailValidator, 
                       labelText: "email".tr(), 
                       inputFormat: FilteringTextInputFormatter.singleLineFormatter, 

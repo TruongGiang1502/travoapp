@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:travo_demo/features/mobile/screen/home/hotel/detail_hotel_screen.dart';
+import 'package:travo_demo/utils/color.dart';
 import 'package:travo_demo/widgets/container_decor.dart';
 import 'package:travo_demo/features/mobile/widget/custom_button.dart';
 import '../models/snap_model.dart';
@@ -32,16 +33,18 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
           );
         }
         else if(snapInternet.data == ConnectivityResult.none){
-          return Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('No internet found! Please try again!'),
-                TextButton(onPressed: (){
-                  setState(() {});
-                }, child: const Text('Try again'))
-              ],
-            )
+          return Scaffold(
+            body: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('No internet found! Please try again!'),
+                  TextButton(onPressed: (){
+                    setState(() {});
+                  }, child: const Text('Try again'))
+                ],
+              )
+            ),
           );
         }
         return Scaffold(
@@ -76,7 +79,7 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
               ),
           body: StreamBuilder(
             stream: FirebaseFirestore.instance.collection('hotel').snapshots(), 
-            builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot){
+            builder: (context, snapshot){
               if(snapshot.connectionState == ConnectionState.waiting){
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -110,9 +113,12 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
                       return (index == dataNum.value - 1 && dataNumber < totalDataSnap)? 
                       TextButton(
                         onPressed: loadmore,
-                        child: const Text(
-                          'Loadmore'
-                        )
+                        child: Text(
+                          'see_more'.tr(),
+                          style: TextStyle(
+                            color: indigo
+                          ),
+                        ),
                       )
                       :Padding(
                         padding: const EdgeInsets.all(16.0),
