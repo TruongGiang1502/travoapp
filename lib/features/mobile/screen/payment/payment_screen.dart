@@ -182,7 +182,7 @@ Widget roomInfoModel(SnapRoomModel roomModel){
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
-      
+            color: Colors.black
           ),
         ),
       ),
@@ -211,7 +211,8 @@ Widget infoWidget (String title, Color titleColor, String content){
       Text(
         content,
         style: const TextStyle(
-          fontWeight: FontWeight.bold
+          fontWeight: FontWeight.bold,
+          color: Colors.black
         ),
       )
     ],

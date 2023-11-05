@@ -39,13 +39,19 @@ class TextFieldCustom extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             validator: validator,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
             inputFormatters: [inputFormat, LengthLimitingTextInputFormatter(lengthInput)],
             obscureText: obscureText,
             keyboardType: keyboardType,
             readOnly: readOnly,
             decoration: InputDecoration(
               prefixText: prefixText,
+              prefixStyle: const TextStyle(
+                color: Colors.black
+              ),
               border: InputBorder.none,
               labelText: labelText,
               labelStyle: const TextStyle(

@@ -118,14 +118,21 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                                         snapInfo.name!, 
                                         style: const TextStyle(
                                           fontSize: 20,
-                                          fontWeight: FontWeight.bold
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black
                                         ),
                                       ),
                                       Text(
                                         '${"max_guest".tr()}: ${snapInfo.maxGuest}',
+                                        style: const TextStyle(
+                                            color: Colors.black
+                                          ),
                                       ),
                                       Text(
                                         snapInfo.typePrice!,
+                                        style: const TextStyle(
+                                            color: Colors.black
+                                          ),
                                       ),
                                     ],
                                   ),
@@ -159,7 +166,8 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                                         '\$${snapInfo.price}',
                                         style: const TextStyle(
                                           fontSize: 25,
-                                          fontWeight: FontWeight.bold
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black
                                         ),
                                       ),
                                       Text(

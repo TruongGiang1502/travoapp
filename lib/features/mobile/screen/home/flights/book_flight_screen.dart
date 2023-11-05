@@ -53,7 +53,8 @@ class _BookFlightScreenState extends State<BookFlightScreen> {
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.bold,
+                      ),
                   ),
                 ],
               ),

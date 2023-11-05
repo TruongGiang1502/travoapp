@@ -8,6 +8,7 @@ import 'package:travo_demo/features/mobile/screen/home/models/card_info_model.da
 import 'package:travo_demo/features/mobile/screen/home/models/guest_info_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/models/snap_model.dart';
 import 'package:travo_demo/features/mobile/screen/home/services/book_firestore_method.dart';
+import 'package:travo_demo/features/mobile/screen/home/utils/date_time_custom.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_card_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_info_cubit.dart';
 import 'package:travo_demo/features/mobile/screen/home/widget/bloc/get_paytype_cubit.dart';
@@ -108,19 +109,25 @@ Widget roomInfo(BuildContext context, SnapRoomModel snapInfo) {
                     Text(
                       snapInfo.name!,
                       style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
+                          fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
                       '${"max_guest".tr()}: ${snapInfo.maxGuest}',
+                      style: const TextStyle(
+                        color: Colors.black
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
                       snapInfo.typePrice!,
+                      style: const TextStyle(
+                        color: Colors.black
+                      ),
                     ),
                   ],
                 ),
@@ -183,11 +190,11 @@ Widget timeChosen(
         children: [
           Text(
             text,
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16, color: Colors.black),
           ),
           Text(
-            DateFormat('E, d/MM').format(time),
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            timeWithShortNameMonth(time),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
           ),
         ],
       )
@@ -212,9 +219,26 @@ Widget payCalulate(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                  children: [Text(days.toString()), const Text(' nights')],
+                  children: [
+                    Text(
+                      days.toString(),
+                      style: const TextStyle(
+                        color: Colors.black
+                      ),
+                    ), 
+                    const Text(
+                      ' nights',
+                      style: TextStyle(
+                        color: Colors.black
+                      ),
+                    )],
                 ),
-                Text('\$${price * days}')
+                Text(
+                  '\$${price * days}',
+                  style: const TextStyle(
+                      color: Colors.black
+                    ),
+                )
               ],
             ),
             const SizedBox(
@@ -222,7 +246,19 @@ Widget payCalulate(
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("taxefee".tr()), Text("free".tr())],
+              children: [
+                Text(
+                  "taxefee".tr(),
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                ), 
+                Text(
+                  "free".tr(),
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                )],
             ),
             Divider(
               color: Colors.grey.withOpacity(0.3),
@@ -233,12 +269,12 @@ Widget payCalulate(
               children: [
                 Text(
                   "total".tr(),
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 Text(
                   '\$${int.parse(snapInfo.price!) * days}',
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 )
               ],
             ),
@@ -291,7 +327,7 @@ Widget paymentMethod(String methodName, VoidCallback previousPage) {
                 Text(
                   payMethodFullName,
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 )
               ],
             ),

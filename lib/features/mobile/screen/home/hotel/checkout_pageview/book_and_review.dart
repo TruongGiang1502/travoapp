@@ -130,14 +130,21 @@ class _BookAndReviewState extends State<BookAndReview> {
                       snapInfo.name!, 
                       style: const TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black
                       ),
                     ),
                     Text(
                       'Max guest: ${snapInfo.maxGuest}',
+                      style: const TextStyle(
+                        color: Colors.black
+                      ),
                     ),
                     Text(
                       snapInfo.typePrice!,
+                      style: const TextStyle(
+                        color: Colors.black
+                      ),
                     ),
                   ],
                 ),
@@ -171,7 +178,8 @@ class _BookAndReviewState extends State<BookAndReview> {
                       '\$${snapInfo.price}',
                       style: const TextStyle(
                         fontSize: 25,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black
                       ),
                     ),
                     Text(
@@ -182,7 +190,12 @@ class _BookAndReviewState extends State<BookAndReview> {
                     )
                   ],
                 ),
-                Text('${snapInfo.total} ${"room".tr()}')
+                Text(
+                  '${snapInfo.total} ${"room".tr()}',
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                )
               ],
             )
           ],
@@ -262,7 +275,8 @@ Widget dateBooking(BuildContext context){
                 "booking_date".tr(), 
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20
+                  fontSize: 20,
+                  color: Colors.black
                 ),
               ),
               const SizedBox(

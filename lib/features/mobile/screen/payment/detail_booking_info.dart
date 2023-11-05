@@ -91,7 +91,8 @@ class DetailBookingInfo extends StatelessWidget {
                         snapRoomModel.name!,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 30
+                          fontSize: 30,
+                          color: Colors.black
                         ),
                       ),
                       
@@ -112,7 +113,8 @@ class DetailBookingInfo extends StatelessWidget {
                         'Book Information',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20
+                          fontSize: 20,
+                          color: Colors.black
                         ),
                       ),
                       const SizedBox(height: 10,),
@@ -123,6 +125,7 @@ class DetailBookingInfo extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: fontSizeContent,
+                              color: Colors.black
                             ),
                           ),
                           Text(
@@ -136,7 +139,8 @@ class DetailBookingInfo extends StatelessWidget {
                           Text(
                             ' to ',
                             style: TextStyle(
-                              fontSize: fontSizeContent
+                              fontSize: fontSizeContent,
+                              color: Colors.black
                             ),
                           ),
                           Text(
@@ -155,13 +159,15 @@ class DetailBookingInfo extends StatelessWidget {
                             'People: ',
                             style: TextStyle(
                               fontSize: fontSizeContent,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
                             ),
                           ),
                           Text(
                             '${snapBookingShowModel.guest!.length}',
                             style: TextStyle(
-                              fontSize: fontSizeContent
+                              fontSize: fontSizeContent,
+                              color: Colors.black
                             ),
                           )
                         ],
@@ -172,13 +178,15 @@ class DetailBookingInfo extends StatelessWidget {
                             'Total price: ',
                             style: TextStyle(
                               fontSize: fontSizeContent,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
                             ),
                           ),
                           Text(
                             '${durationTime.inDays*int.parse(snapRoomModel.price!)}',
                             style: TextStyle(
-                              fontSize: fontSizeContent
+                              fontSize: fontSizeContent,
+                              color: Colors.black
                             ),
                           )
                         ],
@@ -189,13 +197,15 @@ class DetailBookingInfo extends StatelessWidget {
                             'Payment methods: ',
                             style: TextStyle(
                               fontSize: fontSizeContent,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
                             ),
                           ),
                           Text(
                             '${snapBookingShowModel.paymentMethod}',
                             style: TextStyle(
-                              fontSize: fontSizeContent
+                              fontSize: fontSizeContent,
+                              color: Colors.black
                             ),
                           )
                         ],

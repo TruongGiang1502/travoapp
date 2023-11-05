@@ -27,20 +27,21 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
               "bussiness_class".tr(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 18 
+                fontSize: 18,
+                color: Colors.black 
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('  A'),
-                Text(' B'),
-                Text(''),
-                Text('C '),
-                Text('D  ')
+                text('  A'),
+                text(' B'),
+                text(''),
+                text('C '),
+                text('D  ')
               ],
             ),
             const SizedBox(
@@ -56,22 +57,23 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
               "economy_class".tr(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 18 
+                fontSize: 18,
+                color: Colors.black 
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('  A'),
-                Text(' B'),
-                Text('C'),
-                Text(''),
-                Text('D'),
-                Text('E '),
-                Text('F  ')
+                text('  A'),
+                text(' B'),
+                text('C'),
+                text(''),
+                text('D'),
+                text('E '),
+                text('F  ')
               ],
             ),
             const SizedBox(
@@ -84,6 +86,15 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
             economySeat(seat, 5),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget text(String text, {Color color = Colors.black}){
+    return Text(
+      text, 
+      style: TextStyle(
+        color: color
       ),
     );
   }
@@ -103,7 +114,7 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                   '$rowNumber',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-
+                    color: Colors.black
                   ),
                 ),
                 seat('C', rowNumber, 'b', seatPosi),
@@ -134,6 +145,7 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                   '$rowNumber',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
+                    color: Colors.black
                   ), 
                 ),
                 seat('D', rowNumber, 'e', seatPosi),
@@ -270,7 +282,8 @@ class _SelectSeatScreenState extends State<SelectSeatScreen> {
                                     child: Text(
                                       typeSeat,
                                       style: const TextStyle(
-                                        fontWeight: FontWeight.bold
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black
                                       ),
                                     ),
                                   );

@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String? userEmail = FirebaseAuth.instance.currentUser!.email.toString();
+  String? userEmail = FirebaseAuth.instance.currentUser?.email.toString();
   ConnectivityResult connection = ConnectivityResult.none;
   Future<ConnectivityResult> checkInternet () async {
     final connectivityResult = await Connectivity().checkConnectivity();
@@ -160,7 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'searchDes'.tr(),
-                              prefixIcon: const Icon(Icons.search)
+                              hintStyle: TextStyle(
+                                color: greyColor
+                              ),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: greyColor,
+                              )
                             ),
                           ),
                         ),

@@ -28,7 +28,7 @@ class AddInfoGuestCustom extends StatelessWidget {
         style: TextStyle(
           color: indigo,
           fontWeight: FontWeight.bold,
-          fontSize: 18
+          fontSize: 18,
         ),
       );
     }
@@ -206,7 +206,7 @@ Widget titleWidget (String imageUrl, String title){
       Text(
         title,
         style: const TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 20),
+            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
       )
     ],
   );

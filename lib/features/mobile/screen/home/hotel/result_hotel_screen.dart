@@ -145,18 +145,29 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
                                   children: [
                                     Text(snapInfo.name!, style: const TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.bold
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black
                                     ),),
                                     Row(
                                       children: [
                                         const Icon(Icons.location_on, color: Colors.red,),
-                                        Text(snapInfo.location!),
+                                        Text(
+                                          snapInfo.location!,
+                                          style: const TextStyle(
+                                            color: Colors.black
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     Row(
                                       children: [
                                         const Icon(Icons.star, color: Colors.yellow,),
-                                        Text('${snapInfo.rating}'), 
+                                        Text(
+                                          '${snapInfo.rating}',
+                                          style: const TextStyle(
+                                            color: Colors.black
+                                          ),
+                                        ), 
                                         Text(' (${snapInfo.totalReview} ${"review".tr()})', style: const TextStyle(color: Colors.grey),),
                                       ],
                                     ),
@@ -174,7 +185,8 @@ class _ResultHotelScreenState extends State<ResultHotelScreen> {
                                               '\$${snapInfo.price}',
                                               style: const TextStyle(
                                                 fontSize: 25,
-                                                fontWeight: FontWeight.bold
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black
                                               ),
                                             ),
                                             Text(

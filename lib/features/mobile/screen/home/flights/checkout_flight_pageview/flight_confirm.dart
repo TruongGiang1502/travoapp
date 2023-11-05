@@ -57,6 +57,7 @@ Widget topContentCheckout(String shortNameFrom, String fullNameFrom, String shor
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
+                color: Colors.black
               ),
             ),
             Text(
@@ -131,7 +132,8 @@ Widget midContentCheckout(
           text,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15
+            fontSize: 15,
+            color: Colors.black
           ),
         ),
         
@@ -214,7 +216,12 @@ Widget bottomContentCheckout(String price){
             Image.asset('images/flight_screen_icon/barcode3.png'),
           ],
         ),
-        const Text('1234 5678 90AS 6543 21CV')
+        const Text(
+          '1234 5678 90AS 6543 21CV',
+          style: TextStyle(
+            color: Colors.black
+          ),
+        )
       ],
     ),
   );
@@ -231,18 +238,38 @@ Widget totalPayment(){
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('1 Passenger'),
-                  Text('\$215'),
+                  Text(
+                    '1 Passenger',
+                    style: TextStyle(
+                        color: Colors.black
+                      ),
+                  ),
+                  Text(
+                    '\$215',
+                    style: TextStyle(
+                        color: Colors.black
+                      ),
+                  ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Insurance'),
-                  Text('-'),
+                  Text(
+                    'Insurance',
+                    style: TextStyle(
+                        color: Colors.black
+                      ),
+                  ),
+                  Text(
+                    '-',
+                    style: TextStyle(
+                        color: Colors.black
+                      ),
+                  ),
                 ],
               ),
-              Divider(thickness: 2,),
+              Divider(thickness: 1, color: Colors.grey,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -250,14 +277,16 @@ Widget totalPayment(){
                     'Total',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20
+                      fontSize: 20,
+                      color: Colors.black
                     ),
                   ),
                   Text(
                     '\$215',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20
+                      fontSize: 20,
+                      color: Colors.black
                     ),
                   ),
                 ],

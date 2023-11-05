@@ -41,7 +41,13 @@ class ServicesOption extends StatelessWidget {
                       height: 40,
                     ),
                     const SizedBox(height: 3,),
-                    Text(servicesOpts[services[index]]!.text, textAlign: TextAlign.center,)
+                    Text(
+                      servicesOpts[services[index]]!.text, 
+                      style: const TextStyle(
+                        color: Colors.black
+                      ),
+                      textAlign: TextAlign.center,
+                    )
                   ],
                 ),
             );

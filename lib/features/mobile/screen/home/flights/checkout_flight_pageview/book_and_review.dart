@@ -86,6 +86,7 @@ Widget topContentCheckout(String shortNameFrom, String fullNameFrom, String shor
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
+                color: Colors.black
               ),
             ),
             Text(
@@ -160,7 +161,8 @@ Widget midContentCheckout(
           text,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15
+            fontSize: 15,
+            color: Colors.black
           ),
         ),
         
@@ -241,15 +243,24 @@ Widget bottomContentCheckout(String price){
               '\$$price',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 30
+                fontSize: 30,
+                color: Colors.black
               ),
             ),
             const Text(
-              '/passenger'
+              '/passenger',
+              style: TextStyle(
+                color: Colors.black
+              ),
             )
           ],
         ),
-        const Text('1 passenger')
+        const Text(
+          '1 passenger',
+          style: TextStyle(
+            color: Colors.black
+          ),
+        )
       ],
     ),
   );
